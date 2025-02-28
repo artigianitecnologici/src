@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Reti WiFi disponibili (Scheda Rete Locale)</h1>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>SSID</th>
+      <th>Segnale</th>
+      <th>Sicurezza</th>
+      <th>Seleziona</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for net in networks %}
+    <tr>
+      <td>{{ net.ssid }}</td>
+      <td>{{ net.signal }}</td>
+      <td>{{ net.security }}</td>
+      <td>
+        <form action="{{ url_for('local_select') }}" method="post">
+          <input type="hidden" name="ssid" value="{{ net.ssid }}">
+          <button type="submit" class="btn btn-primary">Connetti</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

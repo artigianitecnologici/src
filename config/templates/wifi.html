@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiFi Configuration</title>
+</head>
+<body>
+    <h1>Available WiFi Networks</h1>
+    <ul>
+        {% for network in networks %}
+        <li>{{ network }}</li>
+        {% endfor %}
+    </ul>
+    <form method="POST" action="/wifi/connect">
+        <label for="ssid">SSID:</label>
+        <input type="text" id="ssid" name="ssid">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        <button type="submit">Connect</button>
+    </form>
+</body>
+</html>

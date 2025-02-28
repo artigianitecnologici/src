@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>MARRtina Robot Face</title>
+  <link rel="stylesheet" href="css/marrtina04.css">
+  <script type="text/javascript" src="js/roslib.min.js"></script>
+  <script type="text/javascript" src="js/eventemitter2.min.js"></script>
+  <script type="text/javascript">
+    function refreshPage(t) {
+      setTimeout("location.reload(true);", t);
+    }
+  </script>
+  <script type="text/javascript">
+    var ros = new ROSLIB.Ros({
+      url: 'ws:' + window.location.hostname + ':9090'
+    });
+
+    ros.on('connection', function () {
+      console.log("Connected");
+    });
+
+    ros.on('error', function (error) {
+      console.log("Error");
+    });
+
+    ros.on('close', function () {
+      console.log("Close");
+    });
+
+    // Emotion listener
+    var sonar0_listener = new ROSLIB.Topic({
+      ros: ros,
+      name: 'social/emotion/',
+      messageType: 'std_msgs/String'
+    });
+
+    sonar0_listener.subscribe(function (m) {
+      console.log("Emotion");
+      console.log(m.data);
+
+      if (m.data == "normal") eyes.normal();
+      if (m.data == "happy") eyes.happy();
+      if (m.data == "surprise") eyes.surprise();
+      if (m.data == "angry") eyes.angry();
+      if (m.data == "sad") eyes.sad();
+      if (m.data == "speak") eyes.speak();
+      if (m.data == "sings") eyes.sings();
+      if (m.data == "startblinking") eyes.startBlinking();
+      if (m.data == "stopblinking") eyes.stopBlinking();
+    });
+  </script>
+</head>
+
+<body onload="JavaScript:refreshPage(90000);">
+  <!-- <div class="buttons">
+    <button onclick="eyes.startBlinking()">Start Blinking</button>
+    <button onclick="eyes.stopBlinking()">Stop Blinking</button>
+    <button onclick="eyes.blink()">Blink</button>
+    <button onclick="eyes.normal()">Normal</button>
+    <button onclick="eyes.speak()">Speak</button>
+    <button onclick="eyes.happy()">Happy</button>
+    <button onclick="eyes.sad()">Sad</button>
+    <button onclick="eyes.angry()">Angry</button>
+    <button onclick="eyes.surprise()">Surprise</button>
+    <button onclick="eyes.moveEyes()">Start Eye Movement</button>
+    <button onclick="eyes.stopMoveEyes()">Stop Eye Movement</button>
+  </div> -->
+
+  <div class="face">
+    <div class="eyebrow left">
+      <img id="soprdx" src="image/eyebrowsx1.gif" width="80%">
+    </div>
+    <div class="bulb left">
+      <img id="occhiosx" src="image/face04/BulbDx.png" width="80%">
+      <div class="eye left">
+        <img id="pupsx" src="image/face04/Pupilla.png" class="pupil">
+      </div>
+    </div>
+    <div class="eyebrow right">
+      <img id="soprsx" src="image/eyebrowdx1.gif" width="80%">
+    </div>
+    <div class="bulb right">
+      <img id="occhiodx" src="image/face04/BulbSx.png" width="80%">
+      <div class="eye right">
+        <img id="pupdx" src="image/face04/Pupilla.png" class="pupil">
+      </div>
+    </div>
+    <div class="nose">
+      <img id="naso" src="image/nosetalkmarrtina1.gif" width="100%">
+    </div>
+    <div class="mouth">
+      <img id="bocca" src="image/face02/boccastabile.png" width="210%">
+    </div>
+  </div>
+  <script src="js/marrtina04.js"></script>
+</body>
+
+</html>

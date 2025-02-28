@@ -1,0 +1,171 @@
+<!--
+ # Copyright 2025 robotics-3d.com
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Author: Ferrarini Fabio
+# Email : ferrarini09@gmail.com
+# -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>MARRtina Robot Face</title>
+  <script type="text/javascript" src="js/roslib.min.js"></script>
+  <script type="text/javascript" src="js/eventemitter2.min.js"></script>
+  <script type="text/javascript" type="text/javascript">
+    function refreshPage(t){
+
+      setTimeout("location.reload(true);", t);
+
+    }
+    </script>
+  <script type="text/javascript" type="text/javascript">
+    var teleop;
+    var ros = new ROSLIB.Ros({
+      	 url: 'ws:' + window.location.hostname +':9090'
+    });
+
+    ros.on('connection', function () {
+        console.log("Connected");
+    });
+
+    ros.on('error', function (error) {
+        console.log("Error");
+    });
+
+    ros.on('close', function () {
+       console.log("Close");
+    });
+    //
+
+	// SONAR
+	var sonar0_listener = new ROSLIB.Topic({
+      ros: ros,
+      name: '/social/emotion',
+      messageType: 'std_msgs/String'
+  });
+
+  sonar0_listener.subscribe(function (m) {
+      //document.getElementById("emotion").innerHTML = m.data;
+      console.log("Emotion");
+      console.log(m.data);
+
+	  if (m.data == "normal") {
+        eyes.normal();
+      }
+      if (m.data == "happy") {
+        eyes.happy();
+      }
+	  if (m.data == "surprise") {
+        eyes.surprise();
+      }
+	  if (m.data == "angry") {
+        eyes.angry();
+      }
+	  if (m.data == "sad") {
+        eyes.sad();
+      }
+      if (m.data == "speak") {
+        eyes.speak();
+      }
+	  if (m.data == "sings") {
+        eyes.sings();
+      }
+      if (m.data == "fear") {
+        eyes.fear();
+      }
+      if (m.data == "startblinking") {
+        eyes.startBlinking();
+      }
+      if (m.data == "stopblinking") {
+        eyes.stopBlinking();
+      }
+   });
+
+
+    window.onload = function () {
+
+
+    }
+
+  </script>
+
+  <link rel="stylesheet" href="css/marrtina06.css">
+  <script type="text/javascript">
+    function movePupilsRandomly() {
+      // Seleziona le pupille
+      const leftPupil = document.getElementById("pupsx");
+      const rightPupil = document.getElementById("pupdx");
+
+      setInterval(() => {
+        // Genera spostamenti casuali (range: ±20%)
+        const randomX = Math.random() * 40 - 20; // Da -20% a +20%
+        const randomY = Math.random() * 40 - 20; // Da -20% a +20%
+
+        // Trasforma i valori casuali in una trasformazione comune
+        const transformValue = `translate(${randomX}%, ${randomY}%)`;
+
+        // Applica la stessa trasformazione a entrambe le pupille
+        leftPupil.style.transform = transformValue;
+        rightPupil.style.transform = transformValue;
+      }, 1500); // Cambia posizione ogni 500ms
+    }
+  </script>
+</head>
+
+<body onload="movePupilsRandomly();">
+    <!-- <div class="buttons">
+    <button onclick="eyes.startBlinking()">Start Blink</button>
+    <button onclick="eyes.stopBlinking()">Stop</button>
+ 	<button onclick="eyes.normal()" >Nor</button>
+	<button onclick="eyes.speak()" >Speak</button>
+    <button onclick="eyes.happy()" >Happy</button>
+    <button onclick="eyes.sad()" >Sad</button>
+    <button onclick="eyes.fear()" >Fear</button>
+    <button onclick="eyes.angry()" >Mad</button>
+    <button onclick="eyes.focused()" >Foc</button>
+	 <button onclick="eyes.surprise()" >sur</button>
+    <button onclick="eyes.confused()" >Conf</button>
+
+  </div>  -->
+  <div class="face">
+    <!-- <div class="eyebrow left">
+      <img id="soprdx" src="image/eyebrowsx1.gif" width="80%">
+    </div> -->
+    <div class="bulb left">
+      <img id="occhiosx" src="image/face04/BulbSx.png" width="140%">
+      <div class="eye left">
+        <!-- <img id="pupsx" src="image/face04/Pupilla.png" class="pupil"> -->
+      </div>
+    </div>
+    <!-- <div class="eyebrow right">
+      <img id="soprsx" src="image/eyebrowdx1.gif" width="80%">
+    </div> -->
+    <div class="bulb right">
+      <img id="occhiodx" src="image/face04/BulbDx.png" width="140%">
+      <div class="eye right">
+        <!-- <img id="pupdx" src="image/face04/Pupilla.png" class="pupil"> -->
+      </div>
+    </div>
+    <!-- <div class="nose">
+      <img id="naso" src="image/face04/nosetalkmarrtina3.gif" width="100%">
+    </div> -->
+    <div class="mouth">
+      <!-- <img id="bocca" src="image/face02/boccastabile.png" width="160%"> -->
+    </div>
+  </div>
+  <script  src="js/marrtina06.js"></script>
+</body>
+
+</html>

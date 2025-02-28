@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Regole NAT e Routing Attivi</h1>
+<pre>{{ routing_info }}</pre>
+<a href="{{ url_for('index') }}" class="btn btn-primary">Torna alla Home</a>
+{% endblock %}

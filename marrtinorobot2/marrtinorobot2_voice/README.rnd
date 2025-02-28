@@ -1,0 +1,20 @@
+
+
+# prerequisite f
+pip3 install gtts
+sudo apt install mpg321
+
+
+# run node
+ros2 run marrtinorobot2_voice tts_node 
+# speech
+ros2 topic pub  -1 /speech/to_speak std_msgs/msg/String '{data: "tutti i sistemi sono operativi"}'
+
+
+sudo apt-get install ros-humble-rosbridge-suite
+sudo apt-get install ros-humble-webviz
+
+sudo apt update
+sudo apt install sox
+
+sudo apt install libttspico-utils

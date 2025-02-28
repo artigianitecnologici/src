@@ -1,0 +1,71 @@
+# Vision
+
+# prerequisite for python
+pip3 install gtts
+pip3 install mediapipe
+sudo apt install mpg321
+
+# install astra camera 
+git clone https://github.com/orbbec/OrbbecSDK_ROS2.git
+
+# install oak camera
+git clone -b humble https://github.com/luxonis/depthai-ros-examples.git && \
+git clone -b humble https://github.com/luxonis/depthai-ros.git
+# lsusb
+Bus 001 Device 008: ID 03e7:2485 Intel Movidius MyriadX
+
+ros2 topic pub  -1 /tts_input std_msgs/msg/String '{data: "tutti i sistemi sono operativi"}'
+
+# install camera webcam
+sudo apt-get install ros-${ROS_DISTRO}-v4l2-camera
+sudo apt install v4l-utils
+# aruko makers Apriltag 36h11
+https://chev.me/arucogen/
+
+ pip3 install apriltag
+
+ https://robofoundry.medium.com/opencv-yolo-object-detection-with-picamera-and-ros2-629d52cfec6
+Camesa calibration
+ https://medium.com/starschema-blog/offline-camera-calibration-in-ros-2-45e81df12555
+
+
+sudo apt install v4l-utils
+ list of device
+
+ v4l2-ctl --list-devices
+ # RASPBERRY PI ubuntu 22.04 arm64 
+ raspi-config
+
+ https://automaticaddison.com/getting-started-with-opencv-in-ros-2-foxy-fitzroy-python/
+
+
+sudo apt-get install ros-humble-rosbridge-suite
+sudo apt-get install ros-humble-webviz
+
+
+
+-To use the the calibration file unzip the calibration.tar.gz
+tar -xvf calibration.tar.gz
+
+
+#
+ros2 launch depthai_examples stereo_inertial_node.launch.py
+
+conf minima
+ros2 launch depthai_examples stereo.launch.py
+
+
+ros2 run pointcloud_to_laserscan pointcloud_to_laserscan_node \
+    --ros-args --params-file ~/marrtinorobot2_ws/src/marrtinorobot2_vision/config/pointcloud_to_laserscan_qos.yaml
+
+    ~/marrtinorobot2_ws/src/marrtinorobot2_vision/config
+
+# verficare la cam 
+ v4l2-ctl --list-devices
+
+ros2 run v4l2_camera v4l2_camera_node --ros-args -p video_device:="/dev/video0"
+
+ros2 launch apriltag_ros tag_realsense.launch.py camera_name:=/camera image_topic:=image_raw
+
+# getimage
+ros2 topic pub  -1 /getimage std_msgs/msg/String '{data: "get"}'

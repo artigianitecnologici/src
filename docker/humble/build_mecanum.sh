@@ -1,0 +1,1 @@
+ docker build --build-arg Robot=mecanum -t marrtinorobot2:mate-vnc -f Dockerfile.mate-vnc .

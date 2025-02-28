@@ -1,0 +1,13 @@
+[Unit]
+Description=Esecuzione automatica di 1-bringup.bash
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /home/ubuntu/src/marrtinorobot2/bringup/1-bringup.bash -docker
+User=ubuntu
+WorkingDirectory=/home/ubuntu
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

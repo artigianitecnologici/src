@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  # Servizio Nginx
+  webgui:
+    image: nginx:alpine
+    container_name: nginx
+    volumes:
+      - ./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - "${MARRTINOROBOT2_WEBI}/www:/var/www/html"
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - phpweb
+    networks:
+      - web_network
+    restart: always
+
+  # Servizio PHP-FPM
+  phpweb:
+    image: php:8.1-fpm-alpine
+    container_name: php
+    volumes:
+      - "${MARRTINOROBOT2_WEBI}/www:/var/www/html"
+      - ./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+    networks:
+      - web_network
+    restart: always
+
+networks:
+  web_network:
+    driver: bridge

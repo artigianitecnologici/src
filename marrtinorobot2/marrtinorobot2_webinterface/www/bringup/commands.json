@@ -1,0 +1,82 @@
+[
+    {
+        "title": "bringup",
+        "startCommand": "bringup.sh",
+        "stopCommand": "bringup_kill",
+        "selected": true,
+        "description": "Starts the main bringup process.",
+        "monitor": false
+    },
+    {
+        "title": "MicroROS",
+        "startCommand": "microros_start",
+        "stopCommand": "microros_kill",
+        "selected": false,
+        "description": "Manages the MicroROS processes.",
+        "monitor": false
+    },
+    {
+        "title": "WebCam",
+        "startCommand": "webcam.sh",
+        "stopCommand": "webcam_kill",
+        "selected": false,
+        "description": "Activates the webcam feed.",
+        "monitor": false
+    },
+    {
+        "title": "TTS",
+        "startCommand": "tts.sh",
+        "stopCommand": "tts_kill",
+        "selected": true,
+        "description": "Starts the Text-to-Speech service.",
+        "monitor": false
+    },
+    {
+        "title": "rplidar",
+        "startCommand": "rplidar.sh",
+        "stopCommand": "rplidar_kill",
+        "selected": false,
+        "description": "Activates the RPLIDAR laser scanner.",
+        "monitor": false
+    },
+    {
+        "title": "slam",
+        "startCommand": "slam.sh",
+        "stopCommand": "slam_kill",
+        "selected": false,
+        "description": "Starts the SLAM algorithm for mapping.",
+        "monitor": false
+    },
+    {
+        "title": "explorer",
+        "startCommand": "explorer.sh",
+        "stopCommand": "explorer_kill",
+        "selected": false,
+        "description": "Launches the autonomous exploration module.",
+        "monitor": false
+    },
+    {
+        "title": "nav",
+        "startCommand": "nav.sh",
+        "stopCommand": "nav_kill",
+        "selected": false,
+        "description": "Starts the navigation stack for path planning.",
+        "monitor": false
+    },
+    {
+        "title": "vizanti",
+        "startCommand": "vizanti_server.sh",
+        "stopCommand": "vizanti_kill",
+        "selected": false,
+        "description": "Launches the Vizanti visualization server.",
+        "monitor": false
+    },
+    {
+        "title": "ldlidar",
+        "description": "Lidar LD19",
+        "startCommand": "ldlidar.sh",
+        "stopCommand": "ldlidar_kill",
+        "selected": false,
+        "monitor": false
+    }
+]

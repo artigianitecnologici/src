@@ -1,0 +1,12 @@
+hardware_parameters:
+  device_name: "/dev/ttyUSB0"
+  baud_rate: 1000000
+  protocol_version: 1.0
+
+  motors:
+    pan_motor:
+      id: 1
+      model: "AX-12A"
+    tilt_motor:
+      id: 2
+      model: "AX-12A"

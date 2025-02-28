@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Connetti alla rete locale: {{ ssid }}</h1>
+<form action="{{ url_for('local_connect') }}" method="post">
+    <input type="hidden" name="ssid" value="{{ ssid }}">
+    <div class="mb-3">
+        <label for="password" class="form-label">Password:</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+    </div>
+    <button type="submit" class="btn btn-success">Connetti</button>
+</form>
+{% endblock %}
