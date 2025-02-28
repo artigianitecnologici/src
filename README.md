@@ -1,6 +1,6 @@
 mkdir ~/src
 cd ~/src
-git clone https://github.com/artigianitecnologici/MARRtinoROS2 . --filter=tree:0
+git clone https://github.com/marrtino/MARRtinoROS2 . --filter=tree:0
 
 
 disabiltare il rendering grafico su ssh
