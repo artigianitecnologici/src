@@ -1,11 +1,10 @@
+# Download Repositor 
 mkdir ~/src
-
 cd ~/src
-
 git clone https://github.com/marrtino/MARRtinoROS2 . --filter=tree:0
 
 
-disabiltare il rendering grafico su ssh
+# Disabiltare il rendering grafico su ssh
 
 ssh -x user@remote_host
 ssh -x marrtino@10.3.1.1
