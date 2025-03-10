@@ -137,9 +137,10 @@ if ( !empty($_POST)) {
       FaceExpression('speak')
       startgesture()
       speechTopic.publish(msg_speak); // error here als
+      console.log("speech");   
       console.log(msg_speak);
       
-      console.log("speech");   
+      
     }
 
     

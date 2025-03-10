@@ -10,12 +10,12 @@
       <li class="nav-item active">
         <a class="nav-link" href="/index.php">Home <span class="sr-only">(current)</span></a>
       </li>
-	   <li class="nav-item">
+	   <!-- <li class="nav-item">
         <a class="nav-link" href="../bringup/bringup.php" aria-haspopup="true"  >Bringup</a>
-      </li>
+      </li> -->
       
       <li class="nav-item">
-        <a class="nav-link" href="../social/facerobot.php" aria-haspopup="true"  >Facerobot</a>
+        <a class="nav-link" href="../social/facerobot.php" aria-haspopup="true"  >Social Interface</a>
       </li>
        <!-- <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

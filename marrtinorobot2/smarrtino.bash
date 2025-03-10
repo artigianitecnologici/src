@@ -72,8 +72,8 @@ if [ $? != 0 ]; then
   tmux send-keys -t $SESSION:6 "cd ~/src/marrtinorobot2/marrtinorobot2_vision/marrtinorobot2_vision" C-m
   tmux send-keys -t $SESSION:6 "python3  node_getimage.py " C-m  # Log to websocket_robot.log
 
-  tmux send-keys -t $SESSION:4 "cd \$MARRTINOROBOT2_WS" C-m
-  #tmux send-keys -t $SESSION:7 "python3  pan_tilt_controller.py " C-m  # Log to websocket_robot.log
+  tmux send-keys -t $SESSION:7 "cd \$MARRTINOROBOT2_WS" C-m
+  tmux send-keys -t $SESSION:7 "./rosbridge.sh " C-m  # Log output to cmdexe.lo
 
   
   tmux send-keys -t $SESSION:8 "cd ~/marrtinorobot2_ws" C-m

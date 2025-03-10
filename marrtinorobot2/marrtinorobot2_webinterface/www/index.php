@@ -84,16 +84,16 @@
     </div>
     <h6>Interface version 2.1</h6>
 
-    <!-- Cards Section -->
+    <!-- Cards Section /bringup/bringup.php"-->
     <div class="row">
       <div class="col-md-3">
         <div class="card mb-4 box-shadow">
-          <a href="/bringup/bringup.php">
+          <a href="">
             <img class="card-img-top" src="images/bringup.webp" alt="bringup">
           </a>
           <div class="card-body">
             <div class="d-flex justify-content-center">
-              <a class="btn btn-outline-danger" href="/bringup/bringup.php" role="button">BRING UP</a>
+              <a class="btn btn-outline-danger" href="" role="button">BRING UP</a>
             </div>
           </div>
         </div>
@@ -101,33 +101,35 @@
 
       <div class="col-md-3">
         <div class="card mb-4 box-shadow">
-          <a href="facerobot.php">
+          <a href="social/facerobot.php">
             <img class="card-img-top" src="images/social.webp" alt="Marrtina">
           </a>
           <div class="card-body">
             <div class="d-flex justify-content-center">
-              <a class="btn btn-outline-danger" href="facerobot.php" role="button">Social Interface</a>
+              <a class="btn btn-outline-danger" href="social/facerobot.php" role="button">Social Interface</a>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="col-md-3">
+      <!-- <div class="col-md-3">
         <div class="card mb-4 box-shadow">
           <script>
-            document.write("<a href='https://" + window.location.hostname + ":5000' target='_blank'>");
+            //  document.write("<a href='https://" + window.location.hostname + ":5000' target='_blank'>");
+            document.write("<a href='https://" + window.location.hostname + "'>");
             document.write("<img class='card-img-top' src='images/webinterface.webp' alt='Web Interface'>");
             document.write("</a>");
           </script>
           <div class="card-body">
             <div class="d-flex justify-content-center">
               <script>
-                document.write("<a class='btn btn-outline-danger' href='https://" + window.location.hostname + ":5000' target='_blank'>Web Interface</a>");
+                // document.write("<a class='btn btn-outline-danger' href='https://" + window.location.hostname + ":5000' target='_blank'>Web Interface</a>")
+                 document.write("<a class='btn btn-outline-danger' href='https://" + window.location.hostname + "' >Web Interface</a>");;
               </script>
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="col-md-3">
         <div class="card mb-4 box-shadow">
@@ -196,7 +198,7 @@
         </div>
       </div>
 
-      <div class="col-md-3">
+      <!-- <div class="col-md-3">
         <div class="card mb-4 box-shadow">
           <script>
             document.write("<a href='https://" + window.location.hostname + ":9200' target='_blank'>");
@@ -211,7 +213,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </body>
