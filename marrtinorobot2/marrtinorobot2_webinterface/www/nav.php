@@ -34,6 +34,9 @@
       <li class="nav-item">
         <a class="nav-link" href="../program/blockly_robot.php" aria-haspopup="true"  >Blocky</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../program/python_robot.php" aria-haspopup="true"  >Python</a>
+      </li>
       
       <!--
       <li class="nav-item dropdown">
@@ -65,13 +68,13 @@
       <li class="nav-item">
         <a class="nav-link" href="../social/navigation.php" tabindex="-1" >Telepresence</a>
       </li>
-	   <li class="nav-item">
+	   <!-- <li class="nav-item">
         <a class="nav-link" href="../social/vision.php" tabindex="-1" >Vision</a>
-      </li>
+      </li> -->
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" href="../bringup/config.php" tabindex="-1" >Configuration</a>
-      </li>
+      </li> -->
 
 	 
     </ul>

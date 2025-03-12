@@ -283,7 +283,7 @@ initPanTilt= function() {
     window.onload = function () {
 	    initPanTilt();
       video = document.getElementById('video');
-      video.src = 'http://' + window.location.hostname +':29090/stream?topic=/rgb/image_raw&type=mjpeg&quality=100&width=256&height=192';
+      video.src = 'http://' + window.location.hostname +':29090/stream?topic=/camera/image_raw&type=mjpeg&quality=100&width=256&height=192';
     }
 
   </script>

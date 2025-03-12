@@ -35,7 +35,7 @@ if [ $? != 0 ]; then
   tmux new-window -t $SESSION:5 -n 'blockly'
   tmux new-window -t $SESSION:6 -n 'getimage'
   tmux new-window -t $SESSION:7 -n 'rosbridge'
-  tmux new-window -t $SESSION:8 -n 'explorer'
+  tmux new-window -t $SESSION:8 -n 'videoserver'
   tmux new-window -t $SESSION:9 -n 'navigation'
 
 
@@ -77,6 +77,8 @@ if [ $? != 0 ]; then
 
   
   tmux send-keys -t $SESSION:8 "cd ~/marrtinorobot2_ws" C-m
+  tmux send-keys -t $SESSION:8 "./videoserver.sh " C-m  # Log output to cmdexe.lo
+
   tmux send-keys -t $SESSION:9 "cd ~/marrtinorobot2_ws" C-m
 
 fi
