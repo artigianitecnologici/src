@@ -1,0 +1,22 @@
+# 🔹 Regola per assegnare la webcam Vitade AF a /dev/video0 con permessi 777
+SUBSYSTEM=="video4linux", ATTRS{idVendor}=="0c45", ATTRS{idProduct}=="6366", SYMLINK+="webcam", MODE="0777", KERNEL=="video0"
+
+# 🔹 Regola per assegnare la OAK-D Depth Camera a /dev/video1 con permessi 777
+SUBSYSTEM=="video4linux", KERNEL=="video1", DRIVERS=="uvcvideo",  SYMLINK+="oak", MODE="0777"
+# SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="2485", RUN+="/bin/sh -c 'ln -sf /dev/video1 /dev/oak'" , KERNEL=='video1'
+
+
+# 🔹 Regole udev per dispositivi Luxonis OAK (X_LINK_UNBOOTED)
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", MODE="0777"
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="2485", MODE="0777", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="f63b", MODE="0777", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="f63c", MODE="0777", GROUP="plugdev"
+
+# Supporto per dispositivi DepthAI non avviati (X_LINK_UNBOOTED)
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="2150", MODE="0777", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="2485", MODE="0777", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="f63b", MODE="0777", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="f63c", MODE="0777", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="f63d", MODE="0777", GROUP="plugdev"
+
+ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"

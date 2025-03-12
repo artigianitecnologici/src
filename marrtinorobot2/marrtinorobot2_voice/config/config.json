@@ -1,0 +1,9 @@
+{
+    "input_device_index": 4,
+    "output_device_index": 0,
+    "input_samplerate": 16000,
+    "output_samplerate": 44100,
+    "work_offline": false,
+    "language" : "it",
+    "msg_start" : "tutti i sistemi sono operativi"
+}

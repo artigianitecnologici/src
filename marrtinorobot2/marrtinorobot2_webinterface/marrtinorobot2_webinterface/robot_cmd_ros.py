@@ -260,15 +260,23 @@ class RobotCmdROS(Node):
     
     
 
-    def say(self, msg,language):
+    def say(self, msg, language):
         self.get_logger().info(f'speech: {msg}')
-        self.get_logger().info(f'languahe: {language}')
-        message = String()
-        message.data = language
-        self.language_pub.publish(message)
-        message = String()
-        message.data = msg
-        self.speech_pub.publish(message)
+        self.get_logger().info(f'language: {language}')
+        
+        # Pubblica la lingua prima
+        language_message = String()
+        language_message.data = language
+        self.language_pub.publish(language_message)
+        
+        # Aspetta un breve intervallo per garantire l'ordine corretto
+        time.sleep(0.1)  # Attendi 100ms
+        
+        # Poi pubblica il messaggio vocale
+        speech_message = String()
+        speech_message.data = msg
+        self.speech_pub.publish(speech_message)
+
 
     def emotion(self, msg):
         self.get_logger().info(f'social/emotion: {msg}')

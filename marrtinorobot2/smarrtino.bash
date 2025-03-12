@@ -34,7 +34,7 @@ if [ $? != 0 ]; then
   tmux new-window -t $SESSION:4 -n 'apriltag'  # Window 3 named 'robot_bringup'
   tmux new-window -t $SESSION:5 -n 'blockly'
   tmux new-window -t $SESSION:6 -n 'getimage'
-  tmux new-window -t $SESSION:7 -n 'dynamixel'
+  tmux new-window -t $SESSION:7 -n 'rosbridge'
   tmux new-window -t $SESSION:8 -n 'explorer'
   tmux new-window -t $SESSION:9 -n 'navigation'
 
