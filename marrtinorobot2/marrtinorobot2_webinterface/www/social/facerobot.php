@@ -130,10 +130,22 @@ if ( !empty($_POST)) {
       messageType: 'std_msgs/String'
     });
 
+    function setlanguage( language){
+      var msg_language = new ROSLIB.Message({
+            data: language
+      });
+      speechLanguageTopic.publish(msg_language); // error here als
+      console.log("language");   
+      console.log(msg_language);
+ 
+    }
+
     function speak( testo){
+      setlanguage('it');  
       var msg_speak = new ROSLIB.Message({
             data: testo
       });
+
       FaceExpression('speak')
       startgesture()
       speechTopic.publish(msg_speak); // error here als
@@ -194,7 +206,7 @@ var emotionTopic = new ROSLIB.Topic({
 
 
 function speaken( testo){
-testo=testo+'###en';  
+setlanguage('en');  
 var msg_speak = new ROSLIB.Message({
       data: testo
  });

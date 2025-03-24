@@ -50,7 +50,12 @@ class FaceRecognitionAndTrackingNode(Node):
 
         # Publisher per il numero di volti
         self.face_count_pub = self.create_publisher(Float64, '/nroface', 10)
+        # Inizializza i servo a 0 gradi (posizione minima)
+        initial_pos = Float64()
+        initial_pos.data = 0.0  # 0 gradi
 
+        self.dynamixel_control.publish(initial_pos)        # Pan a 0°
+        self.dynamixel_control_tilt.publish(initial_pos)   # Tilt a 0°
         # Parametri di default per il servo pan/tilt
         self.servomaxx = 1023   # Massima rotazione servo orizzontale (x)
         self.servomaxy = 1023   # Massima rotazione servo verticale (y)
@@ -81,6 +86,10 @@ class FaceRecognitionAndTrackingNode(Node):
         self.initial_pose_y.data = float(self.center_pos_y-100)
         self.dynamixel_control.publish(self.initial_pose_x)
         self.dynamixel_control_tilt.publish(self.initial_pose_y)
+    
+    def position_to_degrees(self, position):
+        """Converte la posizione Dynamixel (0-1023) in gradi."""
+        return position * 300 / 1023
 
     def image_callback(self, msg):
         try:
@@ -140,18 +149,18 @@ class FaceRecognitionAndTrackingNode(Node):
         control_y = self.pid_y.compute(y)
 
         # Controllo asse X (pan)
-        self.current_pos_x += control_x
+        self.current_pos_x += -control_x
         if self.current_pos_x <= self.servomaxx and self.current_pos_x >= self.servomin:
             current_pose_x = Float64()
-            current_pose_x.data = self.current_pos_x
-            self.dynamixel_control.publish(current_pose_x)
+            current_pose_x.data = 512-self.current_pos_x
+            self.dynamixel_control.publish(Float64(data=self.position_to_degrees(current_pose_x.data)))
 
         # Controllo asse Y (tilt)
         self.current_pos_y += control_y
         if self.current_pos_y <= self.servomaxy and self.current_pos_y >= self.servomin:
             current_pose_y = Float64()
-            current_pose_y.data = self.current_pos_y
-            self.dynamixel_control_tilt.publish(current_pose_y)
+            current_pose_y.data = 512-self.current_pos_y
+            self.dynamixel_control_tilt.publish(Float64(data=self.position_to_degrees(current_pose_y.data)))
 
 
 def main(args=None):

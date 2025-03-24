@@ -75,26 +75,7 @@ class RobotCmdROS(Node):
         self.thread = threading.Thread(target=self.read_apriltag_data, daemon=True)
         self.thread.start()
 
-    # def read_apriltag_data(self):
-    #     """Thread separato per ascoltare il topic /apriltag_detections."""
-    #     self.get_logger().info("📡 Thread di lettura attivato!")
-
-    #     # Creazione di un secondo nodo ROS2 all'interno del thread
-    #     node = rclpy.create_node('apriltag_listener')
-
-    #     # Crea la subscription per ascoltare il topic
-    #     subscription = node.create_subscription(
-    #         AprilTagDetectionArray,
-    #         '/apriltag_detections',
-    #         self.process_apriltag_data,
-    #         10
-    #     )
-
-    #     # Loop per elaborare i messaggi ricevuti
-    #     while self.running:
-    #         rclpy.spin_once(node, timeout_sec=1)  # Processa i dati ogni secondo
-
-    #     node.destroy_node()  # Distrugge il nodo alla chiusura
+  
 
     def read_apriltag_data(self):
         self.get_logger().info("📡 Thread di lettura attivato!")
@@ -285,13 +266,13 @@ class RobotCmdROS(Node):
         self.emotion_pub.publish(message)
 
     def pan(self, msg):
-        self.get_logger().info(f'Pan Position: {msg}')
+        self.get_logger().info(f'Pan Position Grade: {msg}')
         message = Float64()
         message.data = float(msg)
         self.pan_pub.publish(message)
 
     def tilt(self, msg):
-        self.get_logger().info(f'Tilt Position: {msg}')
+        self.get_logger().info(f'Tilt Position Grade: {msg}')
         message = Float64()
         message.data = float(msg)
         self.tilt_pub.publish(message)

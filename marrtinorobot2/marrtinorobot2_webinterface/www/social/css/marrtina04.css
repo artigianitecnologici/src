@@ -55,11 +55,13 @@ body {
 }
 
 .bulb.left {
-  left: 08%;
+  left: 20%;
+  transform: rotate(-10deg); /* Ruota di 5 gradi */
 }
 
 .bulb.right {
-  right: 12%;
+  right: 20%;
+  transform: rotate(10deg); /* Ruota di 5 gradi */
 }
 
 .eye {
@@ -105,8 +107,8 @@ body {
 .mouth {
   height: var(--mouth-height);
   width: var(--mouth-width);
-  bottom: 10%;
-  left: 35%;
+  bottom: 5%;
+  left: 40%;
   z-index: 4;
   position: absolute;
 }

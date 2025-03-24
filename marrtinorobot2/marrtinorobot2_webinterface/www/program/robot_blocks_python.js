@@ -198,7 +198,7 @@ Blockly.Python['right_shoulder_flexion'] = function(block) {
     value_steps = -value_steps;
   }
   var value_pos = ( parseInt(value_steps)) ; 
-  var code = 'right_shoulder_flexion('+value_pos+')\n';
+  var code = 'robot.right_shoulder_flexion('+value_pos+')\n';
   return code;
 };
 
@@ -220,7 +220,7 @@ Blockly.Python['left_shoulder_flexion'] = function(block) {
     value_steps = -value_steps;
   }
   var value_pos = (  parseInt(value_steps)) ;
-  var code = 'left_shoulder_flexion('+value_pos+')\n';
+  var code = 'robot.left_shoulder_flexion('+value_pos+')\n';
   return code;
 };
 
@@ -237,7 +237,7 @@ Blockly.Python['right_shoulder_rotation'] = function(block) {
   }
 
   var value_pos = (  parseInt(value_steps)) ;
-  var code = 'right_shoulder_rotation('+value_pos+')\n';
+  var code = 'robot.right_shoulder_rotation('+value_pos+')\n';
   return code;
 };
 
@@ -253,7 +253,7 @@ Blockly.Python['left_shoulder_rotation'] = function(block) {
     value_steps = -value_steps;
   }
   var value_pos = ( parseInt(value_steps)) ;
-  var code = 'left_shoulder_rotation('+value_pos+')\n';
+  var code = 'robot.left_shoulder_rotation('+value_pos+')\n';
   return code;
 };
 
@@ -265,7 +265,7 @@ Blockly.Python['right_elbow'] = function(block) {
     
   }
   var value_pos = (  parseInt(value_steps)) ;
-  var code = 'right_elbow('+value_pos+')\n';
+  var code = 'robot.right_elbow('+value_pos+')\n';
   return code;
 };
 
@@ -279,7 +279,7 @@ Blockly.Python['left_elbow'] = function(block) {
      
   }
   var value_pos = (  parseInt(value_steps)) ;
-  var code = 'left_elbow('+value_pos+')\n';
+  var code = 'robot.left_elbow('+value_pos+')\n';
   return code;
 };
 // social hand
@@ -295,7 +295,7 @@ Blockly.Python['hand_right'] = function(block) {
     if ( parseInt(value_steps) > 90 ) { value_steps = 90  }
   }
   var value_pos = (  parseInt(value_steps)) ;
-  var code = 'right_hand('+value_pos+')\n';
+  var code = 'robot.right_hand('+value_pos+')\n';
   return code;
 };
 
@@ -313,7 +313,7 @@ Blockly.Python['hand_left'] = function(block) {
       if ( parseInt(value_steps) > 90 ) { value_steps = 90  }
   }
   var value_pos = (  parseInt(value_steps)) ;
-  var code = 'left_hand('+value_pos+')\n';
+  var code = 'robot.left_hand('+value_pos+')\n';
   return code;
 };
 

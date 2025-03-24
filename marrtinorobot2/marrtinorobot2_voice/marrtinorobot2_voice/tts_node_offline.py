@@ -94,7 +94,7 @@ class TTSNode(Node):
         
         msgstart = f"ros2 topic pub -1 /speech/to_speak std_msgs/msg/String '{{data: \"{self.msg_start}\"}}'"
         os.system(msgstart)
-
+        #self.play_beep(self)
 
 
     def play_beep(self,frequency=1000, duration=0.5, volume=0.1):
@@ -118,30 +118,20 @@ class TTSNode(Node):
         self.finished_speaking = False
         self.loop_count_down = 0
 
-        # Check internet connectivity
-        if self.is_connected():
-            # Convert text to speech using the set language
-            tts = gTTS(text, lang=self.language)
-            filename = "/tmp/output.mp3"
-            tts.save(filename)
-            os.system('mpg321 ' + filename)
-            # Publish the fact that the TTS is done
-            self.publisher_.publish(String(data='TTS done'))
-        else:
-            if self.language == 'it':
-                self.language = 'it-IT'
-            if self.language == 'en':
-                self.language = 'en-US'
-                
-            filename = "/tmp/robot_speach.wav"
-            cmd = ['pico2wave', '--wave=' + filename, '--lang=' + self.language, f'"{text}"']
+        if self.language == 'it':
+            self.language = 'it-IT'
+        if self.language == 'en':
+            self.language = 'en-US'
+            
+        filename = "/tmp/robot_speach.wav"
+        cmd = ['pico2wave', '--wave=' + filename, '--lang=' + self.language, f'"{text}"']
 
-            subprocess.call(cmd)
-            cmd = ['play', filename, '--norm', '-q']
+        subprocess.call(cmd)
+        cmd = ['play', filename, '--norm', '-q']
 
-            subprocess.call(cmd)
-            self.finished_speaking = True
-            self.loop_count_down = int(self.LOOP_FREQUENCY * 2)
+        subprocess.call(cmd)
+        self.finished_speaking = True
+        self.loop_count_down = int(self.LOOP_FREQUENCY * 2)
 
     def speaking_finished(self):
         if self.finished_speaking:
