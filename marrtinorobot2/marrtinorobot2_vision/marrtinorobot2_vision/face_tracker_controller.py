@@ -5,6 +5,7 @@ from sensor_msgs.msg import Image
 import cv2
 import numpy as np
 from cv_bridge import CvBridge
+import time
 
 class PIDController:
     def __init__(self, kp, ki, kd):
@@ -131,7 +132,8 @@ class FaceRecognitionAndTrackingNode(Node):
 
                 # Chiama la funzione di tracciamento del volto con gli offset calcolati
                 self.track_face(offset_x, offset_y)
-
+                #print ("track")
+                time.sleep(0.1)
                 face_found = True  # Indica che un volto è stato trovato
 
         # Pubblica il numero di volti rilevati

@@ -45,6 +45,12 @@ class RobotCmdROS(Node):
         self.TOPIC_tilt = "tilt_controller/command"
         self.TOPIC_right_arm = "right_arm_controller/command"
         self.TOPIC_left_arm = "left_arm_controller/command"
+        self.TOPIC_right_shoulder_flexion_controller = "right_shoulder_flexion_controller/command"
+        self.TOPIC_left_shoulder_flexion_controller = "left_shoulder_flexion_controller/command"
+        self.TOPIC_right_shoulder_rotation_controller = "right_shoulder_rotation_controller/command"
+        self.TOPIC_left_shoulder_rotation_controller = "left_shoulder_rotation_controller/command"
+
+
         self.TOPIC_image = "/camera/image_raw"
         self.TOPIC_getimage = "/getimage"
         self.TOPIC_apriltag = "/apriltag_detections"
@@ -60,6 +66,13 @@ class RobotCmdROS(Node):
         self.right_arm_pub = self.create_publisher(Float64, self.TOPIC_right_arm, 10)
         self.left_arm_pub = self.create_publisher(Float64, self.TOPIC_left_arm, 10)
         self.getimage_pub = self.create_publisher(String, self.TOPIC_getimage, 10)
+
+
+
+        self.right_shoulder_flexion_pub = self.create_publisher(String, self.TOPIC_right_shoulder_flexion_controller)
+        self.left_shoulder_flexion_pub = self.create_publisher(String, self.TOPIC_left_shoulder_flexion_controller)
+        self.right_shoulder_rotation_pub = self.create_publisher(String, self.TOPIC_right_shoulder_rotation_controller)
+        self.left_shoulder_rotation_pub = self.create_publisher(String, self.TOPIC_left_shoulder_rotation_controller)
         
         self.get_logger().info('RobotCmdROS v.1.0.0 initialized')
         # inizialize tag
@@ -75,7 +88,7 @@ class RobotCmdROS(Node):
         self.thread = threading.Thread(target=self.read_apriltag_data, daemon=True)
         self.thread.start()
 
-  
+    
 
     def read_apriltag_data(self):
         self.get_logger().info("📡 Thread di lettura attivato!")
@@ -288,6 +301,9 @@ class RobotCmdROS(Node):
         message = Float64()
         message.data = float(msg)
         self.right_arm_pub.publish(message)
+
+
+
 
     def head_position(self, msg):
         self.get_logger().info(f'Head Position: {msg}')

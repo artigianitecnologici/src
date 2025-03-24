@@ -110,10 +110,14 @@ class DynamixelController(Node):
         degree = msg.data
  #       if degree > 0 :
         position =  512 + self.degrees_to_position(degree)
+        if position > 512+100:
+            position=512+100
+        if position < 512-100:
+            position = 512-100
  #       else:
  #           position =  512 + self.degrees_to_position(-degree)
         pan_position = position 
-        speed = 50  # Imposta la velocità del motore Pan
+        speed = 30  # Imposta la velocità del motore Pan
         self.get_logger().info(f'pan position: {pan_position}')
         self.set_position(self.pan_motor_id, pan_position, speed)
 
@@ -123,10 +127,15 @@ class DynamixelController(Node):
         degree = msg.data
  #       if degree > 0 :
         position =  512 - self.degrees_to_position(degree)
+        if position > 512+150:
+            position=512+150
+        if position < 512-150:
+            position = 512-150
+
  #       else:
  #           position =  512 + self.degrees_to_position(-degree)
         tilt_position = position 
-        speed = 50  # Imposta la velocità del motore Tilt
+        speed = 30  # Imposta la velocità del motore Tilt
         self.set_position(self.tilt_motor_id, tilt_position, speed)
 
     # Callback per il comando spalla rotazione destra
