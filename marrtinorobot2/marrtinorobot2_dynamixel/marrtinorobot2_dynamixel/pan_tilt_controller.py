@@ -1,3 +1,21 @@
+# Copyright 2025 robotics-3d.com 
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Author: Ferrarini Fabio
+# Email : ferrarini09@gmail.com
+# File  : pantilt_controller.py
+#
 #!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
@@ -69,14 +87,25 @@ class DynamixelController(Node):
     # Callback per il comando pan
     def pan_callback(self, msg):
         self.get_logger().info(f'Received pan command (degrees): {msg.data}')
-        pan_position = self.degrees_to_position(150 + msg.data)  # Converte i gradi in posizione
+        degree = msg.data
+ #       if degree > 0 :
+        position =  512 + self.degrees_to_position(degree)
+ #       else:
+ #           position =  512 + self.degrees_to_position(-degree)
+        pan_position = position 
         speed = 50  # Imposta la velocità del motore Pan
+        self.get_logger().info(f'pan position: {pan_position}')
         self.set_position(self.pan_motor_id, pan_position, speed)
 
     # Callback per il comando tilt
     def tilt_callback(self, msg):
         self.get_logger().info(f'Received tilt command (degrees): {msg.data}')
-        tilt_position = self.degrees_to_position(150 + msg.data)  # Converte i gradi in posizione
+        degree = msg.data
+ #       if degree > 0 :
+        position =  512 - self.degrees_to_position(degree)
+ #       else:
+ #           position =  512 + self.degrees_to_position(-degree)
+        tilt_position = position 
         speed = 50  # Imposta la velocità del motore Tilt
         self.set_position(self.tilt_motor_id, tilt_position, speed)
 
