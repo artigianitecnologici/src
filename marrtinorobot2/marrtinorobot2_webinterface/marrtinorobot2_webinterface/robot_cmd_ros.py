@@ -49,7 +49,10 @@ class RobotCmdROS(Node):
         self.TOPIC_left_shoulder_flexion_controller = "left_shoulder_flexion_controller/command"
         self.TOPIC_right_shoulder_rotation_controller = "right_shoulder_rotation_controller/command"
         self.TOPIC_left_shoulder_rotation_controller = "left_shoulder_rotation_controller/command"
-
+        self.TOPIC_right_elbow_motor_controller = "right_elbow_controller/command"
+        self.TOPIC_left_elbow_motor_controller = "left_elbow_controller/command" 
+        self.TOPIC_hand_right_motor_controller = "hand_right_controller/command" 
+        self.TOPIC_hand_left_motor_controller = "hand_left_controller/command" 
 
         self.TOPIC_image = "/camera/image_raw"
         self.TOPIC_getimage = "/getimage"
@@ -69,12 +72,21 @@ class RobotCmdROS(Node):
 
 
 
-        self.right_shoulder_flexion_pub = self.create_publisher(String, self.TOPIC_right_shoulder_flexion_controller)
-        self.left_shoulder_flexion_pub = self.create_publisher(String, self.TOPIC_left_shoulder_flexion_controller)
-        self.right_shoulder_rotation_pub = self.create_publisher(String, self.TOPIC_right_shoulder_rotation_controller)
-        self.left_shoulder_rotation_pub = self.create_publisher(String, self.TOPIC_left_shoulder_rotation_controller)
+        self.right_shoulder_flexion_pub = self.create_publisher(Float64, self.TOPIC_right_shoulder_flexion_controller,10)
+        self.left_shoulder_flexion_pub = self.create_publisher(Float64, self.TOPIC_left_shoulder_flexion_controller,10)
+        self.right_shoulder_rotation_pub = self.create_publisher(Float64, self.TOPIC_right_shoulder_rotation_controller,10)
+        self.left_shoulder_rotation_pub = self.create_publisher(Float64, self.TOPIC_left_shoulder_rotation_controller,10)
         
-        self.get_logger().info('RobotCmdROS v.1.0.0 initialized')
+        self.right_elbow_motor_pub = self.create_publisher(Float64, self.TOPIC_right_elbow_motor_controller,10)
+        self.left_elbow_motor_pub = self.create_publisher(Float64, self.TOPIC_left_elbow_motor_controller,10)
+        self.hand_right_motor_pub = self.create_publisher(Float64, self.TOPIC_hand_right_motor_controller,10)
+        self.hand_left_motor_pub = self.create_publisher(Float64, self.TOPIC_hand_left_motor_controller,10)
+      
+
+
+
+
+        self.get_logger().info('RobotCmdROS v.1.0.1 initialized')
         # inizialize tag
         self.tag_id = -1
         self.tag_size = 0.0
