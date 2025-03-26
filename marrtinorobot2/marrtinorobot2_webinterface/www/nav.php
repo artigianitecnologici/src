@@ -10,9 +10,9 @@
       <li class="nav-item active">
         <a class="nav-link" href="/index.php">Home <span class="sr-only">(current)</span></a>
       </li>
-	   <!-- <li class="nav-item">
+	    <li class="nav-item">
         <a class="nav-link" href="../bringup/bringup.php" aria-haspopup="true"  >Bringup</a>
-      </li> -->
+      </li> 
       
       <li class="nav-item">
         <a class="nav-link" href="../social/facerobot.php" aria-haspopup="true"  >Social Interface</a>
@@ -68,9 +68,9 @@
       <li class="nav-item">
         <a class="nav-link" href="../social/navigation.php" tabindex="-1" >Telepresence</a>
       </li>
-	   <!-- <li class="nav-item">
+	  <li class="nav-item">
         <a class="nav-link" href="../social/vision.php" tabindex="-1" >Vision</a>
-      </li> -->
+      </li> 
 
       <!-- <li class="nav-item">
         <a class="nav-link" href="../bringup/config.php" tabindex="-1" >Configuration</a>
