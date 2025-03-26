@@ -138,7 +138,7 @@
       video = document.getElementById('video');
 	   // Populate video source 
          
-          video.src = 'http://' + window.location.hostname +':29090/stream?topic=/face_detector/raw_image&type=mjpeg&quality=100';
+          video.src = 'http://' + window.location.hostname +':29090/stream?topic=/camera/image_raw&type=mjpeg&quality=100';
 
 	  //video.src = "http://192.168.1.119:29090/stream?topic=/usb_cam/image_raw&type=mjpeg&quality=100";
 	  video.onload = function () {
