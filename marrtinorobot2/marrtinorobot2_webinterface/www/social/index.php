@@ -63,7 +63,7 @@ h6 {text-align: center;}
     
     
       
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-4">
           <div class="thumbnail">
@@ -86,7 +86,7 @@ h6 {text-align: center;}
         <div class="col-md-1">  </div>
 
        
-      </div>
+      </div> -->
    <h6> Interface version 2.0</h6>
           <div class="row">
             <div class="col-md-3">

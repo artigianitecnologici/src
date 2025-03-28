@@ -63,7 +63,6 @@ class FaceRecognitionAndTrackingNode(Node):
             self.image_callback,
             10
         )
-        self.image_face_detection = self.create_publisher(Image, '/face_detector/image_raw', 10)
 
         # Publisher per il controllo del Dynamixel
         self.dynamixel_control = self.create_publisher(Float64, '/pan_controller/command', 10)
@@ -112,59 +111,6 @@ class FaceRecognitionAndTrackingNode(Node):
         """Converte la posizione Dynamixel (0-1023) in gradi."""
         return position * 300 / 1023
 
-    # def image_callback(self, msg):
-    #     try:
-    #         # Converti il messaggio ROS in un'immagine OpenCV
-    #         frame = self.bridge.imgmsg_to_cv2(msg, 'bgr8')
-    #         # Capovolgi l'immagine orizzontalmente
-    #         frame = cv2.flip(frame, 1)
-    #     except Exception as e:
-    #         self.get_logger().error(f'Failed to convert image: {e}')
-    #         return
-
-    #     # Prepara l'immagine per il modello di deep learning
-    #     h, w = frame.shape[:2]
-    #     blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
-
-    #     self.net.setInput(blob)
-    #     detections = self.net.forward()
-
-    #     face_count = 0
-    #     face_found = False
-
-    #     for i in range(detections.shape[2]):
-    #         confidence = detections[0, 0, i, 2]
-    #         if confidence > 0.5:
-    #             face_count += 1  # Incrementa il contatore dei volti
-    #             box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
-    #             (startX, startY, endX, endY) = box.astype("int")
-
-    #             # Disegna un rettangolo intorno al volto rilevato
-    #             cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 0, 255), 2)
-
-    #             # Calcola il centro del volto rilevato
-    #             face_center_x = (startX + endX) // 2
-    #             face_center_y = (startY + endY) // 2
-
-    #             # Calcola l'offset rispetto al centro dell'immagine
-    #             offset_x = face_center_x - (w // 2)
-    #             offset_y = face_center_y - (h // 2)
-
-    #             # Chiama la funzione di tracciamento del volto con gli offset calcolati
-    #             self.track_face(offset_x, offset_y)
-    #             #print ("track")
-    #             time.sleep(0.1)
-    #             face_found = True  # Indica che un volto è stato trovato
-
-    #     # Pubblica il numero di volti rilevati
-    #     face_count_msg = Float64()
-    #     face_count_msg.data = float(face_count)
-    #     self.face_count_pub.publish(face_count_msg)
-
-    #     # Mostra l'immagine con il volto rilevato
-    #     cv2.imshow('Face Recognition', frame)
-    #     cv2.waitKey(1)
-    
     def image_callback(self, msg):
         try:
             # Converti il messaggio ROS in un'immagine OpenCV
@@ -205,6 +151,7 @@ class FaceRecognitionAndTrackingNode(Node):
 
                 # Chiama la funzione di tracciamento del volto con gli offset calcolati
                 self.track_face(offset_x, offset_y)
+                #print ("track")
                 time.sleep(0.1)
                 face_found = True  # Indica che un volto è stato trovato
 
@@ -213,12 +160,9 @@ class FaceRecognitionAndTrackingNode(Node):
         face_count_msg.data = float(face_count)
         self.face_count_pub.publish(face_count_msg)
 
-        # Converti l'immagine OpenCV in un messaggio ROS e pubblicala
-        try:
-            ros_image_msg = self.bridge.cv2_to_imgmsg(frame, encoding="bgr8")
-            self.image_face_detection.publish(ros_image_msg)
-        except Exception as e:
-            self.get_logger().error(f'Failed to publish image: {e}')
+        # Mostra l'immagine con il volto rilevato
+        cv2.imshow('Face Recognition', frame)
+        cv2.waitKey(1)
 
     def track_face(self, x, y):
         # Calcolo PID per X e Y
