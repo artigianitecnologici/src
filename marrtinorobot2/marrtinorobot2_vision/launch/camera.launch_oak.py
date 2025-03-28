@@ -10,7 +10,7 @@ def generate_launch_description():
             output='screen',
             namespace='camera',
             parameters=[{
-                'video_device': '/dev/webcam',  # Adjust the video device path accordingly
+                'video_device': '/dev/oak',  # Adjust the video device path accordingly
                 'image_size': [640,480],
                 'time_per_frame': [1, 6],
                 'camera_frame_id': 'camera_link_optical',

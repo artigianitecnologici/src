@@ -35,7 +35,7 @@ def launch_setup(context, *args, **kwargs):
         # Include the camera.launch.py launch file from the depthai_ros_driver package
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
-                os.path.join(depthai_prefix, "launch", "camera.launch.py")
+                os.path.join(depthai_prefix, "launch", "camera.launch_oak.py")
             ),
             launch_arguments={
                 "name": name, 
