@@ -130,6 +130,10 @@ if ( !empty($_POST)) {
       messageType: 'std_msgs/String'
     });
 
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     function setlanguage( language){
       var msg_language = new ROSLIB.Message({
             data: language
@@ -137,23 +141,36 @@ if ( !empty($_POST)) {
       speechLanguageTopic.publish(msg_language); // error here als
       console.log("language");   
       console.log(msg_language);
- 
+      //await sleep(500); // aspetta 1 secondo
+
+    }
+  
+    function speak(testo) {
+      setlanguage('it');  // prima imposta la lingua
+
+      setTimeout(function () {
+        var msg_speak = new ROSLIB.Message({ data: testo });
+        FaceExpression('speak');
+        startgesture();
+        speechTopic.publish(msg_speak);
+        console.log("speech");
+        console.log(msg_speak);
+      }, 1000); // dopo 1 secondo
+    }
+    function speaken(testo) {
+      setlanguage('en');  // prima imposta la lingua
+
+      setTimeout(function () {
+        var msg_speak = new ROSLIB.Message({ data: testo });
+        FaceExpression('speak');
+        startgesture();
+        speechTopic.publish(msg_speak);
+        console.log("speech EN");
+        console.log(msg_speak);
+      }, 1000); // dopo 1 secondo
     }
 
-    function speak( testo){
-      setlanguage('it');  
-      var msg_speak = new ROSLIB.Message({
-            data: testo
-      });
 
-      FaceExpression('speak')
-      startgesture()
-      speechTopic.publish(msg_speak); // error here als
-      console.log("speech");   
-      console.log(msg_speak);
-      
-      
-    }
 
     
    //* A topic for messaging.
@@ -205,18 +222,6 @@ var emotionTopic = new ROSLIB.Topic({
    
 
 
-function speaken( testo){
-setlanguage('en');  
-var msg_speak = new ROSLIB.Message({
-      data: testo
- });
- FaceExpression('speak')
-  startgesture()
- speechTopic.publish(msg_speak); // error here als
- console.log(msg_speak);
- 
- console.log("speech");   
-}
 
 function normal(){
 var msg_happy = new ROSLIB.Message({
@@ -275,7 +280,7 @@ initPanTilt= function() {
    // Add event listener for slider moves
     headPanRange = document.getElementById("robot-pan");
     headPanRange.oninput = function() {
-        value = ((headPanRange.value /100) - 0.5)*2;
+        value = (headPanRange.value -35 ) ;
 		console.log(value);
 		pan(value);
 		
@@ -283,7 +288,7 @@ initPanTilt= function() {
     } 
 	  headTiltRange = document.getElementById("robot-tilt");
     headTiltRange.oninput = function() {
-        value = ((headTiltRange.value /100) -0.5) * -1;
+        value = (headTiltRange.value -20) ;
 		console.log(value);
 		tilt(value);
 		
@@ -330,13 +335,13 @@ initPanTilt= function() {
     <div class="col-md-1"><button class="btn btn-outline-danger btn-lg" onclick="FaceExpression('speak')">Speak</button><br><button class="btn btn-outline-danger btn-lg" onclick="FaceExpression('normal')">stop </button></div>
     <div class="col-md-1"> <input class="btn btn-outline-success btn-lg" type="submit" name="submit" value="Salva"></div>
     <div class="col-md-1"></div>
-    <div class="col-md-1" align="right"> <input type="range" orient="vertical"id="robot-tilt" /> </div>
+    <div class="col-md-1" align="right"> <input type="range" min="0" max="40" orient="vertical"id="robot-tilt" /> </div>
 	<div class="col-md-2">
 	 
 
     <img  src=""  alt="" id="video" />
    <!--   <iframe loading="lazy" src="/social/marrtina02.html"></iframe>-->
-	   <input  type="range" min="0" max="100" style="width:100%;" id="robot-pan" >
+	   <input  type="range" min="0" max="70" style="width:100%;" id="robot-pan" >
    </div>
    
   </div>

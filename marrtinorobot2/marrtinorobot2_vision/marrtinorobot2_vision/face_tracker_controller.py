@@ -89,6 +89,8 @@ class FaceRecognitionAndTrackingNode(Node):
         # PID controller per pan e tilt
         self.pid_x = PIDController(0.05, 0.001, 0.01)  # Regola questi valori per rallentare il movimento
         self.pid_y = PIDController(0.05, 0.001, 0.01)
+        # self.pid_x = PIDController(0.01, 0.0001, 0.001)  # Regola questi valori per rallentare il movimento
+        # self.pid_y = PIDController(0.01, 0.0001, 0.001)
 
         # Calcolo dei margini centrali per il tracciamento
         self.screenmaxx = 640  # Risoluzione massima dello schermo (x)
@@ -107,6 +109,7 @@ class FaceRecognitionAndTrackingNode(Node):
         self.initial_pose_y.data = float(self.center_pos_y-100)
         self.dynamixel_control.publish(self.initial_pose_x)
         self.dynamixel_control_tilt.publish(self.initial_pose_y)
+        self.get_logger().info("Face Tracker Controller v.1.0")
     
     def position_to_degrees(self, position):
         """Converte la posizione Dynamixel (0-1023) in gradi."""
