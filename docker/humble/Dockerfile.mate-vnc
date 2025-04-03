@@ -195,7 +195,7 @@ RUN source /opt/ros/$ROS_DISTRO/setup.bash \
 RUN source /opt/ros/$ROS_DISTRO/setup.bash \
     && colcon build
 ##
-# EOF INSTALLAZIONE MICROROS
+# EOF INSTALLAZIONE MICROROS  
 ##
 RUN echo -e "\033[1;32mInstall Repository MARRtino Robot 2 \033[0m"
 # --- Clona repository ---# Installazione di pacchetti e repository MARRtino
@@ -271,12 +271,19 @@ RUN apt-get update && apt-get install -y \
     ros-humble-web-video-server && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+
+
 # Installa opencv-python tramite pip
 RUN pip3 install opencv-python gtts opencv-python-headless dynamixel-sdk pydub  websockets 
 
 RUN apt-get update && apt-get install -y \
     portaudio19-dev 
-    
+
+RUN pip3 install  vosk sounddevice requests
+   
+RUN apt-get update && apt-get install -y \
+    python3-dev portaudio19-dev libportaudio2 libportaudiocpp0 ffmpeg libavdevice-dev
+
 RUN pip3 install sounddevice soundfile
 
 # Assicura compatibilità di numpy
@@ -284,6 +291,7 @@ RUN pip uninstall numpy -y && pip install numpy==1.26.4
 
 USER ubuntu
 # Aggiorna rosdep e installa le dipendenze del workspace ROS 2
+RUN echo -e "\033[1;32m=== Update rosdep \033[0m"
 RUN rosdep update && \
     rosdep install --from-paths src --ignore-src -r -y
 

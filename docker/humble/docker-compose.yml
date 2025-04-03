@@ -33,6 +33,7 @@ services:
       - ROS_LOCALHOST_ONLY=0
     volumes:
       - $MARRTINOROBOT2_HOME:/home/ubuntu/src/marrtinorobot2
+      - ./docker_home_autostart:/home/ubuntu/.config/autostart                       
       - /dev:/dev
       - /run/user/1000/pulse/native:/run/user/1000/pulse/native
     dns: 8.8.8.8
