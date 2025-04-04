@@ -30,7 +30,21 @@
   }
 </style>
 </head>
-
+<!-- <head>
+  <meta charset="utf-8">
+  <title>Tile Robot</title>
+  <script src="websocket_robot.js"></script>
+  <style>
+    body {
+      background-color: #fff;
+      font-family: sans-serif;
+    }
+    h1 {
+      font-weight: normal;
+      font-size: 140%;
+    }
+  </style>
+</head> -->
 <body>
   <?php include "../nav.php" ?>
   <h1>Tile robot</h1>
@@ -78,7 +92,6 @@
             <td><button id="bip_btn" onclick="command('A')"><img src="img/bip.png"></button></td>
             <td><button id="f_btn" onclick="command('F')"><img src="img/up.png"></button></td>
             <td><button id="boom_btn" onclick="command('C')"><img src="img/boom.png"></button></td>
-            
           </tr>
           <tr>
             <td><button id="l_btn" onclick="command('L')"><img src="img/rotleft.png"></button></td>
@@ -101,6 +114,26 @@
     <div id="codeDiv" style="height: 400px; width: 240px; background-color: #DDDDDD; font-size: 120%;"></div>
     
   </td>
+  <td>
+          <table border=1>
+                <tr>
+                  <td><button id="bip_btn" onclick="command('A')"><img src="img/bip.png"></button></td>
+                  <td><button id="tf_btn" onclick="command('TU')"><img src="img/up.png"></button></td>
+                  <td><button id="boom_btn" onclick="command('C')"><img src="img/boom.png"></button></td>
+                </tr>
+                <tr>
+                  <td><button id="pl_btn" onclick="command('PL')"><img src="img/rotleft.png"></button></td>
+                  <td><button id="run_btn" onclick="runCode()"><img src="img/run.png"></button></td>
+                  <td><button id="pr_btn" onclick="command('PR')"><img src="img/rotright.png"></button></td>
+                </tr>
+                <tr>
+                  <td><button id="clr_btn" onclick="clearCode()"><img src="img/clear.png"></button></td>
+                  <td><button id="td_btn" onclick="command('TD')"><img src="img/down.png"></button></td>
+                  <td><button id="stop_btn" onclick="stopCode()"><img src="img/stop.png"></button></td>
+                </tr>
+              </table>
+            </td>
+
   </tr>
   </table>
 </div>
@@ -131,13 +164,16 @@
     }
 
     function decode(c) {
-       if (c=='F') return "robot.forward";
-       if (c=='B') return "robot.backward";
-       if (c=='L') return "robot.left";
-       if (c=='R') return "robot.right";
-       if (c=='A') return "robot.bip";
-       if (c=='C') return "robot.boom";
-    }
+        if (c === 'F') return "robot.forward";
+        if (c === 'B') return "robot.backward";
+        if (c === 'L') return "robot.left";
+        if (c === 'R') return "robot.right";
+        if (c === 'A') return "robot.bip";
+        if (c === 'C') return "robot.boom";
+        if (c === 'TU' || c === 'TD') return "robot.pan";
+        if (c === 'PL' || c === 'PF') return "robot.tilt";
+        return "robot.unknown";
+      }
 
     function clearCode() {
        program = ""; last_command = ""; last_index = 0;
@@ -145,32 +181,46 @@
     }
 
     function command(c) {
-      if (c != last_command) {
-          if (last_command != "") {
+        let increment;
+
+        if (c === 'L' || c === 'R') {
+          increment = 15;
+        } else if (c === 'TU') {
+          program += "robot.pan(-15)\n";
+          updateCodeView();
+          return;
+        } else if (c === 'TD') {
+          program += "robot.pan(15)\n";
+          updateCodeView();
+          return;
+        } else if (c === 'PL') {
+          program += "robot.tilt(-15)\n";
+          updateCodeView();
+          return;
+        } else if (c === 'PF') {
+          program += "robot.tilt(15)\n";
+          updateCodeView();
+          return;
+        } else {
+          increment = 0.1;
+        }
+
+        if (c !== last_command) {
+          if (last_command !== "") {
             program += decode(last_command) + "(" + last_index + ")\n";
           }
           last_command = c;
-          last_index = (c === 'L' || c === 'R') ? 30 : .1; // Inizia da 90 per L e R
-      } else {
-          last_index += (c === 'L' || c === 'R') ? 30 : .1; // Incrementa di 90 per L e R, altrimenti 1
+          last_index = increment;
+        } else {
+          last_index += increment;
+        }
+
+        updateCodeView();
       }
 
-      document.getElementById("codeDiv").innerHTML = "<pre>" + currentcode() + "</pre>";        
-    }
-
-    // function command(c) {
-    //    if (c != last_command) {
-    //       if (last_command!="") {
-    //          program += decode(last_command)+"("+last_index+")\n";
-    //       }
-    //       last_command = c;
-    //       last_index = 1;
-    //    }
-    //    else {
-    //       last_index++;
-    //    }
-    //    document.getElementById("codeDiv").innerHTML = "<pre>" + currentcode() + "</pre>";        
-    // }
+function updateCodeView() {
+  document.getElementById("codeDiv").innerHTML = "<pre>" + currentcode() + "</pre>";
+}
 
     function currentcode() {
         //#var code = "begin()\n" + program; 
