@@ -170,8 +170,8 @@
         if (c === 'R') return "robot.right";
         if (c === 'A') return "robot.bip";
         if (c === 'C') return "robot.boom";
-        if (c === 'TU' || c === 'TD') return "robot.pan";
-        if (c === 'PL' || c === 'PF') return "robot.tilt";
+        if (c === 'TU' || c === 'TD') return "robot.tilt";
+        if (c === 'PL' || c === 'PF') return "robot.pan;
         return "robot.unknown";
       }
 
@@ -186,19 +186,19 @@
         if (c === 'L' || c === 'R') {
           increment = 15;
         } else if (c === 'TU') {
-          program += "robot.pan(-15)\n";
-          updateCodeView();
-          return;
-        } else if (c === 'TD') {
-          program += "robot.pan(15)\n";
-          updateCodeView();
-          return;
-        } else if (c === 'PL') {
           program += "robot.tilt(-15)\n";
           updateCodeView();
           return;
-        } else if (c === 'PF') {
+        } else if (c === 'TD') {
           program += "robot.tilt(15)\n";
+          updateCodeView();
+          return;
+        } else if (c === 'PL') {
+          program += "robot.pan(-15)\n";
+          updateCodeView();
+          return;
+        } else if (c === 'PF') {
+          program += "robot.pan(15)\n";
           updateCodeView();
           return;
         } else {
