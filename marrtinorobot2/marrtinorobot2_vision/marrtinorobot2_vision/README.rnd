@@ -1,0 +1,6 @@
+ros2 param list /camera/v4l2_camera
+ros2 lifecycle set /camera/v4l2_camera shutdown
+v4l2-ctl -d /dev/video0 --set-parm=10
+
+ros2 topic hz /camera/image_raw
+

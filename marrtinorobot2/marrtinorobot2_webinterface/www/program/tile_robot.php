@@ -163,9 +163,9 @@
             program += decode(last_command) + "(" + last_index + ")\n";
           }
           last_command = c;
-          last_index = (c === 'L' || c === 'R') ? 90 : 1; // Inizia da 90 per L e R
+          last_index = (c === 'L' || c === 'R') ? 30 : .1; // Inizia da 90 per L e R
       } else {
-          last_index += (c === 'L' || c === 'R') ? 90 : 1; // Incrementa di 90 per L e R, altrimenti 1
+          last_index += (c === 'L' || c === 'R') ? 30 : .1; // Incrementa di 90 per L e R, altrimenti 1
       }
 
       document.getElementById("codeDiv").innerHTML = "<pre>" + currentcode() + "</pre>";        

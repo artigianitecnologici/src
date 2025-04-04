@@ -171,7 +171,7 @@
               <a class="btn btn-outline-danger" href="../program/python_robot.php" role="button">Python 3</a>
             </div>
             <div class="d-flex justify-content-center">
-              <a class="btn btn-outline-danger" href="../program/tilre_robot.php" role="button">Tile</a>
+              <a class="btn btn-outline-danger" href="../program/tile_robot.php" role="button">Tile</a>
               
             </div>
           </div>

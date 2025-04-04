@@ -57,7 +57,7 @@ body {
 .bulb {
   height:  calc(var(--bulb-size)*1.2);
   width:  var(--bulb-size);
-  top: 18%;
+  top: 25%;
 }
 
 .bulb.left {
