@@ -171,7 +171,7 @@
         if (c === 'A') return "robot.bip";
         if (c === 'C') return "robot.boom";
         if (c === 'TU' || c === 'TD') return "robot.tilt";
-        if (c === 'PL' || c === 'PF') return "robot.pan;
+        if (c === 'PL' || c === 'PF') return "robot.pan";
         return "robot.unknown";
       }
 
