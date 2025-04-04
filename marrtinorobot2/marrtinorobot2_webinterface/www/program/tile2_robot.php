@@ -187,18 +187,22 @@
           increment = 15;
         } else if (c === 'TU') {
           program += "robot.tilt(-15)\n";
+          program += "robot.wait(2)\n";
           updateCodeView();
           return;
         } else if (c === 'TD') {
           program += "robot.tilt(15)\n";
+          program += "robot.wait(2)\n";
           updateCodeView();
           return;
         } else if (c === 'PL') {
           program += "robot.pan(-15)\n";
+          program += "robot.wait(2)\n";
           updateCodeView();
           return;
         } else if (c === 'PR') {
           program += "robot.pan(15)\n";
+          program += "robot.wait(2)\n";
           updateCodeView();
           return;
         } else {
