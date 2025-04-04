@@ -197,7 +197,7 @@
           program += "robot.pan(-15)\n";
           updateCodeView();
           return;
-        } else if (c === 'PF') {
+        } else if (c === 'PR') {
           program += "robot.pan(15)\n";
           updateCodeView();
           return;
