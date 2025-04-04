@@ -208,22 +208,22 @@
           updateCodeView();
           return;
         }  else if (c === 'LAUP') {
-          program += "robot.left_arm(15)\n";
+          program += "robot.left_arm(30)\n";
           program += "robot.wait(2)\n";
           updateCodeView();
           return;
         } else if (c === 'LADN') {
-          program += "robot.left_arm(-15)\n";
+          program += "robot.left_arm(-30)\n";
           program += "robot.wait(2)\n";
           updateCodeView();
           return;
         }  else if (c === 'RAUP') {
-          program += "robot.right_arm(15)\n";
+          program += "robot.right_arm(30)\n";
           program += "robot.wait(2)\n";
           updateCodeView();
           return;
         } else if (c === 'RADN') {
-          program += "robot.right_arm(-15)\n";
+          program += "robot.right_arm(-30)\n";
           program += "robot.wait(2)\n";
           updateCodeView();
           return;
