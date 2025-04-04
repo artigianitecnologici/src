@@ -63,7 +63,7 @@
 
   <div class="container">
     <!-- Logo Row -->
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-1"></div>
       <div class="col-md-4">
         <div class="thumbnail">
@@ -81,19 +81,19 @@
         </div>
       </div>
       <div class="col-md-1"></div>
-    </div>
+    </div> -->
     <h6>Interface version 2.1</h6>
 
     <!-- Cards Section /bringup/bringup.php"-->
     <div class="row">
       <div class="col-md-3">
         <div class="card mb-4 box-shadow">
-          <a href="">
+          <a href="../bringup/bringup.php">
             <img class="card-img-top" src="images/bringup.webp" alt="bringup">
           </a>
           <div class="card-body">
             <div class="d-flex justify-content-center">
-              <a class="btn btn-outline-danger" href="" role="button">BRING UP</a>
+              <a class="btn btn-outline-danger" href="../bringup/bringup.php" role="button">BRING UP</a>
             </div>
           </div>
         </div>
@@ -169,6 +169,10 @@
             <div class="d-flex justify-content-center">
               <a class="btn btn-outline-danger" href="../program/blockly_robot.php" role="button">Blockly </a>
               <a class="btn btn-outline-danger" href="../program/python_robot.php" role="button">Python 3</a>
+            </div>
+            <div class="d-flex justify-content-center">
+              <a class="btn btn-outline-danger" href="../program/tilre_robot.php" role="button">Tile</a>
+              
             </div>
           </div>
         </div>
