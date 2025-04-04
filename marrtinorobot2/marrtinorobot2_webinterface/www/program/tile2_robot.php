@@ -117,9 +117,9 @@
   <td>
           <table border=1>
                 <tr>
-                  <td><button id="bip_btn" onclick="command('A')"><img src="img/bip.png"></button></td>
+                  <td><button id="laup_btn" onclick="command('LAUP')"><img src="img/bip.png"></button></td>
                   <td><button id="tf_btn" onclick="command('TU')"><img src="img/up.png"></button></td>
-                  <td><button id="boom_btn" onclick="command('C')"><img src="img/boom.png"></button></td>
+                  <td><button id="ladn_btn" onclick="command('LADN')"><img src="img/boom.png"></button></td>
                 </tr>
                 <tr>
                   <td><button id="pl_btn" onclick="command('PL')"><img src="img/rotleft.png"></button></td>
@@ -127,9 +127,9 @@
                   <td><button id="pr_btn" onclick="command('PR')"><img src="img/rotright.png"></button></td>
                 </tr>
                 <tr>
-                  <td><button id="clr_btn" onclick="clearCode()"><img src="img/clear.png"></button></td>
+                  <td><button id="raup_btn" onclick="command('RAUP')"><img src="img/clear.png"></button></td>
                   <td><button id="td_btn" onclick="command('TD')"><img src="img/down.png"></button></td>
-                  <td><button id="stop_btn" onclick="stopCode()"><img src="img/stop.png"></button></td>
+                  <td><button id="radn_btn" onclick="command('RADN')"><img src="img/stop.png"></button></td>
                 </tr>
               </table>
             </td>
@@ -172,6 +172,8 @@
         if (c === 'C') return "robot.boom";
         if (c === 'TU' || c === 'TD') return "robot.tilt";
         if (c === 'PL' || c === 'PR') return "robot.pan";
+        if (c === 'LADN' || c === 'LAUP') return "robot.left_arm";
+        if (c === 'RADN' || c === 'RAUP') return "robot.right_arm";
         return "robot.unknown";
       }
 
@@ -202,6 +204,26 @@
           return;
         } else if (c === 'PR') {
           program += "robot.pan(15)\n";
+          program += "robot.wait(2)\n";
+          updateCodeView();
+          return;
+        }  else if (c === 'LAUP') {
+          program += "robot.left_arm(15)\n";
+          program += "robot.wait(2)\n";
+          updateCodeView();
+          return;
+        } else if (c === 'LADN') {
+          program += "robot.left_arm(-15)\n";
+          program += "robot.wait(2)\n";
+          updateCodeView();
+          return;
+        }  else if (c === 'RAUP') {
+          program += "robot.right_arm(15)\n";
+          program += "robot.wait(2)\n";
+          updateCodeView();
+          return;
+        } else if (c === 'RADN') {
+          program += "robot.right_arm(-15)\n";
           program += "robot.wait(2)\n";
           updateCodeView();
           return;
