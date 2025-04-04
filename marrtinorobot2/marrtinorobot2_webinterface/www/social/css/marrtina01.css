@@ -46,7 +46,7 @@ body {
 }
 
 .eyebrow.left {
-  left: 5%;
+  left: 7%;
    
 }
 .eyebrow.right {
@@ -113,8 +113,9 @@ body {
   border-radius: 50%;
   z-index: 4;
   bottom:calc(var(--face-height)/ 4);
-  left: 30%;
+  left: 32%;
   transform: rotateX(0);
+  top: 70%;
 }
 
 
@@ -123,6 +124,7 @@ body {
   height: var(--nose-height);
   width:  var(--nose-width);
   bottom: calc(var(--face-height) / 2.5);
-  left: 40%;
+  left: 42%;
   z-index: 4;
+  top: 60%;
 }
