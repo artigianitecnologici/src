@@ -34,3 +34,9 @@ mate-panel --reset
 git add .
 git commit -m "Update e fix"
 git push origin main
+# ------------------------
+# tmux list-sessions  
+# tmux a -t start-nodes
+# -------------------------------
+# ps aux | grep nome processo
+# kill -9 pid 

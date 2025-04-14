@@ -131,7 +131,7 @@ class TTSNode(Node):
 
         subprocess.call(cmd)
         self.finished_speaking = True
-        self.loop_count_down = int(self.LOOP_FREQUENCY * 2)
+        #self.loop_count_down = int(self.LOOP_FREQUENCY * 2)
 
     def speaking_finished(self):
         if self.finished_speaking:
@@ -141,13 +141,7 @@ class TTSNode(Node):
                 self.finished_speaking = False
                 self.publisher_.publish(String(data='TTS done'))
 
-    def is_connected(self):
-        try:
-            # Try to connect to a well-known website
-            socket.create_connection(("www.google.com", 80))
-            return True
-        except OSError:
-            return False
+    
         
 def main(args=None):
     rclpy.init(args=args)
