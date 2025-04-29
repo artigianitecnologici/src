@@ -202,10 +202,8 @@ RUN echo -e "\033[1;32mInstall Repository MARRtino Robot 2 \033[0m"
 RUN mkdir -p /home/ubuntu/marrtinorobot2_ws/src && \ 
 mkdir -p /home/ubuntu/src && \
 cd /home/ubuntu/src && \
-git clone https://github.com/marrtino/MARRtinoROS2.git . --filter=tree:0
+git clone https://github.com/marrtino/MARRtinoROS2 . --filter=tree:0
 
-#git clone github.com/artigianitecnologici/MARRtinoROS2 . --filter=tree:0
-#github.com/tuo_username/
 WORKDIR /home/ubuntu/marrtinorobot2_ws/src
 RUN cd /home/ubuntu/marrtinorobot2_ws/src  && \ 
     ln -s /home/ubuntu/src/apriltag_ros . && \
@@ -264,7 +262,6 @@ RUN apt-get update -q && \
 # Aggiorna il sistema e installa pacchetti di base
 RUN apt-get update && apt-get install -y \
     python3-pip \
-    python3.10-venv \
     python3-flask \
     python3-opencv \
     ros-humble-apriltag \

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/ubuntu/src/marrtinorobot2/smarrtino.bash
+Hidden=false
+Name[C]=autostart marrtino
+Name=autostart marrtino
+Comment[C]=
+Comment=
+X-MATE-Autostart-Delay=6
