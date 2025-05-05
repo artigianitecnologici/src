@@ -1,4 +1,4 @@
-# Copyright 2025 robotics-3d.com 
+# Copyright 2025 robotics-3d.com
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -65,6 +65,34 @@ class DynamixelController(Node):
         """Converte la posizione Dynamixel (0-1023) in gradi."""
         return position * 300 / 1023
 
+    def reset_servo(self, motor_id):
+        result, error = self.packet_handler.factoryReset(self.port_handler, motor_id, 0xFF)
+        if result != COMM_SUCCESS:
+            self.get_logger().error(f'Failed to reset motor {motor_id}: {self.packet_handler.getTxRxResult(result)}')
+        elif error != 0:
+            self.get_logger().error(f'Error occurred when resetting motor {motor_id}: {self.packet_handler.getRxPacketError(error)}')
+        else:
+            self.get_logger().info(f'Motor {motor_id} has been reset to factory defaults.')
+
+
+    def set_max_torque(self, motor_id, torque_value=1023):
+        result, error = self.packet_handler.write2ByteTxRx(self.port_handler, motor_id, 14, torque_value)
+        if result != COMM_SUCCESS:
+            self.get_logger().error(f'Failed to set max torque: {self.packet_handler.getTxRxResult(result)}')
+        elif error != 0:
+            self.get_logger().error(f'Error occurred when setting max torque: {self.packet_handler.getRxPacketError(error)}')
+        else:
+            self.get_logger().info(f'Motor {motor_id} max torque set to {torque_value}')
+
+    def enable_torque(self, motor_id):
+        result, error = self.packet_handler.write1ByteTxRx(self.port_handler, motor_id, 24, 1)
+        if result != COMM_SUCCESS:
+            self.get_logger().error(f'Failed to enable torque: {self.packet_handler.getTxRxResult(result)}')
+        elif error != 0:
+            self.get_logger().error(f'Error occurred when enabling torque: {self.packet_handler.getRxPacketError(error)}')
+        else:
+            self.get_logger().info(f'Motor {motor_id} torque enabled.')
+
     def set_position(self, motor_id, position, speed):
         # Imposta la velocità di movimento (indirizzo 32)
         result_speed, error_speed = self.packet_handler.write2ByteTxRx(self.port_handler, motor_id, 32, speed)
@@ -88,11 +116,14 @@ class DynamixelController(Node):
     def pan_callback(self, msg):
         self.get_logger().info(f'Received pan command (degrees): {msg.data}')
         degree = msg.data
- #       if degree > 0 :
+ 
         position =  512 + self.degrees_to_position(degree)
- #       else:
- #           position =  512 + self.degrees_to_position(-degree)
-        pan_position = position 
+ 
+        pan_position = position
+        if pan_position > 648:
+            pan_position = 648
+        if pan_position < 376:
+            pan_position = 376
         speed = 50  # Imposta la velocità del motore Pan
         self.get_logger().info(f'pan position: {pan_position}')
         self.set_position(self.pan_motor_id, pan_position, speed)
@@ -101,18 +132,21 @@ class DynamixelController(Node):
     def tilt_callback(self, msg):
         self.get_logger().info(f'Received tilt command (degrees): {msg.data}')
         degree = msg.data
- #       if degree > 0 :
+
         position =  512 - self.degrees_to_position(degree)
- #       else:
- #           position =  512 + self.degrees_to_position(-degree)
-        tilt_position = position 
+ 
+        tilt_position = position
+        if tilt_position < 410:
+            tilt_position = 410
+        if tilt_position > 580:
+            tilt_position = 580
         speed = 50  # Imposta la velocità del motore Tilt
         self.set_position(self.tilt_motor_id, tilt_position, speed)
 
     # Callback per il comando braccio destro
     def right_arm_callback(self, msg):
         self.get_logger().info(f'Received right arm command (degrees): {msg.data}')
-        # 
+        #
         right_arm_position = self.degrees_to_position(150 + msg.data )  # Converte i gradi in posizione
         speed = 50  # Imposta la velocità del motore braccio destro
         self.set_position(self.right_arm_motor_id, right_arm_position, speed)
@@ -129,9 +163,30 @@ def main(args=None):
 
     # Inizializza il nodo DynamixelController
     controller = DynamixelController()
-     # Imposta il motore pan a posizione 150 gradi e velocità 40
-    controller.set_position(1, controller.degrees_to_position(150), 40)
+    # Configurazione dei motori: id, posizione iniziale, velocità
+    # motor_configs = [
+    #     {'id': 1, 'position_deg': 140, 'speed': 40},  # Tilt
+    #     {'id': 2, 'position_deg': 150, 'speed': 40},  # Pan
+    #     {'id': 3, 'position_deg': 150, 'speed': 40},  # Braccio destro
+    #     {'id': 4, 'position_deg': 150, 'speed': 40},  # Braccio sinistro
+    # ]
+
+    # # Ciclo per inizializzare ogni motore
+    # for motor in motor_configs:
+    #     motor_id = motor['id']
+    #     position = controller.degrees_to_position(motor['position_deg'])
+    #     speed = motor['speed']
+
+    #     controller.set_max_torque(motor_id, 1023)
+    #     controller.enable_torque(motor_id)
+    #     controller.set_position(motor_id, position, speed)
+
+    # Imposta il motore pan a posizione 150 gradi e velocità 40
+    position =  512 - controller.degrees_to_position(30)
+    controller.set_position(1, position, 40)
+    #controller.set_position(1, controller.degrees_to_position(140), 40)
     # Imposta il motore tilt a posizione 150 gradi e velocità 40
+
     controller.set_position(2, controller.degrees_to_position(150), 40)
     # Imposta il motore braccio destro a posizione 150 gradi e velocità 40
     controller.set_position(3, controller.degrees_to_position(150), 40)
