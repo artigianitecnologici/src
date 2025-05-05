@@ -9,6 +9,6 @@ def generate_launch_description():
             executable='web_video_server',
             name='web_video_server',
             output='screen',
-            parameters=[{'port': 29090}]
+            parameters=[{'port': 29090, 'video_quality': 50}],  # Riduci la qualità
         )
     ])
