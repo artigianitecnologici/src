@@ -140,7 +140,7 @@
          
           video.src = 'http://' + window.location.hostname +':29090/stream?topic=/face_detector/image_raw&type=mjpeg&quality=100';
 
-	  //video.src = "http://192.168.1.119:29090/stream?topic=/usb_cam/image_raw&type=mjpeg&quality=100";
+	  //video.src = "http://192.168.1.119:29090/stream?topic=/usb_cam/image_raw&type=mjpeg&quality=50";
 	  video.onload = function () {
 			createJoystick();
 			initTeleopKeyboard();
