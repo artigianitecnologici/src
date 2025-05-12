@@ -189,7 +189,7 @@ var msg_tilt = new ROSLIB.Message({
       video = document.getElementById('video');
 	   // Populate video source 
          
-          video.src = 'http://' + window.location.hostname +':29090/stream?topic=/camera/image_raw&type=mjpeg&quality=100';
+          video.src = 'http://' + window.location.hostname +':29090/stream?topic=/camera/image_raw&type=mjpeg&quality=50';
 
 	  //video.src = "http://192.168.1.119:29090/stream?topic=/usb_cam/image_raw&type=mjpeg&quality=100";
 	  video.onload = function () {
