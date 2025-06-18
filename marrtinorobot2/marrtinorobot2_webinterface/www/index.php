@@ -196,7 +196,7 @@
           <img class="card-img-top" src="images/demo.webp" alt="Card image cap">
           <div class="card-body">
             <div class="d-flex justify-content-center">
-              <a class="btn btn-outline-danger" href="demorobotics.php" role="button">DEMO</a>
+              <a class="btn btn-outline-danger" href="../social/demorobotics.php" role="button">DEMO</a>
             </div>
           </div>
         </div>
