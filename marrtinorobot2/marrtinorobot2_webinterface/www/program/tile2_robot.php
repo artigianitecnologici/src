@@ -89,18 +89,18 @@
       <table border=1>
 
           <tr>
-            <td><button id="bip_btn" onclick="command('A')"><img src="img/bip.png"></button></td>
-            <td><button id="f_btn" onclick="command('F')"><img src="img/up.png"></button></td>
-            <td><button id="boom_btn" onclick="command('C')"><img src="img/boom.png"></button></td>
+            <td><button id="bip_btn" onclick="mycommand('A')"><img src="img/bip.png"></button></td>
+            <td><button id="f_btn" onclick="mycommand('F')"><img src="img/up.png"></button></td>
+            <td><button id="boom_btn" onclick="mycommand('C')"><img src="img/boom.png"></button></td>
           </tr>
           <tr>
-            <td><button id="l_btn" onclick="command('L')"><img src="img/rotleft.png"></button></td>
+            <td><button id="l_btn" onclick="mycommand('L')"><img src="img/rotleft.png"></button></td>
             <td><button id="run_btn" onclick="runCode()"><img src="img/run.png"></button></td>
-            <td><button id="r_btn" onclick="command('R')"><img src="img/rotright.png"></button></td>
+            <td><button id="r_btn" onclick="mycommand('R')"><img src="img/rotright.png"></button></td>
           </tr>
           <tr>
             <td><button id="clr_btn" onclick="clearCode()"><img src="img/clear.png"></button></td>
-            <td><button id="d_btn" onclick="command('B')"><img src="img/down.png"></button></td>
+            <td><button id="d_btn" onclick="mycommand('B')"><img src="img/down.png"></button></td>
             <td><button id="stop_btn" onclick="stopCode()"><img src="img/stop.png"></button></td>
           </tr>
       </table>
@@ -117,19 +117,19 @@
   <td>
           <table border=1>
                 <tr>
-                  <td><button id="laup_btn" onclick="command('LAUP')"><img src="img/bip.png"></button></td>
-                  <td><button id="tf_btn" onclick="command('TU')"><img src="img/up.png"></button></td>
-                  <td><button id="ladn_btn" onclick="command('LADN')"><img src="img/boom.png"></button></td>
+                  <td><button id="laup_btn" onclick="mycommand('LAUP')"><img src="img/bip.png"></button></td>
+                  <td><button id="tf_btn" onclick="mycommand('TU')"><img src="img/up.png"></button></td>
+                  <td><button id="ladn_btn" onclick="mycommand('LADN')"><img src="img/boom.png"></button></td>
                 </tr>
                 <tr>
-                  <td><button id="pl_btn" onclick="command('PL')"><img src="img/rotleft.png"></button></td>
+                  <td><button id="pl_btn" onclick="mycommand('PL')"><img src="img/rotleft.png"></button></td>
                   <td><button id="run_btn" onclick="runCode()"><img src="img/run.png"></button></td>
-                  <td><button id="pr_btn" onclick="command('PR')"><img src="img/rotright.png"></button></td>
+                  <td><button id="pr_btn" onclick="mycommand('PR')"><img src="img/rotright.png"></button></td>
                 </tr>
                 <tr>
-                  <td><button id="raup_btn" onclick="command('RAUP')"><img src="img/clear.png"></button></td>
-                  <td><button id="td_btn" onclick="command('TD')"><img src="img/down.png"></button></td>
-                  <td><button id="radn_btn" onclick="command('RADN')"><img src="img/stop.png"></button></td>
+                  <td><button id="raup_btn" onclick="mycommand('RAUP')"><img src="img/clear.png"></button></td>
+                  <td><button id="td_btn" onclick="mycommand('TD')"><img src="img/down.png"></button></td>
+                  <td><button id="radn_btn" onclick="mycommand('RADN')"><img src="img/stop.png"></button></td>
                 </tr>
               </table>
             </td>
@@ -182,7 +182,7 @@
        document.getElementById("codeDiv").innerHTML = "<pre>" + currentcode() + "</pre>";        
     }
 
-    function command(c) {
+    function mycommand(c) {
         let increment;
 
         if (c === 'L' || c === 'R') {
