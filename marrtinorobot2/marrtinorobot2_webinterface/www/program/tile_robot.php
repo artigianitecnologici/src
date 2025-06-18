@@ -75,19 +75,19 @@
       <table border=1>
 
           <tr>
-            <td><button id="bip_btn" onclick="command('A')"><img src="img/bip.png"></button></td>
-            <td><button id="f_btn" onclick="command('F')"><img src="img/up.png"></button></td>
-            <td><button id="boom_btn" onclick="command('C')"><img src="img/boom.png"></button></td>
+            <td><button id="bip_btn" onclick="mycommand('A')"><img src="img/bip.png"></button></td>
+            <td><button id="f_btn" onclick="mycommand('F')"><img src="img/up.png"></button></td>
+            <td><button id="boom_btn" onclick="mycommand('C')"><img src="img/boom.png"></button></td>
             
           </tr>
           <tr>
-            <td><button id="l_btn" onclick="command('L')"><img src="img/rotleft.png"></button></td>
+            <td><button id="l_btn" onclick="mycommand('L')"><img src="img/rotleft.png"></button></td>
             <td><button id="run_btn" onclick="runCode()"><img src="img/run.png"></button></td>
-            <td><button id="r_btn" onclick="command('R')"><img src="img/rotright.png"></button></td>
+            <td><button id="r_btn" onclick="mycommand('R')"><img src="img/rotright.png"></button></td>
           </tr>
           <tr>
             <td><button id="clr_btn" onclick="clearCode()"><img src="img/clear.png"></button></td>
-            <td><button id="d_btn" onclick="command('B')"><img src="img/down.png"></button></td>
+            <td><button id="d_btn" onclick="mycommand('B')"><img src="img/down.png"></button></td>
             <td><button id="stop_btn" onclick="stopCode()"><img src="img/stop.png"></button></td>
           </tr>
       </table>
@@ -144,7 +144,7 @@
        document.getElementById("codeDiv").innerHTML = "<pre>" + currentcode() + "</pre>";        
     }
 
-    function command(c) {
+    function mycommand(c) {
       if (c != last_command) {
           if (last_command != "") {
             program += decode(last_command) + "(" + last_index + ")\n";
