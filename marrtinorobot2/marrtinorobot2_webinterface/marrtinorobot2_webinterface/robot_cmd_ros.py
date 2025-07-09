@@ -59,7 +59,7 @@ class RobotCmdROS(Node):
         self.TOPIC_apriltag = "/apriltag_detections"
         
         # Publisher definitions
-        self.emotion_pub = self.create_publisher(String, self.TOPIC_emotion, 10)
+        self.robotemotion_pub = self.create_publisher(String, self.TOPIC_emotion, 10)
         self.gesture_pub = self.create_publisher(String, self.TOPIC_gesture, 10)
         self.speech_pub = self.create_publisher(String, self.TOPIC_speech, 10)
         self.language_pub = self.create_publisher(String, self.TOPIC_language, 10)
@@ -285,10 +285,10 @@ class RobotCmdROS(Node):
 
 
     def emotion(self, msg):
-        self.get_logger().info(f'social/emotion: {msg}')
+        self.get_logger().info(f'social/emotion(2): {msg}')
         message = String()
         message.data = msg
-        self.emotion_pub.publish(message)
+        self.robotemotion_pub.publish(message)
 
     def pan(self, msg):
         self.get_logger().info(f'Pan Position Grade: {msg}')
