@@ -330,7 +330,7 @@ class RobotCmdROS(Node):
             self.tilt(0)
         elif msg == 'up':
             self.pan(0)
-            self.tilt(30)
+            self.tilt(-30)
         elif msg == 'down':
             self.pan(0)
-            self.tilt(-30)
+            self.tilt(30)

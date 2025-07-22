@@ -46,7 +46,6 @@ services:
       - /dev:/dev
       - /run/user/1000/pulse/native:/run/user/1000/pulse/native
       - $MARRTINOROBOT2_HOME/marrtinorobot2_voice/models/vosk:/home/ubuntu/models/vosk
-
     dns: 8.8.8.8
     networks:
       - web_network

@@ -1,0 +1,14 @@
+QUESTION: ciao; ANSWER: Ciao! Come posso aiutarti?
+QUESTION: Cosa sai fare; ANSWER: Hmm, questa domanda mi mette in difficoltà! Mi insegni la risposta?
+QUESTION: non lo so; ANSWER: Non so rispondere a questo... ma posso imparare da te!
+QUESTION: ciao; ANSWER: Ciao! Come posso aiutarti?
+QUESTION: cia; ANSWER: Non sono sicuro di cosa dire. Vuoi insegnarmi qualcosa?
+QUESTION: ciaoo; ANSWER: Non sono sicuro di cosa dire. Vuoi insegnarmi qualcosa?
+QUESTION: ciao; ANSWER: Ciao! Come posso aiutarti?
+QUESTION: ciao; ANSWER: Ciao! Come posso aiutarti?
+QUESTION: ciao; ANSWER: Ciao! Come posso aiutarti?
+QUESTION: Cosa sai fare; ANSWER: Hmm, questa domanda mi mette in difficoltà! Mi insegni la risposta?
+QUESTION: cosa sai fare; ANSWER: posso interagire
+QUESTION: cosa sai fare; ANSWER: posso interagire
+QUESTION: ciao; ANSWER: Non sono sicuro di cosa dire. Vuoi insegnarmi qualcosa?
+QUESTION: ciao; ANSWER: Non sono sicuro di cosa dire. Vuoi insegnarmi qualcosa?

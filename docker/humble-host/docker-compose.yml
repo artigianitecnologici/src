@@ -22,7 +22,7 @@ services:
 
   humble:
     image: marrtinorobot2:mate-vnc
-    container_name: Dockerfile.mate-vnc
+    container_name: marrtinorobot2-mate-vnc
     network_mode: host
     security_opt:
       - seccomp=unconfined
@@ -36,6 +36,7 @@ services:
       - ./docker_home_autostart:/home/ubuntu/.config/autostart                       
       - /dev:/dev
       - /run/user/1000/pulse/native:/run/user/1000/pulse/native
+      - $MARRTINOROBOT2_HOME/marrtinorobot2_voice/models/vosk:/home/ubuntu/models/vosk
     dns: 8.8.8.8
     privileged: true
     tty: true

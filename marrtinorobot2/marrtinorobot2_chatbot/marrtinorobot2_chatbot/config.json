@@ -1,0 +1,9 @@
+{
+    "model_vosk_path": "../models/vosk/vosk-model-it-0.22",
+    "vosk_model_url": "https://alphacephei.com/vosk/models/vosk-model-it-0.22.zip",
+    "input_device_index": 5,
+    "output_device_index": 0,
+    "input_samplerate": 16000,
+    "output_samplerate": 44100,
+    "keyword": ""
+}

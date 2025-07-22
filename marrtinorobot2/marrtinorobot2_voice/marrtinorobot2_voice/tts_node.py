@@ -113,35 +113,69 @@ class TTSNode(Node):
         self.get_logger().info(f'Language set to: {self.language}')
 
     def tts_callback(self, msg):
-        text = msg.data
+        text = msg.data.strip()  # Rimuove spazi iniziali/finali
+
+        if not text:
+            self.get_logger().warn('Received empty text, skipping TTS.')
+            return  # Evita il crash!
+
         self.get_logger().info(f'Received text: "{text}"')
         self.finished_speaking = False
         self.loop_count_down = 0
+        self.publisher_.publish(String(data='ON'))
 
-        # Check internet connectivity
         if self.is_connected():
-            # Convert text to speech using the set language
-            tts = gTTS(text, lang=self.language)
-            filename = "/tmp/output.mp3"
-            tts.save(filename)
-            os.system('mpg321 ' + filename)
-            # Publish the fact that the TTS is done
-            self.publisher_.publish(String(data='TTS done'))
+            try:
+                tts = gTTS(text, lang=self.language)
+                filename = "/tmp/output.mp3"
+                tts.save(filename)
+                os.system('mpg321 ' + filename)
+                self.publisher_.publish(String(data='TTS done'))
+            except Exception as e:
+                self.get_logger().error(f"gTTS failed: {e}")
         else:
             if self.language == 'it':
                 self.language = 'it-IT'
-            if self.language == 'en':
+            elif self.language == 'en':
                 self.language = 'en-US'
-                
-            filename = "/tmp/robot_speach.wav"
-            cmd = ['pico2wave', '--wave=' + filename, '--lang=' + self.language, f'"{text}"']
 
+            filename = "/tmp/robot_speach.wav"
+            cmd = ['pico2wave', '--wave=' + filename, '--lang=' + self.language, text]
             subprocess.call(cmd)
             cmd = ['play', filename, '--norm', '-q']
-
             subprocess.call(cmd)
-            self.finished_speaking = True
-            self.loop_count_down = int(self.LOOP_FREQUENCY * 2)
+
+
+    # def tts_callback(self, msg):
+    #     text = msg.data
+    #     self.get_logger().info(f'Received text: "{text}"')
+    #     self.finished_speaking = False
+    #     self.loop_count_down = 0
+    #     self.publisher_.publish(String(data='ON'))
+    #     # Check internet connectivity
+    #     if self.is_connected():
+    #         # Convert text to speech using the set language
+    #         tts = gTTS(text, lang=self.language)
+    #         filename = "/tmp/output.mp3"
+    #         tts.save(filename)
+    #         os.system('mpg321 ' + filename)
+    #         # Publish the fact that the TTS is done
+    #         self.publisher_.publish(String(data='TTS done'))
+    #     else:
+    #         if self.language == 'it':
+    #             self.language = 'it-IT'
+    #         if self.language == 'en':
+    #             self.language = 'en-US'
+                
+    #         filename = "/tmp/robot_speach.wav"
+    #         cmd = ['pico2wave', '--wave=' + filename, '--lang=' + self.language, f'"{text}"']
+
+    #         subprocess.call(cmd)
+    #         cmd = ['play', filename, '--norm', '-q']
+
+    #         subprocess.call(cmd)
+    #         self.finished_speaking = True
+    #         self.loop_count_down = int(self.LOOP_FREQUENCY * 2)
 
     def speaking_finished(self):
         if self.finished_speaking:
@@ -149,7 +183,7 @@ class TTSNode(Node):
             if self.loop_count_down <= 0:
                 self.get_logger().info('Speaking finished')
                 self.finished_speaking = False
-                self.publisher_.publish(String(data='TTS done'))
+                self.publisher_.publish(String(data='OFF'))
 
     def is_connected(self):
         try:

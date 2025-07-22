@@ -1,0 +1,10 @@
+{
+    "output_samplerate": 16000,
+    "output_device_index": 1,
+    "input_samplerate": 16000,
+    "output_samplerate": 24000,
+    "language": "it",
+    "work_offline": false,
+    "msg_start": "Ciao, sono pronto ad ascoltarti.",
+    "wake_word": "martino"
+}

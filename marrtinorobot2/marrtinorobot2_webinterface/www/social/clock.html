@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>jsAnalogClock Fullscreen</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #000;
+      width: 100%;
+      height: 100%;
+    }
+    canvas {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+  <script src="analogclock.js"></script>
+</head>
+
+<body onload="runOnLoad();">
+  <canvas id="analog-clock"></canvas>
+
+  <script>
+    let clockInstance;
+
+    function runOnLoad() {
+      const canvas = document.getElementById('analog-clock');
+
+      function resizeCanvas() {
+        // Imposta dimensioni logiche
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Imposta dimensioni visive (CSS)
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+
+        let scale = Math.min(canvas.width, canvas.height) / 500;
+        if (typeof clockInstance !== "undefined") clockInstance.stop();
+        clockInstance = myclockFull("analog-clock", scale);
+      }
+
+      window.addEventListener("resize", resizeCanvas, false);
+      resizeCanvas();
+    }
+
+    function myclockFull(id, scale) {
+      const clk = new Clock(id);
+      const clkOpts = clk.getClockOpts();
+      const textOpts = clk.getTextOpts();
+      clkOpts.smoothTicks = false;
+      textOpts.text1 = 'Quartz';
+      textOpts.text2 = 'Chronometer';
+      clk.redraw();
+      clk.scale = scale;
+      return clk;
+    }
+  </script>
+</body>
+</html>

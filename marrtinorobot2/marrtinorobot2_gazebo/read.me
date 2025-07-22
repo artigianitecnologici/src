@@ -1,0 +1,52 @@
+
+# Set up your environment for Gazebo to automatically download models:
+export GAZEBO_MODEL_PATH=~/.gazebo/models
+export GAZEBO_RESOURCE_PATH=~/.gazebo
+
+
+1. Verifica che il sistema possa scaricare i modelli automaticamente
+
+Gazebo scarica automaticamente i modelli necessari da un server online se il file non è trovato localmente. Per assicurarti che questa funzionalità sia abilitata:
+Controlla il file di configurazione di Gazebo
+
+Il file di configurazione di Gazebo si trova solitamente in ~/.gazebo:
+
+nano ~/.gazebo/client.conf
+
+Verifica che sia abilitata l'opzione download_models:
+
+<client>
+  <download_models>true</download_models>
+</client>
+
+Se non è presente, aggiungila e salva il file.
+2. Controlla la connessione al server dei modelli di Gazebo
+
+I modelli vengono scaricati dal server Fuel di Open Robotics. Verifica che Gazebo possa connettersi al server controllando la variabile di ambiente GAZEBO_MODEL_DATABASE_URI:
+
+echo $GAZEBO_MODEL_DATABASE_URI
+
+Il valore predefinito dovrebbe essere:
+
+http://models.gazebosim.org
+
+Se non è impostato, aggiungilo temporaneamente con:
+
+export GAZEBO_MODEL_DATABASE_URI=http://models.gazebosim.org
+
+Per renderlo permanente, aggiungilo al file ~/.bashrc:
+
+echo "export GAZEBO_MODEL_DATABASE_URI=http://models.gazebosim.org" >> ~/.bashrc
+source ~/.bashrc
+
+3. Avvia Gazebo e forza il download
+
+Elimina eventuali modelli corrotti o incompleti:
+
+rm -rf ~/.gazebo/models/*
+
+Poi, avvia Gazebo:
+
+gazebo
+
+Quando Gazebo tenta di caricare un modello, lo scaricherà automaticamente dal server.

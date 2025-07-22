@@ -61,6 +61,7 @@ class MyWebSocketServer(tornado.websocket.WebSocketHandler):
             print(f'Received event {message}')
         else:
             print('Code received')
+            print(message)
             save_program(message)
             if status == 'Idle':
                 run_code(message)

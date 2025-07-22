@@ -1,0 +1,67 @@
+
+# Manuale configurazione udev rules per LiDAR e Dynamixel su Ubuntu 24.04
+
+Questo manuale descrive come creare regole udev personalizzate su Ubuntu 24.04 per assegnare nomi simbolici stabili
+a dispositivi seriali USB, come LiDAR RPLIDAR e controller Dynamixel. Questo evita problemi dovuti al cambiamento
+di `/dev/ttyUSBx` al riavvio o dopo riconnessioni.
+
+## 1. Identificazione dei dispositivi USB
+
+Collegare il dispositivo (LiDAR o Dynamixel), quindi identificare le informazioni univoche con:
+
+**Per il LiDAR:**
+```bash
+sudo udevadm info -a -n /dev/ttyUSB0 | less
+```
+
+**Per il Dynamixel:**
+```bash
+sudo udevadm info -a -n /dev/ttyUSB1 | less
+```
+
+**Per estrarre rapidamente idVendor, idProduct e serial:**
+```bash
+udevadm info -a -n /dev/ttyUSB1 | grep -E 'idVendor|idProduct|serial'
+```
+
+## 2. Creazione delle regole udev
+
+**Per il LiDAR RPLIDAR:**
+```bash
+sudo nano /etc/udev/rules.d/99-rplidar.rules
+```
+
+Inserire la seguente riga (modificare `serial` se necessario):
+
+```text
+SUBSYSTEM=="tty", ATTRS{serial}=="68ac606df7e5ed119702d0a80b2af5ab", SYMLINK+="rplidar", MODE="0666"
+```
+
+**Per il Dynamixel:**
+```bash
+sudo nano /etc/udev/rules.d/99-dynamixel.rules
+```
+
+Inserire la seguente riga:
+
+```text
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", ATTRS{serial}=="FT9HDCC5", SYMLINK+="dynamixel", MODE="0666"
+```
+
+## 3. Applicazione delle regole
+
+Dopo aver salvato i file delle regole, eseguire:
+
+```bash
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+```
+
+## 4. Verifica del collegamento simbolico
+
+Verificare la creazione dei symlink con:
+
+```bash
+ls -l /dev/dynamixel
+ls -l /dev/rplidar
+```
