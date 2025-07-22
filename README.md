@@ -3,7 +3,7 @@ mkdir ~/src
 
 cd ~/src
 
-git clone --branch dev --single-branch --filter=tree:0 https://github.com/marrtino/MARRtinoROS2 .
+git clone   --single-branch --filter=tree:0 https://github.com/marrtino/MARRtinoROS2 .
 
 # Forzare su ubuntu con gnome il rendering su X11
 sudo nano /etc/gdm3/custom.conf
