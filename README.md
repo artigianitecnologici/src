@@ -1,8 +1,7 @@
-# Download Repository
+# Download Repository Branch Dev
 mkdir ~/src
 cd ~/src
-git clone https://github.com/marrtino/MARRtinoROS2 . --filter=tree:0 dev
-
+git clone --branch dev --single-branch --filter=tree:0 https://github.com/marrtino/MARRtinoROS2 .
 
 # Disabiltare il rendering grafico su ssh
 
