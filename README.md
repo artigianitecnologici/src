@@ -5,9 +5,13 @@ git clone --branch dev --single-branch --filter=tree:0 https://github.com/marrti
 
 # Forzare su ubuntu con gnome il rendering su X11
 sudo nano /etc/gdm3/custom.conf
+
 Assicurati che questa riga NON sia commentata: 
+
     WaylandEnable=false 
+    
 sudo systemctl restart gdm3
+
 
 # Disabiltare il rendering grafico su ssh
 
