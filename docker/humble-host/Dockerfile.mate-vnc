@@ -202,7 +202,7 @@ RUN echo -e "\033[1;32mInstall Repository MARRtino Robot 2 \033[0m"
 RUN mkdir -p /home/ubuntu/marrtinorobot2_ws/src && \ 
 mkdir -p /home/ubuntu/src && \
 cd /home/ubuntu/src && \
-git clone https://github.com/marrtino/MARRtinoROS2 . --filter=tree:0
+git clone --branch dev https://github.com/marrtino/MARRtinoROS2 . --filter=tree:0
 
 WORKDIR /home/ubuntu/marrtinorobot2_ws/src
 RUN cd /home/ubuntu/marrtinorobot2_ws/src  && \ 
