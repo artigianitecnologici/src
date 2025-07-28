@@ -1,9 +1,11 @@
 {
-    "input_device_index": 4,
-    "output_device_index": 0,
+    "model_vosk_path": "/home/ubuntu/models/vosk/vosk-model-small-it-0.22",
+    "vosk_model_url": "https://alphacephei.com/vosk/models/vosk-model-it-0.22.zip",
+    "input_device_index": 1,
+    "output_device_index": 15,
     "input_samplerate": 16000,
-    "output_samplerate": 44100,
-    "work_offline": false,
-    "language" : "it",
-    "msg_start" : "tutti i sistemi sono operativi"
+    "output_samplerate": 24000,
+    "language": "it",
+    "msg_start": "Ciao come va io sono martino",
+    "work_offline": true
 }

@@ -1,2 +1,2 @@
 # dynamyxel
-SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", ATTRS{serial}=="FT9HDCC5", SYMLINK+="dynamixel", MODE="0666"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014",  SYMLINK+="dynamixel", MODE="0666"

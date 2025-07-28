@@ -30,13 +30,14 @@ if [ $? != 0 ]; then
   tmux rename-window -t $SESSION:0 'bringup'  # Window 0 is renamed to 'config'
   tmux new-window -t $SESSION:1 -n 'camera'  # Window 1 named 'docker'
   tmux new-window -t $SESSION:2 -n 'dynamixel'  # Window 2 named 'cmdexe'
-  tmux new-window -t $SESSION:3 -n 'tts'  # Window 3 named 'robot_bringup'
-  tmux new-window -t $SESSION:4 -n 'apriltag'  # Window 3 named 'robot_bringup'
+  tmux new-window -t $SESSION:3 -n 'asr_tts'  # Window 3 named 'robot_bringup'
+  tmux new-window -t $SESSION:4 -n 'chatbot'  # Window 3 named 'robot_bringup'
   tmux new-window -t $SESSION:5 -n 'blockly'
   tmux new-window -t $SESSION:6 -n 'getimage'
   tmux new-window -t $SESSION:7 -n 'rosbridge'
   tmux new-window -t $SESSION:8 -n 'videoserver'
-  tmux new-window -t $SESSION:9 -n 'navigation'
+  tmux new-window -t $SESSION:9 -n 'facetracker'
+  tmux new-window -t $SESSION:9 -n 'apriltag'
 
 
 
@@ -59,13 +60,14 @@ if [ $? != 0 ]; then
   tmux send-keys -t $SESSION:2 "python3  social_controller.py " C-m  # Log to websocket_robot.log
 
   # Commands to be executed in window 3 ('tts')
-  tmux send-keys -t $SESSION:3 "cd \$MARRTINOROBOT2_WS" C-m
-  tmux send-keys -t $SESSION:3 "./tts.sh " C-m  # Log output to cmdexe.lo
 
+  tmux send-keys -t $SESSION:3 "cd ~/src/marrtinorobot2/marrtinorobot2_voice/marrtinorobot2_voice" C-m
+  tmux send-keys -t $SESSION:3 "python3 python3 asr_tts_node.py" C-m  # Log output to cmdexe.lo
+
+  tmux send-keys -t $SESSION:4 "cd ~/src/marrtinorobot2/marrtinorobot2_voice/marrtinorobot2_voice" C-m
+  tmux send-keys -t $SESSION:4 "python3 asr_chatbot_bridge.py " C-m  # Log output to cmdexe.lo
   # Commands to be executed in window 4 ('slam')
-  tmux send-keys -t $SESSION:4 "cd \$MARRTINOROBOT2_WS" C-m
-  tmux send-keys -t $SESSION:4 "./apriltag.sh " C-m  # Log output to cmdexe.lo
-  # sleep 5
+ 
   tmux send-keys -t $SESSION:5 "cd ~/src/marrtinorobot2/marrtinorobot2_webinterface/marrtinorobot2_webinterface" C-m
   tmux send-keys -t $SESSION:5 "python3 websocket_robot.py " C-m  # Log to websocket_robot.log
 
@@ -80,6 +82,13 @@ if [ $? != 0 ]; then
   tmux send-keys -t $SESSION:8 "./webvideoserver.sh " C-m  # Log output to cmdexe.lo
 
   tmux send-keys -t $SESSION:9 "cd ~/marrtinorobot2_ws" C-m
+  tmux send-keys -t $SESSION:9 "./face_tracker.sh " C-m  # Log output to cmdexe.lo
+
+# Commands to be executed in window 3 ('tts')
+
+   tmux send-keys -t $SESSION:10 "cd \$MARRTINOROBOT2_WS" C-m
+  tmux send-keys -t $SESSION:10 "./apriltag.sh " C-m  # Log output to cmdexe.lo
+  # sleep 5
 
 fi
 

@@ -6,8 +6,8 @@ def generate_launch_description():
     # 
     tts_node = Node(
         package='marrtinorobot2_voice',
-        executable='tts_node_offline',
-        name='tts_node_offline',
+        executable='tts_offline_node',
+        name='tts_offline_node',
         output='screen'
     )
 

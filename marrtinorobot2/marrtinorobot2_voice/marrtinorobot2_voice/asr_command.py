@@ -16,9 +16,10 @@
 #
 # Author: Ferrarini Fabio
 # Email : ferrarini09@gmail.com
-# File  : robot_cmd_ros.py  
+# File  : asr_command.py  
 
 import rclpy
+
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
 from std_msgs.msg import String, Float64
@@ -39,6 +40,7 @@ class RobotCmdROS(Node):
         self.TOPIC_emotion = "social/emotion"
         self.TOPIC_gesture = "social/gesture"
         self.TOPIC_speech = "speech/to_speak"
+        self.TOPIC_asr = "/asr"
         self.TOPIC_language = "speech/language"
         self.TOPIC_cmdvel = "cmd_vel"
         self.TOPIC_pan = "pan_controller/command"
@@ -59,7 +61,7 @@ class RobotCmdROS(Node):
         self.TOPIC_apriltag = "/apriltag_detections"
         
         # Publisher definitions
-        self.robotemotion_pub = self.create_publisher(String, self.TOPIC_emotion, 10)
+        self.emotion_pub = self.create_publisher(String, self.TOPIC_emotion, 10)
         self.gesture_pub = self.create_publisher(String, self.TOPIC_gesture, 10)
         self.speech_pub = self.create_publisher(String, self.TOPIC_speech, 10)
         self.language_pub = self.create_publisher(String, self.TOPIC_language, 10)
@@ -82,98 +84,21 @@ class RobotCmdROS(Node):
         self.hand_right_motor_pub = self.create_publisher(Float64, self.TOPIC_hand_right_motor_controller,10)
         self.hand_left_motor_pub = self.create_publisher(Float64, self.TOPIC_hand_left_motor_controller,10)
       
+        self.get_logger().info('RobotAsrCmd v.1.0.1 initialized')
+        # Subscription to receive text to speak
+        self.subscription_text = self.create_subscription(
+            String,
+            '/robot_command',
+            self.asr_callback,
+            10)
+        
 
-
-
-
-        self.get_logger().info('RobotCmdROS v.1.0.1 initialized')
-        # inizialize tag
-        self.tag_id = -1
-        self.tag_size = 0.0
-        self.position = None
-        self.orientation = None
-        self.tag_distance = 0.0
-        self.last_tag_id = 0
-        # Define the 'running' attribute to control the thread execution
-        self.running = True  # ✅ Added to prevent the AttributeError
-        # Initialize the thread for reading AprilTag data
-        self.thread = threading.Thread(target=self.read_apriltag_data, daemon=True)
-        self.thread.start()
-
-    
-
-    def read_apriltag_data(self):
-        self.get_logger().info("📡 Thread di lettura attivato!")
-        # Creazione di un secondo nodo ROS2 all'interno del thread
-        node = rclpy.create_node('apriltag_listener')
-
-        # Crea la subscription per ascoltare il topic
-        subscription = node.create_subscription(
-            AprilTagDetectionArray,
-            '/apriltag_detections',
-            self.process_apriltag_data,
-            10
-        )
-
-        # Creazione di un executor dedicato
-        #from rclpy.executors import SingleThreadedExecutor
-        executor = SingleThreadedExecutor()
-        executor.add_node(node)
-
-        # Loop per elaborare i messaggi ricevuti
-        while self.running:
-            executor.spin_once(timeout_sec=1)
-
-        node.destroy_node()  # Distrugge il nodo alla chiusura
-
-
-    def process_apriltag_data(self, msg):
-        """Callback per gestire i dati degli AprilTag."""
-        if not msg.detections:
-            #self.get_logger().info("🚫 Nessun AprilTag rilevato.")
-            return
-
-        self.get_logger().info(f"✅ Rilevati {len(msg.detections)} AprilTag!")
-
-        for detection in msg.detections:
-            self.tag_id = detection.id
-
-            self.tag_distance = detection.pose.pose.pose.position.z
-
-            self.get_logger().info(f"📌 Tag ID: {self.tag_id}, Distanza: {self.tag_distance:.2f}m")
-
-        def stop_thread(self):
-            """Stops the reading thread"""
-            self.running = False  # ✅ Added to stop the loop in the thread
-            self.thread.join()
-            self.get_logger().info("🛑 Thread stopped.")
 
     # init function 
 
     def wait(self,seconds):
         time.sleep(seconds)
-
-    # def tagTrigger():
-    #     global tag_trigger_
-    #     return tag_trigger_
-
-    def tagClean(self):
-        self.tag_id = -1
-        time.sleep(1)
-
-    def tagID(self):
-        self.get_logger().info(f"📌 Tag ID: {self.tag_id}, Distanza: {self.tag_distance:.2f}m")
-
-        return self.tag_id
-
-    def tagDistance(self):
-        self.tag_distance = self.tag_distance
-        return self.tag_distance
-
-    # def tagAngle():
-    #     global tag_angle_
-    #     return tag_angle_
-    
+   
 
     def begin(self):
         self.get_logger().info('Robot control started')
@@ -210,7 +135,8 @@ class RobotCmdROS(Node):
         while (time.time() - start_time) < duration:
             self.cmd_vel_pub.publish(twist)
             #self.get_logger().info(f'Publishing: {twist}')
-            rclpy.spin_once(self, timeout_sec=0.1)
+            
+            time.sleep(0.1) 
         self.stop()
 
     def backward(self, distance):
@@ -225,7 +151,7 @@ class RobotCmdROS(Node):
         while (time.time() - start_time) < duration:
             self.cmd_vel_pub.publish(twist)
             #self.get_logger().info(f'Publishing: {twist}')
-            rclpy.spin_once(self, timeout_sec=0.1)
+            time.sleep(0.1) 
         self.stop()
 
     def left(self, angle):
@@ -240,7 +166,7 @@ class RobotCmdROS(Node):
         while (time.time() - start_time) < duration:
             self.cmd_vel_pub.publish(twist)
             #self.get_logger().info(f'Publishing: {twist}')
-            rclpy.spin_once(self, timeout_sec=0.1)
+            time.sleep(0.1) 
         self.stop()
 
     def right(self, angle):
@@ -255,7 +181,7 @@ class RobotCmdROS(Node):
         while (time.time() - start_time) < duration:
             self.cmd_vel_pub.publish(twist)
             #self.get_logger().info(f'Publishing: {twist}')
-            rclpy.spin_once(self, timeout_sec=0.1)
+            time.sleep(0.1) 
         self.stop()
 
     def gesture(self, msg):
@@ -285,10 +211,10 @@ class RobotCmdROS(Node):
 
 
     def emotion(self, msg):
-        self.get_logger().info(f'social/emotion(2): {msg}')
+        self.get_logger().info(f'social/emotion: {msg}')
         message = String()
         message.data = msg
-        self.robotemotion_pub.publish(message)
+        self.emotion_pub.publish(message)
 
     def pan(self, msg):
         self.get_logger().info(f'Pan Position Grade: {msg}')
@@ -314,7 +240,18 @@ class RobotCmdROS(Node):
         message.data = float(msg)
         self.right_arm_pub.publish(message)
 
-
+    def walk(self, msg):
+        try:
+            n = int(msg)
+            self.get_logger().info(f'Walking for {n} steps')
+            for i in range(n):
+                self.get_logger().info(f'Step {i+1} of {n}')
+                self.right(30)
+                self.forward(0.10)
+                self.left(30)
+                self.forward(0.10)
+        except ValueError:
+            self.get_logger().error(f"Invalid walk count: '{msg}' is not an integer")
 
 
     def head_position(self, msg):
@@ -330,56 +267,98 @@ class RobotCmdROS(Node):
             self.tilt(0)
         elif msg == 'up':
             self.pan(0)
-            self.tilt(30)
+            self.tilt(-30)
         elif msg == 'down':
             self.pan(0)
-            self.tilt(-30)
+            self.tilt(30)
 
 
-    def right_shoulder_flexion(self, msg):
-        self.get_logger().info(f'Right Shoulder Flexion: {msg}')
-        message = Float64()
-        message.data = float(msg)
-        self.right_shoulder_flexion_pub.publish(message)
+    def asr_callback(self, msg):
+        cmd_text = msg.data.lower().strip()
+        cmd_text = cmd_text.replace("martino", "").strip()
+        self.get_logger().info(f'Received command: "{cmd_text}"')
 
-    def left_shoulder_flexion(self, msg):
-        self.get_logger().info(f'Left Shoulder Flexion: {msg}')
-        message = Float64()
-        message.data = float(msg)
-        self.left_shoulder_flexion_pub.publish(message)
+        # Usa un thread per non bloccare il nodo
+        threading.Thread(target=self.handle_command, args=(cmd_text,), daemon=True).start()
 
-    def right_shoulder_rotation(self, msg):
-        self.get_logger().info(f'Right Shoulder Rotation: {msg}')
-        message = Float64()
-        message.data = float(msg)
-        self.right_shoulder_rotation_pub.publish(message)
+    def handle_command(self, cmd_text):
+        if cmd_text == "avanti":
+            self.forward(0.10)
+        elif cmd_text == "cammina":
+            self.walk(2)
+        elif cmd_text == "indietro":
+            self.backward(0.10)
+        elif cmd_text == "sinistra":
+            self.left(90)
+        elif cmd_text == "destra":
+            self.right(90)
+        elif cmd_text == "stop":
+            self.stop()
+        elif cmd_text == "foto":
+            self.getImage()
+        elif cmd_text == "saluta":
+            self.left_arm(20)
+            self.right_arm(140)
+            self.say("Ciao ", "it")
+            time.sleep(5)
+            self.left_arm(0)
+            self.right_arm(0)
 
-    def left_shoulder_rotation(self, msg):
-        self.get_logger().info(f'Left Shoulder Rotation: {msg}')
-        message = Float64()
-        message.data = float(msg)
-        self.left_shoulder_rotation_pub.publish(message)
+        else:
+            self.get_logger().info("comando non riconosciuto")
+            # self.say("Comando non riconosciuto", "it")
 
-    def right_elbow_motor(self, msg):
-        self.get_logger().info(f'Right Elbow Motor: {msg}')
-        message = Float64()
-        message.data = float(msg)
-        self.right_elbow_motor_pub.publish(message)
 
-    def left_elbow_motor(self, msg):
-        self.get_logger().info(f'Left Elbow Motor: {msg}')
-        message = Float64()
-        message.data = float(msg)
-        self.left_elbow_motor_pub.publish(message)
 
-    def hand_right_motor(self, msg):
-        self.get_logger().info(f'Right Hand Motor: {msg}')
-        message = Float64()
-        message.data = float(msg)
-        self.hand_right_motor_pub.publish(message)
+    # def asr_callback(self, msg):
+    #     cmd_text = msg.data.lower().strip()
+    #     cmd_text = cmd_text.replace("martino", "").strip()
+     
+    #     self.get_logger().info(f'Received command: "{cmd_text}"')
 
-    def hand_left_motor(self, msg):
-        self.get_logger().info(f'Left Hand Motor: {msg}')
-        message = Float64()
-        message.data = float(msg)
-        self.hand_left_motor_pub.publish(message)
+    #     if cmd_text == "avanti":
+    #         self.forward(0.10)
+
+    #     elif cmd_text == "indietro":
+    #         self.backward(0.10)
+
+    #     elif cmd_text == "sinistra":
+    #         self.left(90)
+
+    #     elif cmd_text == "destra":
+    #         self.right(90)
+
+    #     elif cmd_text == "stop":
+    #         self.stop()
+
+    #     elif cmd_text == "foto":
+    #         self.getImage()
+
+    #     elif cmd_text == "saluta":
+    #         self.left_arm(30)
+    #         self.right_arm(60)
+    #         self.say("ma wa a caca", "it")
+
+    #     # elif cmd_text.start1swith("emozione "):
+    #     #     _, emotion = cmd_text.split(maxsplit=1)
+    #     #     self.emotion(emotion)
+
+    #     # elif cmd_text.startswith("testa "):
+    #     #     _, posizione = cmd_text.split(maxsplit=1)
+    #     #     self.head_position(posizione)
+
+    #     else:
+    #         print("comando non riconosciiuto")
+    #         #self.say("Comando non riconosciuto", "it")
+
+def main(args=None):
+    rclpy.init(args=args)
+    asrcmd_node = RobotCmdROS()
+    rclpy.spin(asrcmd_node)
+    asrcmd_node.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+# ros2 topic pub /speech/language std_msgs/msg/String '{data: "en"}'

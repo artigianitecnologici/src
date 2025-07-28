@@ -59,8 +59,8 @@ if [ $? != 0 ]; then
   tmux send-keys -t $SESSION:2 "python3  pan_tilt_controller.py " C-m  # Log to websocket_robot.log
 
   # Commands to be executed in window 3 ('tts')
-  tmux send-keys -t $SESSION:3 "cd \$MARRTINOROBOT2_WS" C-m
-  tmux send-keys -t $SESSION:3 "./tts.sh " C-m  # Log output to cmdexe.lo
+  tmux send-keys -t $SESSION:3 "cd ~/src/marrtinorobot2/marrtinorobot2_voice/marrtinorobot2_voice" C-m
+  tmux send-keys -t $SESSION:3 "python3 tts_node_offline.py " C-m  # Log output to cmdexe.lo
 
   # Commands to be executed in window 4 ('slam')
   tmux send-keys -t $SESSION:4 "cd \$MARRTINOROBOT2_WS" C-m
@@ -73,13 +73,14 @@ if [ $? != 0 ]; then
   tmux send-keys -t $SESSION:6 "python3  node_getimage.py " C-m  # Log to websocket_robot.log
 
   tmux send-keys -t $SESSION:7 "cd \$MARRTINOROBOT2_WS" C-m
-  tmux send-keys -t $SESSION:7 "./rosbridge.sh " C-m  # Log output to cmdexe.lo
+ # tmux send-keys -t $SESSION:7 "./rosbridge.sh " C-m  # Log output to cmdexe.lo
 
   
   tmux send-keys -t $SESSION:8 "cd ~/marrtinorobot2_ws" C-m
   tmux send-keys -t $SESSION:8 "./webvideoserver.sh " C-m  # Log output to cmdexe.lo
 
   tmux send-keys -t $SESSION:9 "cd ~/marrtinorobot2_ws" C-m
+  tmux send-keys -t $SESSION:9 "./face_tracker.sh " C-m  # Log output to cmdexe.lo
 
 fi
 
