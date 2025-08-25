@@ -30,7 +30,7 @@ if [ $? != 0 ]; then
   tmux rename-window -t $SESSION:0 'bringup'  # Window 0 is renamed to 'config'
   tmux new-window -t $SESSION:1 -n 'camera'  # Window 1 named 'docker'
   tmux new-window -t $SESSION:2 -n 'dynamixel'  # Window 2 named 'cmdexe'
-  tmux new-window -t $SESSION:3 -n 'tts'  # Window 3 named 'robot_bringup'
+  tmux new-window -t $SESSION:3 -n 'asr-tts'  # Window 3 named 'robot_bringup'
   tmux new-window -t $SESSION:4 -n 'apriltag'  # Window 3 named 'robot_bringup'
   tmux new-window -t $SESSION:5 -n 'blockly'
   tmux new-window -t $SESSION:6 -n 'getimage'
@@ -60,7 +60,7 @@ if [ $? != 0 ]; then
 
   # Commands to be executed in window 3 ('tts')
   tmux send-keys -t $SESSION:3 "cd ~/src/marrtinorobot2/marrtinorobot2_voice/marrtinorobot2_voice" C-m
-  tmux send-keys -t $SESSION:3 "python3 tts_node_offline.py " C-m  # Log output to cmdexe.lo
+  tmux send-keys -t $SESSION:3 "python3 asr_tts_node.py " C-m  # Log output to cmdexe.lo
 
   # Commands to be executed in window 4 ('slam')
   tmux send-keys -t $SESSION:4 "cd \$MARRTINOROBOT2_WS" C-m
