@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=/home/ubuntu/src/marrtinorobot2/marrtina.bash
+Exec=/home/ubuntu/src/marrtinorobot2/smarrtino.bash
 Hidden=false
 Name[C]=Smarrtino Start
 Name=Smarrtino Start
