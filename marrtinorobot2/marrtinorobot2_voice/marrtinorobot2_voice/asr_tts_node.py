@@ -34,26 +34,26 @@ from rclpy.node import Node
 from std_msgs.msg import String
 
 def download_vosk_model(model_url, model_path):
-    print(f"📅 Scarico modello Vosk da {model_url}")
+    print(f"ðŸ“… Scarico modello Vosk da {model_url}")
     zip_path = "vosk_model.zip"
     try:
         urllib.request.urlretrieve(model_url, zip_path)
     except Exception as e:
-        print(f"❌ Errore nel download del modello: {e}")
+        print(f"âŒ Errore nel download del modello: {e}")
         return
 
     try:
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             zip_ref.extractall(os.path.dirname(model_path))
         os.remove(zip_path)
-        print("✅ Modello scaricato ed estratto.")
+        print("âœ… Modello scaricato ed estratto.")
     except Exception as e:
-        print(f"❌ Errore nell'estrazione del modello: {e}")
+        print(f"âŒ Errore nell'estrazione del modello: {e}")
 
 class ASRTTSNode(Node):
     def __init__(self):
         super().__init__('asr_tts_node')
-        self.get_logger().info("🤖 Nodo ASR+TTS avviato")
+        self.get_logger().info("ðŸ¤– Nodo ASR+TTS avviato")
 
         config_path = '/home/ubuntu/src/marrtinorobot2/marrtinorobot2_voice/config/config.json'
         if not os.path.exists(config_path):
@@ -81,14 +81,14 @@ class ASRTTSNode(Node):
                 break
 
         if self.input_device_index is None:
-            self.get_logger().error("❌ Microfono ReSpeaker non trovato. Controlla che sia collegato.")
+            self.get_logger().error("âŒ Microfono ReSpeaker non trovato. Controlla che sia collegato.")
             return
 
-        self.model_vosk_path = "/home/ubuntu/src/marrtinorobot2/marrtinorobot2_voice/models/vosk"
+        self.model_vosk_path = "/home/ubuntu/src/marrtinorobot2/marrtinorobot2_voice/models"
         self.vosk_model_url = "https://alphacephei.com/vosk/models/vosk-model-it-0.22.zip"
 
         if subprocess.call(['which', 'pico2wave'], stdout=subprocess.DEVNULL) != 0:
-            self.get_logger().error("❌ pico2wave non è installato. Installa con: sudo apt install libttspico-utils")
+            self.get_logger().error("âŒ pico2wave non Ã¨ installato. Installa con: sudo apt install libttspico-utils")
 
         expected_file = os.path.join(self.model_vosk_path + "/vosk-model-it-0.22/", "am", "final.mdl")
         if not os.path.exists(expected_file):
@@ -132,12 +132,12 @@ class ASRTTSNode(Node):
                 device=self.input_device_index
             )
             self.stream.start()
-            self.get_logger().info("🎤 Microfono avviato")
+            self.get_logger().info("ðŸŽ¤ Microfono avviato")
         except Exception as e:
-            self.get_logger().error(f"❌ Errore nell'avvio del microfono: {e}")
+            self.get_logger().error(f"âŒ Errore nell'avvio del microfono: {e}")
 
         self.create_timer(0.1, self.listen_loop)
-        self.get_logger().info("⏱ Timer ascolto continuo avviato.")
+        self.get_logger().info("â± Timer ascolto continuo avviato.")
         # robot.emotion("startblinking")
         # robot.emotion("speak")
         # r  obot.emotion("normal")
@@ -161,7 +161,7 @@ class ASRTTSNode(Node):
 
     def language_callback(self, msg):
         self.language = msg.data
-        self.get_logger().info(f"🌐 Lingua impostata: {self.language}")
+        self.get_logger().info(f"ðŸŒ Lingua impostata: {self.language}")
 
 
     def tts_callback(self, msg):
@@ -174,7 +174,7 @@ class ASRTTSNode(Node):
             self.stream.stop()
             with self.queue.mutex:
                 self.queue.queue.clear()
-            self.get_logger().info("🔇 Microfono disattivato e coda svuotata.")
+            self.get_logger().info("ðŸ”‡ Microfono disattivato e coda svuotata.")
         except Exception as e:
             self.get_logger().warning(f"Errore nel fermare il microfono: {e}")
 
@@ -198,7 +198,7 @@ class ASRTTSNode(Node):
 
         try:
             self.stream.start()
-            self.get_logger().info("🎤 Microfono riattivato.")
+            self.get_logger().info("ðŸŽ¤ Microfono riattivato.")
         except Exception as e:
             self.get_logger().warning(f"Errore nel riavvio del microfono: {e}")
 
@@ -217,7 +217,7 @@ class ASRTTSNode(Node):
             self.stream.stop()
             with self.queue.mutex:
                 self.queue.queue.clear()
-            self.get_logger().info("🔇 Microfono disattivato e coda svuotata.")
+            self.get_logger().info("ðŸ”‡ Microfono disattivato e coda svuotata.")
         except Exception as e:
             self.get_logger().warning(f"Errore nel fermare il microfono: {e}")
 
@@ -242,7 +242,7 @@ class ASRTTSNode(Node):
 
         try:
             self.stream.start()
-            self.get_logger().info("🎤 Microfono riattivato.")
+            self.get_logger().info("ðŸŽ¤ Microfono riattivato.")
         except Exception as e:
             self.get_logger().warning(f"Errore nel riavvio del microfono: {e}")
 
@@ -260,11 +260,11 @@ class ASRTTSNode(Node):
                     result = json.loads(self.recognizer.Result())
                     text = result.get("text", "").strip().lower()
                     if text:
-                        self.get_logger().info(f"🎤 Hai detto: {text}")
+                        self.get_logger().info(f"ðŸŽ¤ Hai detto: {text}")
                         if text.startswith(self.wake_word):
                             filtered_text = text[len(self.wake_word):].strip()
-                            self.get_logger().info(f"🔑 Parola chiave rilevata. Testo: {filtered_text}")
-                            if filtered_text:  # Pubblica solo se c'è altro dopo la parola chiave
+                            self.get_logger().info(f"ðŸ”‘ Parola chiave rilevata. Testo: {filtered_text}")
+                            if filtered_text:  # Pubblica solo se c'Ã¨ altro dopo la parola chiave
                                 self.publish_asr(filtered_text)
         except Exception as e:
             self.get_logger().error(f"Errore ascolto: {e}")
