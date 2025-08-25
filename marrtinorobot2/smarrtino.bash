@@ -81,6 +81,9 @@ if [ $? != 0 ]; then
 
   tmux send-keys -t $SESSION:9 "cd ~/marrtinorobot2_ws" C-m
   tmux send-keys -t $SESSION:9 "./face_tracker.sh " C-m  # Log output to cmdexe.lo
+  
+  tmux send-keys -t $SESSION:10 "cd ~/src/marrtinorobot2/marrtinorobot2_voice/marrtinorobot2_voice" C-m
+  tmux send-keys -t $SESSION:10 "python3 asr_chatbot_bridge.py " C-m  # Log output to cmdexe.lo
 
 fi
 
