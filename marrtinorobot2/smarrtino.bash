@@ -34,10 +34,10 @@ if [ $? != 0 ]; then
   tmux new-window -t $SESSION:4 -n 'apriltag'  # Window 3 named 'robot_bringup'
   tmux new-window -t $SESSION:5 -n 'blockly'
   tmux new-window -t $SESSION:6 -n 'getimage'
-  tmux new-window -t $SESSION:7 -n 'rosbridge'
+  tmux new-window -t $SESSION:7 -n 'asr-bridge'
   tmux new-window -t $SESSION:8 -n 'videoserver'
   tmux new-window -t $SESSION:9 -n 'navigation'
-  tmux new-window -t $SESSION:10 -n 'asr'
+  tmux new-window -t $SESSION:10 -n 'nullr'
 
 
   # Log files for command output
@@ -72,8 +72,8 @@ if [ $? != 0 ]; then
   tmux send-keys -t $SESSION:6 "cd ~/src/marrtinorobot2/marrtinorobot2_vision/marrtinorobot2_vision" C-m
   tmux send-keys -t $SESSION:6 "python3  node_getimage.py " C-m  # Log to websocket_robot.log
 
-  tmux send-keys -t $SESSION:7 "cd \$MARRTINOROBOT2_WS" C-m
- # tmux send-keys -t $SESSION:7 "./rosbridge.sh " C-m  # Log output to cmdexe.lo
+  tmux send-keys -t $SESSION:7 "cd ~/src/marrtinorobot2/marrtinorobot2_voice/marrtinorobot2_voice" C-m
+  tmux send-keys -t $SESSION:7 "python3 asr_chatbot_bridge.py " C-m  # Log output to cmdexe.lo
 
   
   tmux send-keys -t $SESSION:8 "cd ~/marrtinorobot2_ws" C-m
@@ -82,8 +82,8 @@ if [ $? != 0 ]; then
   tmux send-keys -t $SESSION:9 "cd ~/marrtinorobot2_ws" C-m
   tmux send-keys -t $SESSION:9 "./face_tracker.sh " C-m  # Log output to cmdexe.lo
   
-  tmux send-keys -t $SESSION:10 "cd ~/src/marrtinorobot2/marrtinorobot2_voice/marrtinorobot2_voice" C-m
-  tmux send-keys -t $SESSION:10 "python3 asr_chatbot_bridge.py " C-m  # Log output to cmdexe.lo
+  #tmux send-keys -t $SESSION:10 "cd ~/src/marrtinorobot2/marrtinorobot2_voice/marrtinorobot2_voice" C-m
+  #tmux send-keys -t $SESSION:10 "python3 asr_chatbot_bridge.py " C-m  # Log output to cmdexe.lo
 
 fi
 
