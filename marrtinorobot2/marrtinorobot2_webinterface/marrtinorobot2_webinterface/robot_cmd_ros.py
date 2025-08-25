@@ -40,6 +40,7 @@ class RobotCmdROS(Node):
         self.TOPIC_gesture = "social/gesture"
         self.TOPIC_speech = "speech/to_speak"
         self.TOPIC_language = "speech/language"
+        self.TOPIC_ASR = "ASR"
         self.TOPIC_cmdvel = "cmd_vel"
         self.TOPIC_pan = "pan_controller/command"
         self.TOPIC_tilt = "tilt_controller/command"
@@ -82,7 +83,7 @@ class RobotCmdROS(Node):
         self.hand_right_motor_pub = self.create_publisher(Float64, self.TOPIC_hand_right_motor_controller,10)
         self.hand_left_motor_pub = self.create_publisher(Float64, self.TOPIC_hand_left_motor_controller,10)
       
-
+     
 
 
 
@@ -95,15 +96,39 @@ class RobotCmdROS(Node):
         self.tag_distance = 0.0
         self.last_tag_id = 0
         # Define the 'running' attribute to control the thread execution
-        self.running = True  # ✅ Added to prevent the AttributeError
+        self.running = True  # âœ… Added to prevent the AttributeError
         # Initialize the thread for reading AprilTag data
         self.thread = threading.Thread(target=self.read_apriltag_data, daemon=True)
         self.thread.start()
+        # Thread per ASR
+        self.thread_asr = threading.Thread(target=self.read_asr_data, daemon=True)
+        self.thread_asr.start()
+
+    def read_asr_data(self):
+        self.get_logger().info("ðŸŽ¤ Thread ASR attivato!")
+        node = rclpy.create_node('asr_listener')
+
+        subscription = node.create_subscription(
+            String,
+            '/ASR',
+            self.listener_callback,
+            10
+        )
+
+        executor = SingleThreadedExecutor()
+        executor.add_node(node)
+
+        while self.running:
+            executor.spin_once(timeout_sec=1)
+
+        node.destroy_node()
+        self.get_logger().info("ðŸ›‘ Thread ASR fermato.")
+
 
     
 
     def read_apriltag_data(self):
-        self.get_logger().info("📡 Thread di lettura attivato!")
+        self.get_logger().info("ðŸ“¡ Thread di lettura attivato!")
         # Creazione di un secondo nodo ROS2 all'interno del thread
         node = rclpy.create_node('apriltag_listener')
 
@@ -126,27 +151,31 @@ class RobotCmdROS(Node):
 
         node.destroy_node()  # Distrugge il nodo alla chiusura
 
+    def listener_callback(self, msg):
+        text = msg.data.strip()
+        self.get_logger().info(f"ðŸ—£ï¸ Ricevuto testo ASR: '{text}'")
+        
 
     def process_apriltag_data(self, msg):
         """Callback per gestire i dati degli AprilTag."""
         if not msg.detections:
-            #self.get_logger().info("🚫 Nessun AprilTag rilevato.")
+            #self.get_logger().info("ðŸš« Nessun AprilTag rilevato.")
             return
 
-        self.get_logger().info(f"✅ Rilevati {len(msg.detections)} AprilTag!")
+        self.get_logger().info(f"âœ… Rilevati {len(msg.detections)} AprilTag!")
 
         for detection in msg.detections:
             self.tag_id = detection.id
 
             self.tag_distance = detection.pose.pose.pose.position.z
 
-            self.get_logger().info(f"📌 Tag ID: {self.tag_id}, Distanza: {self.tag_distance:.2f}m")
+            self.get_logger().info(f"ðŸ“Œ Tag ID: {self.tag_id}, Distanza: {self.tag_distance:.2f}m")
 
         def stop_thread(self):
             """Stops the reading thread"""
-            self.running = False  # ✅ Added to stop the loop in the thread
+            self.running = False  # âœ… Added to stop the loop in the thread
             self.thread.join()
-            self.get_logger().info("🛑 Thread stopped.")
+            self.get_logger().info("ðŸ›‘ Thread stopped.")
 
     # init function 
 
@@ -162,7 +191,7 @@ class RobotCmdROS(Node):
         time.sleep(1)
 
     def tagID(self):
-        self.get_logger().info(f"📌 Tag ID: {self.tag_id}, Distanza: {self.tag_distance:.2f}m")
+        self.get_logger().info(f"ðŸ“Œ Tag ID: {self.tag_id}, Distanza: {self.tag_distance:.2f}m")
 
         return self.tag_id
 
@@ -173,15 +202,32 @@ class RobotCmdROS(Node):
     # def tagAngle():
     #     global tag_angle_
     #     return tag_angle_
-    
+    def stop_threads(self):
+        """Ferma i thread Apriltag e ASR in modo ordinato."""
+        self.get_logger().info("ðŸ›‘ Arresto dei thread in corso...")
+        self.running = False  # segnala ai while loop di fermarsi
 
+        # Controlla ed aspetta che il thread Apriltag termini
+        if hasattr(self, "thread_apriltag") and self.thread_apriltag.is_alive():
+            self.thread_apriltag.join()
+            self.get_logger().info("ðŸ“¡ Thread AprilTag fermato.")
+
+        # Controlla ed aspetta che il thread ASR termini
+        if hasattr(self, "thread_asr") and self.thread_asr.is_alive():
+            self.thread_asr.join()
+            self.get_logger().info("ðŸŽ¤ Thread ASR fermato.")
+
+        self.get_logger().info("âœ… Tutti i thread fermati.")
+
+    
     def begin(self):
         self.get_logger().info('Robot control started')
 
     def end(self):
-        self.stop()
+        self.stop()          # ferma il movimento
+        self.stop_threads()  # ferma i thread ASR + Apriltag
         self.get_logger().info('Robot control stopped')
-
+    
     def stop(self):
         """Stop the robot."""
         twist = Twist()
