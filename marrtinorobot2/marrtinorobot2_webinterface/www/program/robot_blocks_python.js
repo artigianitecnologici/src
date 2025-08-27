@@ -364,10 +364,10 @@ Blockly.Python['run_python'] = function(block) {
 
 
 
-Blockly.Python['wait_user_say'] = function(block) {
-  var code = 'wait_get_user_say()\n';
-  return [code, Blockly.Python.ORDER_NONE];
-};
+// Blockly.Python['wait_user_say'] = function(block) {
+//   var code = 'get_asr()\n';
+//   return [code, Blockly.Python.ORDER_NONE];
+// };
 
 
 Blockly.Python['user_say'] = function(block) {
