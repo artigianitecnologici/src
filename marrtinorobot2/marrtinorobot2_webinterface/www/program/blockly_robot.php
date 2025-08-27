@@ -197,8 +197,7 @@
     </block>
   </value>
 </block> -->
-
-<!-- <block type="ask_chatgpt">
+<block type="ask_chatgpt">
   <value name="text">
     <block type="text">
       <field name="TEXT">your question</field>
@@ -206,8 +205,8 @@
   </value>
 </block>
 <block type="user_say"></block>
-<block type="wait_user_say"></block>
-<block type="clear-asr"></block> -->
+<block type="clear-asr"></block>  
+
 <block type="run_python">
 
    <value name="text">
