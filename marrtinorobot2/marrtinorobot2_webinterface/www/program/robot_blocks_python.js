@@ -371,12 +371,12 @@ Blockly.Python['run_python'] = function(block) {
 
 
 Blockly.Python['user_say'] = function(block) {
-  var code = 'get_user_say()';
+  var code = 'robot.get_user_say()';
   return [code, Blockly.Python.ORDER_NONE];
 };
 
 Blockly.Python['clear-asr'] = function(block) {
-  var code = 'clear_asr()\n';
+  var code = 'robot.clear_asr()\n';
   return code;
 };
 
