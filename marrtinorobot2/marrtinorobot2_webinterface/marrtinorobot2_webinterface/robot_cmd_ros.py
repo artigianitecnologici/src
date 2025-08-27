@@ -215,20 +215,20 @@ class RobotCmdROS(Node):
 
     def stop_threads(self):
         """Ferma i thread Apriltag e ASR in modo ordinato."""
-        self.get_logger().info("ðŸ›‘ Arresto dei thread in corso...")
-        self.running = False  # segnala ai while loop di fermarsi
+        self.get_logger().info(" Set pippa OFF !!! non Arresto dei thread in corso...")
+        # self.running = False  # segnala ai while loop di fermarsi
 
-        # Controlla ed aspetta che il thread Apriltag termini
-        if hasattr(self, "thread_apriltag") and self.thread_apriltag.is_alive():
-            self.thread_apriltag.join()
-            self.get_logger().info("ðŸ“¡ Thread AprilTag fermato.")
+        # # Controlla ed aspetta che il thread Apriltag termini
+        # if hasattr(self, "thread_apriltag") and self.thread_apriltag.is_alive():
+        #     self.thread_apriltag.join()
+        #     self.get_logger().info("ðŸ“¡ Thread AprilTag fermato.")
 
-        # Controlla ed aspetta che il thread ASR termini
-        if hasattr(self, "thread_asr") and self.thread_asr.is_alive():
-            self.thread_asr.join()
-            self.get_logger().info("ðŸŽ¤ Thread ASR fermato.")
+        # # Controlla ed aspetta che il thread ASR termini
+        # if hasattr(self, "thread_asr") and self.thread_asr.is_alive():
+        #     self.thread_asr.join()
+        #     self.get_logger().info("ðŸŽ¤ Thread ASR fermato.")
 
-        self.get_logger().info("âœ… Tutti i thread fermati.")
+        # self.get_logger().info("âœ… Tutti i thread fermati.")
 
     
     def begin(self):
