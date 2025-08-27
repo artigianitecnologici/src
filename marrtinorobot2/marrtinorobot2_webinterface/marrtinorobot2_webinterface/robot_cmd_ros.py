@@ -95,6 +95,7 @@ class RobotCmdROS(Node):
         self.orientation = None
         self.tag_distance = 0.0
         self.last_tag_id = 0
+        self.myasr = ""
         # Define the 'running' attribute to control the thread execution
         self.running = True  # âœ… Added to prevent the AttributeError
         # Initialize the thread for reading AprilTag data
@@ -153,7 +154,8 @@ class RobotCmdROS(Node):
 
     def listener_callback(self, msg):
         text = msg.data.strip()
-        self.get_logger().info(f"ðŸ—£ï¸ Ricevuto testo ASR: '{text}'")
+        self.myasr = text
+        self.get_logger().info(f"Ricevuto testo ASR: '{text}'")
         
 
     def process_apriltag_data(self, msg):
@@ -202,6 +204,15 @@ class RobotCmdROS(Node):
     # def tagAngle():
     #     global tag_angle_
     #     return tag_angle_
+
+
+    def get_user_say(self):
+        #self.get_logger().info(f"User Say: {self.myasr}:.2f}m")
+        return self.myasr
+        
+    def clear_asr(self):
+        self.myasr = ""
+
     def stop_threads(self):
         """Ferma i thread Apriltag e ASR in modo ordinato."""
         self.get_logger().info("ðŸ›‘ Arresto dei thread in corso...")
