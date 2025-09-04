@@ -84,7 +84,7 @@ class ASRTTSNode(Node):
             self.get_logger().error("âŒ Microfono ReSpeaker non trovato. Controlla che sia collegato.")
             return
 
-        self.model_vosk_path = "/home/ubuntu/src/marrtinorobot2/marrtinorobot2_voice/models"
+        self.model_vosk_path = "/home/ubuntu/src/marrtinorobot2/marrtinorobot2_voice/models/"
         self.vosk_model_url = "https://alphacephei.com/vosk/models/vosk-model-it-0.22.zip"
 
         if subprocess.call(['which', 'pico2wave'], stdout=subprocess.DEVNULL) != 0:
