@@ -1,9 +1,9 @@
 # Download Repository Branch Dev
-mkdir ~/src
-
-cd ~/src
-
-git clone   --single-branch --filter=tree:0 https://github.com/marrtino/MARRtinoROS2 .
+    mkdir ~/src
+    
+    cd ~/src
+    
+    git clone   --single-branch --filter=tree:0 https://github.com/marrtino/MARRtinoROS2 .
 
 # Forzare su ubuntu con gnome il rendering su X11
 sudo nano /etc/gdm3/custom.conf
@@ -20,26 +20,29 @@ sudo systemctl restart gdm3
 ssh -x user@remote_host
 ssh -x marrtino@10.3.1.1
 
-echo "export MARRTINOROBOT2_WEBI=/home/marrtino/src/marrtinorobot2/marrtinorobot2_webinterface/www" >> /home/marrtino/.bashrc
-echo "export MARRTINOROBOT2_WS=/home/marrtino/marrtinorobot2_ws" >> /home/marrtino/.bashrc
+# configurare env 
+
+    echo "export MARRTINOROBOT2_WEBI=/home/marrtino/src/marrtinorobot2/marrtinorobot2_webinterface/www" >> /home/marrtino/.bashrc
+    echo "export MARRTINOROBOT2_HOME=/home/marrtino/src/marrtinorobot2" >> /home/marrtino/.bashrc
 
 
 # Modifica della configurazione su ssh
 sudo nano /etc/ssh/sshd_config
 
-Setting 
-X11Forwarding no
-
-Restart service ssh
-sudo systemctl restart sshd
+    Setting 
+    X11Forwarding no
+    
+    Restart service ssh
+    sudo systemctl restart sshd
 
 # disinstallare il portachiavi 
-sudo apt remove --purge gnome-keyring
-rm -rf ~/.local/share/keyrings
-sudo reboot
+
+    sudo apt remove --purge gnome-keyring
+    rm -rf ~/.local/share/keyrings
+    sudo reboot
 
 # ripristinare i widget o applet
-mate-panel --reset
+    mate-panel --reset
 
 # push repository
 git add .
