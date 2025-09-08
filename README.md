@@ -5,6 +5,16 @@
     
     git clone   --single-branch --filter=tree:0 https://github.com/marrtino/MARRtinoROS2 .
 
+# prerequisiti
+sudo apt install git terminator curl openssh-server
+sudo systemctl enable ssh
+
+# prerequisiti x audio
+sudo apt update
+sudo apt install sox libsox-fmt-all libttspico-utils pulseaudio
+speaker-test -t wav -c 2 -l 1
+
+
 # Forzare su ubuntu con gnome il rendering su X11
 sudo nano /etc/gdm3/custom.conf
 
