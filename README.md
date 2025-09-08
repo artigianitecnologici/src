@@ -7,11 +7,14 @@
 
 # prerequisiti
 sudo apt install git terminator curl openssh-server
+sudo apt install chromium-browser
 sudo systemctl enable ssh
 
 # prerequisiti x audio
 sudo apt update
+
 sudo apt install sox libsox-fmt-all libttspico-utils pulseaudio
+
 speaker-test -t wav -c 2 -l 1
 
 
