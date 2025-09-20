@@ -37,6 +37,7 @@ services:
       - /dev:/dev
       - /run/user/1000/pulse/native:/run/user/1000/pulse/native
       - $MARRTINOROBOT2_HOME/marrtinorobot2_voice/models/vosk:/home/ubuntu/models/vosk
+      - $MARRTINOROBOT2_HOME/marrtinorobot2_voice/models/voice:/home/ubuntu/models/voice
     dns: 8.8.8.8
     privileged: true
     tty: true
