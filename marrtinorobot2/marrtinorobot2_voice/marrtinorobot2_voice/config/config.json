@@ -1,10 +1,25 @@
 {
-    "output_samplerate": 16000,
-    "output_device_index": 1,
-    "input_samplerate": 16000,
-    "output_samplerate": 24000,
-    "language": "it",
-    "work_offline": false,
-    "msg_start": "Ciao, sono pronto ad ascoltarti.",
-    "wake_word": "martino"
+  // ---- Audio output ----
+  "output_samplerate": 48000,       // frequenza campionamento uscita (es. 48000 Hz)
+  "output_device_index": 1,         // indice scheda audio output (controlla con `sd.query_devices()`)
+
+  // ---- Audio input ----
+  "input_samplerate": 16000,        // frequenza campionamento microfono
+  "language": "it",                 // lingua principale: "it" o "en"
+  "work_offline": true,             // non usato più (piper funziona offline), tenuto per compatibilità
+
+  // ---- Messaggi iniziali ----
+  "msg_start": "Ciao, sono pronta!", // frase di benvenuto all’avvio
+  "wake_word": "martino",           // parola chiave per attivare ASR
+
+  // ---- Piper TTS ----
+  "piper_models_dir": "/home/ubuntu/src/marrtinorobot2/marrtinorobot2_voice/voice", 
+  // cartella contenente i modelli .onnx e .json di Paola/Riccardo
+
+  "piper_default_voice": "paola",   // voce di default: "paola" o "riccardo"
+
+  // Parametri prosodia voce Piper
+  "piper_length_scale": 1.3,        // velocità parlato (default 1.0 ? >1 più lento, <1 più veloce)
+  "piper_noise_scale": 0.55,        // variabilità voce (default 0.667 ? più basso = più monotono)
+  "piper_noise_w": 0.8              // influsso rumore prosodico (default 0.8 ? valori più bassi = più piatto)
 }
