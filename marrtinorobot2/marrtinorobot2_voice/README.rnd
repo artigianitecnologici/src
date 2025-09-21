@@ -18,3 +18,212 @@ sudo apt update
 sudo apt install sox
 
 sudo apt install libttspico-utils
+
+# Scaricare le voci 
+wget https://huggingface.co/rhasspy/piper-voices/resolve/main/it/it_IT/paola/medium/it_IT-paola-medium.onnx
+wget https://huggingface.co/rhasspy/piper-voices/resolve/main/it/it_IT/paola/medium/it_IT-paola-medium.onnx.json
+# MARRtino — ASR + Piper-TTS (Vosk + Piper)
+Guida pratica di **installazione**, **configurazione** e **uso** per il nodo `asr_tts_node_piper.py`.
+
+---
+
+## 0) Requisiti
+- **Ubuntu** 20.04/22.04
+- **ROS 2** (Foxy/Humble) con `rclpy`, `std_msgs`
+- Connessione internet (solo al primo setup per scaricare i modelli)
+
+Percorso atteso dello script:
+```
+/home/ubuntu/src/marrtinorobot2/marrtinorobot2_voice/marrtinorobot2_voice/asr_tts_node_piper.py
+```
+
+Percorso atteso del **config**:
+```
+/home/ubuntu/src/marrtinorobot2/marrtinorobot2_voice/config/config.json
+```
+
+---
+
+## 1) Dipendenze di sistema
+```bash
+sudo apt-get update
+# TTS e riproduzione audio
+sudo apt-get install -y piper sox
+# Python & audio
+sudo apt-get install -y python3-pip python3-dev portaudio19-dev
+# (facoltativo) strumenti ALSA per debug audio
+sudo apt-get install -y alsa-utils
+```
+
+## 2) Dipendenze Python
+> Esegui nel tuo ambiente ROS (se usi venv, attivalo prima).
+```bash
+pip3 install --upgrade pip
+pip3 install vosk sounddevice
+```
+
+---
+
+## 3) Modelli: Vosk (ASR) e Piper (TTS)
+
+### 3.1 Vosk IT
+Il nodo scarica automaticamente il modello **vosk-model-it-0.22** al primo avvio in:
+```
+/home/ubuntu/src/marrtinorobot2/marrtinorobot2_voice/models/vosk-model-it-0.22
+```
+
+### 3.2 Piper (Paola & Riccardo)
+Cartella modelli predefinita (configurabile):
+```
+/home/ubuntu/src/marrtinorobot2/marrtinorobot2_voice/models/piper
+```
+Scarica le voci:
+```bash
+mkdir -p /home/ubuntu/src/marrtinorobot2/marrtinorobot2_voice/models/piper
+cd /home/ubuntu/src/marrtinorobot2/marrtinorobot2_voice/models/piper
+
+# Paola
+wget https://huggingface.co/rhasspy/piper-voices/resolve/main/it/it_IT/paola/medium/it_IT-paola-medium.onnx
+wget https://huggingface.co/rhasspy/piper-voices/resolve/main/it/it_IT/paola/medium/it_IT-paola-medium.onnx.json
+
+# Riccardo
+wget https://huggingface.co/rhasspy/piper-voices/resolve/main/it/it_IT/riccardo/medium/it_IT-riccardo-medium.onnx
+wget https://huggingface.co/rhasspy/piper-voices/resolve/main/it/it_IT/riccardo/medium/it_IT-riccardo-medium.onnx.json
+```
+
+---
+
+## 4) Configurazione (`config.json`)
+
+### 4.1 Esempio **con commenti** (solo riferimento umano)
+> **ATTENZIONE**: i commenti non sono validi in JSON. Usa il file seguente (4.2) per il runtime.
+```jsonc
+{
+  // ---- Audio output ----
+  "output_samplerate": 48000,         // Hz (44100 o 48000)
+  "output_device_index": 1,           // indice scheda audio output (vedi §7)
+
+  // ---- Audio input ----
+  "input_samplerate": 16000,          // Vosk usa 16 kHz
+  "language": "it",                   // "it" o "en" (solo log)
+  "work_offline": true,               // legacy: Piper è offline
+
+  // ---- Messaggio iniziale ----
+  "msg_start": "Ciao, sono pronta!",
+
+  // ---- Wake word ----
+  "wake_words": ["martino", "martina"], // più parole chiave
+  "wake_match": "prefix",               // "prefix" (inizio frase) o "anywhere" (ovunque)
+  "case_sensitive": false,
+  "normalize_accents": true,            // rimuove accenti per matching robusto
+
+  // ---- Beep su parola chiave ----
+  "beep": {
+    "enabled": true,
+    "frequency": 1000,                  // Hz
+    "duration_ms": 180,
+    "volume": 0.2                       // 0.0 - 1.0
+  },
+
+  // ---- Piper TTS ----
+  "piper_models_dir": "/home/ubuntu/src/marrtinorobot2/marrtinorobot2_voice/models/piper",
+  "piper_default_voice": "paola",       // "paola" o "riccardo"
+
+  // Parametri prosodia Piper (CLI: --length_scale --noise_scale --noise_w)
+  "piper_length_scale": 1.3,            // >1 più lento, <1 più veloce (default 1.0)
+  "piper_noise_scale": 0.55,            // variabilità (default 0.667): più basso = più monotono
+  "piper_noise_w": 0.8,                 // “rumore” prosodico (default 0.8)
+
+  // ---- Debug ----
+  "debug": true                         // stampa dump completo del config e parametri Piper ad ogni speak
+}
+```
+
+### 4.2 Esempio **valido** (usa questo realmente)
+```json
+{
+  "output_samplerate": 48000,
+  "output_device_index": 1,
+  "input_samplerate": 16000,
+  "language": "it",
+  "work_offline": true,
+  "msg_start": "Ciao, sono pronta!",
+  "wake_words": ["martino", "martina"],
+  "wake_match": "prefix",
+  "case_sensitive": false,
+  "normalize_accents": true,
+  "beep": {
+    "enabled": true,
+    "frequency": 1000,
+    "duration_ms": 180,
+    "volume": 0.2
+  },
+  "piper_models_dir": "/home/ubuntu/src/marrtinorobot2/marrtinorobot2_voice/models/piper",
+  "piper_default_voice": "paola",
+  "piper_length_scale": 1.3,
+  "piper_noise_scale": 0.55,
+  "piper_noise_w": 0.8,
+  "debug": true
+}
+```
+
+---
+
+## 5) Avvio del nodo
+Dalla cartella dello script:
+```bash
+python3 asr_tts_node_piper.py
+```
+All’avvio il nodo stampa **tutti i parametri di configurazione** (INFO) e, se `debug=true`, anche il **dump completo** del JSON e i parametri inviati a **Piper** ad ogni sintesi.
+
+---
+
+## 6) Topic ROS 2
+**Publisher**
+- `/ASR` — `std_msgs/String`: testo riconosciuto (dopo la wake word)
+- `social/emotion`, `social/gesture` — `std_msgs/String`: segnali sociali
+
+**Subscriber**
+- `/speech/to_speak` — `std_msgs/String`: fa parlare il robot (usa Piper)
+- `/speech/language` — `std_msgs/String`: aggiorna lingua (solo log)
+- `/speech/voice` — `std_msgs/String`: cambia voce Piper a runtime (`paola` / `riccardo`)
+
+Esempi:
+```bash
+ros2 topic pub /speech/to_speak std_msgs/String "{data: 'Ciao!'}"
+ros2 topic pub /speech/voice std_msgs/String "{data: riccardo}"
+```
+
+---
+
+## 7) Scoprire gli indici dei device audio
+```bash
+python3 -c "import sounddevice as sd, json; print(json.dumps(sd.query_devices(), indent=2))"
+```
+Sostituisci `output_device_index` nel `config.json` con l’indice corretto.  
+Il microfono **ReSpeaker** viene auto-selezionato cercando “ReSpeaker” nel nome.
+
+> Se l’audio non parte, assicurati che l’utente sia nel gruppo `audio`:
+```bash
+sudo usermod -aG audio $USER
+# poi disconnetti/riconnetti
+```
+
+---
+
+## 8) Troubleshooting rapido
+- **“Non legge il config”** ? verifica percorso esatto del file e che sia JSON valido (niente commenti). Con `debug=true` vedrai il dump del config caricato.
+- **“Modello Piper non trovato”** ? controlla i file `.onnx`/`.json` nella cartella `piper_models_dir`.
+- **“ReSpeaker non trovato”** ? verifica con `sd.query_devices()` / `arecord -l`. Se usi un altro mic, adatta la ricerca nel codice.
+- **“Errore SoX / play”** ? `sudo apt-get install -y sox`. Se PulseAudio/pipewire occupa il device, riavvia PulseAudio o cambia device di default.
+- **“Niente riconoscimento”** ? `input_samplerate = 16000`, ambiente meno rumoroso.
+
+---
+
+## 9) Note
+- Nodo TTS **solo Piper** (niente pico2wave/gTTS).
+- Beep su wake word via `sox` (`play`).
+- Matching wake word: `"prefix"` (inizio frase) o `"anywhere"` (ovunque nella frase, rimuovendo la keyword dal testo pubblicato).
+
+Buon lavoro! ??????
+

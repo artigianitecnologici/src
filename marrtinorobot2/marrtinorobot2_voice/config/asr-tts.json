@@ -1,0 +1,24 @@
+{
+  "output_samplerate": 48000,
+  "output_device_index": 1,
+  "input_samplerate": 16000,
+  "language": "it",
+  "work_offline": true,
+  "msg_start": "Ciao, sono pronta!",
+  "wake_words": ["martino", "martina"],
+  "wake_match": "prefix",
+  "case_sensitive": false,
+  "normalize_accents": true,
+  "beep": {
+    "enabled": true,
+    "frequency": 1000,
+    "duration_ms": 180,
+    "volume": 0.2
+  },
+  "piper_models_dir": "/home/ubuntu/src/marrtinorobot2/marrtinorobot2_voice/models/piper",
+  "piper_default_voice": "paola",
+  "piper_length_scale": 1.7,
+  "piper_noise_scale": 0.55,
+  "piper_noise_w": 0.8,
+  "debug": true
+}
