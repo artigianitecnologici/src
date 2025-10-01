@@ -29,7 +29,7 @@ class ChatbotBridgeNode(Node):
     def __init__(self):
         super().__init__('chatbot_bridge_node')
         # IP server ollama
-        server_ip = '10.3.1.98'  
+        server_ip = '10.3.1.104'  
         self.server_url = f"http://{server_ip}:8060/json"
         #
         self.publisher = self.create_publisher(String, '/speech/to_speak', 10)
