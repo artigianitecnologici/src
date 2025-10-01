@@ -125,7 +125,16 @@ class PiperTTS:
             check=True,
         )
         # Riproduzione
-        subprocess.run(["play", wav_path, "--norm", "-q"], check=True)
+        #subprocess.run(["play", wav_path, "--norm", "-q"], check=True)
+        subprocess.run([
+            "play", wav_path, "--norm", "-q",
+            "pitch", "400",      # +400 cent ≈ +4 semitoni
+            "tempo", "1.08",     # leggermente più veloce senza cambiare pitch
+            "treble", "+3",      # più brillantezza
+            "highpass", "120"    # taglia le sub-basse
+        ], check=True)
+
+
 
 
 # ---------------------------
