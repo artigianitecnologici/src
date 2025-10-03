@@ -56,6 +56,16 @@ sudo nano /etc/ssh/sshd_config
 
 # ripristinare i widget o applet
     mate-panel --reset
+# disable screen  saver e risparmio energetico monitor
+
+    mkdir -p ~/.config/autostart
+    cat > ~/.config/autostart/x11-nosleep.desktop << 'EOF'
+    [Desktop Entry]
+    Type=Application
+    Name=X11 No Sleep
+    Exec=/home/$USER/bin/x11-nosleep.sh
+    X-MATE-Autostart-enabled=true
+    EOF
 
 # push repository
 git add .
