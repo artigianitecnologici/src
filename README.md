@@ -67,6 +67,26 @@ sudo nano /etc/ssh/sshd_config
     X-MATE-Autostart-enabled=true
     EOF
 
+
+# 1. Disabilitare screensaver MATE
+
+Da console remota puoi dare:
+
+    DISPLAY=:0 gsettings set org.mate.screensaver idle-activation-enabled false
+    DISPLAY=:0 gsettings set org.mate.screensaver lock-enabled false
+
+
+# :0 = display grafico principale (può essere :1 se hai più sessioni).
+
+Questo comando modifica le impostazioni di Mate Screensaver, quindi non si attiverà più.
+
+#🔹 2. Disabilitare risparmio energetico (DPMS)
+
+Sempre da console remota:
+
+    DISPLAY=:0 xset -dpms
+    DISPLAY=:0 xset s off
+    DISPLAY=:0 xset s noblank
 # push repository
 git add .
 git commit -m "Update e fix"
