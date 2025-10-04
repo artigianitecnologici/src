@@ -183,7 +183,7 @@ def main(args=None):
 
     # Imposta il motore pan a posizione 150 gradi e velocità 40
     position =  512 - controller.degrees_to_position(30)
-    controller.set_position(1, position, 40)
+    controller.set_position(1, controller.degrees_to_position(140), 40)
     #controller.set_position(1, controller.degrees_to_position(140), 40)
     # Imposta il motore tilt a posizione 150 gradi e velocità 40
 
