@@ -29,8 +29,8 @@ class ChatbotBridgeNode(Node):
     def __init__(self):
         super().__init__('chatbot_bridge_node')
         # IP server ollama
-        server_ip = '10.3.1.104'  
-        self.server_url = f"http://{server_ip}:8060/json"
+        server_ip = '10.3.1.1'  
+        self.server_url = f"http://{server_ip}:5000/json"
         #
         self.publisher = self.create_publisher(String, '/speech/to_speak', 10)
         self.subscription = self.create_subscription(
@@ -51,6 +51,7 @@ class ChatbotBridgeNode(Node):
     def listener_callback(self, msg):
         text = msg.data.strip()
         self.get_logger().info(f"🗣️ Ricevuto testo ASR: '{text}'")
+        # Gestione dei comandi vocali robot 
         if text:
             self.send_text_to_chatbot(text,self.server_url)
 

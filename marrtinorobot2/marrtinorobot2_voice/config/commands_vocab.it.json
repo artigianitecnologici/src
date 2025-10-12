@@ -1,0 +1,15 @@
+[
+  { "phrase": "avanti",               "intent": "avanti" },
+  { "phrase": "vai avanti",           "intent": "avanti" },
+  { "phrase": "muoviti avanti",       "intent": "avanti" },
+  { "phrase": "indietro",             "intent": "indietro" },
+  { "phrase": "vai indietro",         "intent": "indietro" },
+  { "phrase": "destra",               "intent": "destra" },
+  { "phrase": "a destra",             "intent": "destra" },
+  { "phrase": "sinistra",             "intent": "sinistra" },
+  { "phrase": "a sinistra",           "intent": "sinistra" },
+  { "phrase": "stop",                 "intent": "stop" },
+  { "phrase": "fermati",              "intent": "stop" },
+  { "phrase": "alza braccio destro",  "intent": "alza braccio destro" },
+  { "phrase": "alza braccio sinistro","intent": "alza braccio sinistro" }
+]
