@@ -165,7 +165,7 @@ class ASRTTSNode(Node):
         # Lingua / messaggi
         self.language = cfg.get("language", "it")
         self.work_offline = cfg.get("work_offline", True)
-        self.msg_start = cfg.get("msg_start", "Ciao, sono pronta!")
+        self.msg_start = cfg.get("msg_start", "Ciao, sono marrtino , il robot biricchino !")
 
         # Flag normalizzazione (prima di _resolve_wake_words)
         self.case_sensitive = cfg.get("case_sensitive", False)
@@ -480,26 +480,77 @@ class ASRTTSNode(Node):
         try:
             while not self.queue.empty():
                 data = self.queue.get_nowait()
+
                 if self.recognizer.AcceptWaveform(data):
                     result = json.loads(self.recognizer.Result())
                     raw_text = (result.get("text", "") or "").strip()
                     if not raw_text:
                         continue
-                    match_text = raw_text if self.case_sensitive else raw_text.lower()
+
+                    # --- NORMALIZZAZIONE per ricerca wake ---
+                    norm = raw_text if self.case_sensitive else raw_text.lower()
                     if self.normalize_accents:
-                        match_text = unicodedata.normalize('NFD', match_text)
-                        match_text = ''.join(ch for ch in match_text if unicodedata.category(ch) != 'Mn')
+                        norm = unicodedata.normalize('NFD', norm)
+                        norm = ''.join(ch for ch in norm if unicodedata.category(ch) != 'Mn')
+
+                    # --- TAGLIA TUTTO PRIMA DELLA WAKE-WORD, SEMPRE ---
+                    found = False
+                    remainder = ""
+                    trig_word = ""
+                    for kw in self.wake_words:
+                        # kw va normalizzata come sopra
+                        nkw = kw if self.case_sensitive else kw.lower()
+                        if self.normalize_accents:
+                            nkw = unicodedata.normalize('NFD', nkw)
+                            nkw = ''.join(ch for ch in nkw if unicodedata.category(ch) != 'Mn')
+                        idx = norm.find(nkw)
+                        if idx != -1:
+                            # prendi "raw_text" a partire dalla fine della wake-word trovata
+                            # Nota: usiamo l'indice in "norm", ma tagliamo su "raw_text" conservando maiuscole e accenti originali
+                            # Per allinearci, ricalcoliamo l'offset su raw_text con la stessa sottostringa non normalizzata
+                            # (approssimazione robusta: usa len della wakeword originale)
+                            start = idx + len(kw)
+                            remainder = raw_text[start:].lstrip()
+                            trig_word = kw
+                            found = True
+                            break
+
                     self.get_logger().info(f"Hai detto: {raw_text}")
-                    triggered, trig_word, remainder = self._check_wake(match_text, raw_text)
-                    if triggered:
-                        if self.debug:
-                            self.get_logger().debug(f"[DEBUG] Wake matched: '{trig_word}' | remainder_raw='{remainder}'")
-                        self._beep()
-                        if remainder:
-                            corrected = self._postprocess_text(remainder)
-                            if self.debug and corrected != remainder:
-                                self.get_logger().debug(f"[DEBUG] NLP corrected -> '{corrected}' (from '{remainder}')")
-                            self.publish_asr(corrected)
+
+                    if not found:
+                        # Nessuna wake-word: ignora
+                        continue
+
+                    if self.debug:
+                        self.get_logger().debug(f"[DEBUG] Wake matched: '{trig_word}' | remainder_raw='{remainder}'")
+
+                    self._beep()
+                    if remainder:
+                        corrected = self._postprocess_text(remainder)
+                        if self.debug and corrected != remainder:
+                            self.get_logger().debug(f"[DEBUG] NLP corrected -> '{corrected}' (from '{remainder}')")
+                        self.publish_asr(corrected)
+
+                # if self.recognizer.AcceptWaveform(data):
+                #     result = json.loads(self.recognizer.Result())
+                #     raw_text = (result.get("text", "") or "").strip()
+                #     if not raw_text:
+                #         continue
+                #     match_text = raw_text if self.case_sensitive else raw_text.lower()
+                #     if self.normalize_accents:
+                #         match_text = unicodedata.normalize('NFD', match_text)
+                #         match_text = ''.join(ch for ch in match_text if unicodedata.category(ch) != 'Mn')
+                #     self.get_logger().info(f"Hai detto: {raw_text}")
+                #     triggered, trig_word, remainder = self._check_wake(match_text, raw_text)
+                #     if triggered:
+                #         if self.debug:
+                #             self.get_logger().debug(f"[DEBUG] Wake matched: '{trig_word}' | remainder_raw='{remainder}'")
+                #         self._beep()
+                #         if remainder:
+                #             corrected = self._postprocess_text(remainder)
+                #             if self.debug and corrected != remainder:
+                #                 self.get_logger().debug(f"[DEBUG] NLP corrected -> '{corrected}' (from '{remainder}')")
+                #             self.publish_asr(corrected)
         except Exception as e:
             self.get_logger().error(f"Errore ascolto: {e}")
 
