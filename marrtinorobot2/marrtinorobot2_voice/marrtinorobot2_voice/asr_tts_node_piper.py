@@ -81,9 +81,9 @@ class PiperTTS:
 
         # Verifica dipendenze
         if subprocess.call(['which', 'piper'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) != 0:
-            raise RuntimeError("piper non è installato. Installa con: sudo apt-get install -y piper")
+            raise RuntimeError("piper non e installato. Installa con: sudo apt-get install -y piper")
         if subprocess.call(['which', 'play'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) != 0:
-            raise RuntimeError("SoX non è installato. Installa con: sudo apt-get install -y sox")
+            raise RuntimeError("SoX non e installato. Installa con: sudo apt-get install -y sox")
 
     def set_voice(self, voice_name: str) -> bool:
         v = (voice_name or "").strip().lower()
@@ -128,8 +128,8 @@ class PiperTTS:
         # Riproduzione con leggera post-EQ/tempo
         subprocess.run([
             "play", wav_path, "--norm", "-q",
-            "pitch", "400",      # +400 cent ≈ +4 semitoni
-            "tempo", "1.08",     # più veloce senza cambiare pitch
+            "pitch", "400",      # +400 cent e +4 semitoni
+            "tempo", "0.9",     # pie veloce senza cambiare pitch
             "treble", "+3",      # brillantezza
             "highpass", "120"    # taglia le sub-basse
         ], check=True)
@@ -140,7 +140,7 @@ class PiperTTS:
 # ---------------------------
 class ASRTTSNode(Node):
     def __init__(self):
-        super().__init__('asr_tts_node')
+        super().__init__('asr_tts_node_piper')
         self.get_logger().info("Avvio nodo ASR+TTS (piper)")
 
         # --- Config ---
@@ -165,7 +165,7 @@ class ASRTTSNode(Node):
         # Lingua / messaggi
         self.language = cfg.get("language", "it")
         self.work_offline = cfg.get("work_offline", True)
-        self.msg_start = cfg.get("msg_start", "Ciao, sono marrtino , il robot biricchino !")
+        self.msg_start = cfg.get("msg_start", "Ciao, sono pronta!")
 
         # Flag normalizzazione (prima di _resolve_wake_words)
         self.case_sensitive = cfg.get("case_sensitive", False)
@@ -480,36 +480,30 @@ class ASRTTSNode(Node):
         try:
             while not self.queue.empty():
                 data = self.queue.get_nowait()
-
                 if self.recognizer.AcceptWaveform(data):
                     result = json.loads(self.recognizer.Result())
                     raw_text = (result.get("text", "") or "").strip()
                     if not raw_text:
                         continue
 
-                    # --- NORMALIZZAZIONE per ricerca wake ---
+                    # normalizza per la ricerca wake
                     norm = raw_text if self.case_sensitive else raw_text.lower()
                     if self.normalize_accents:
                         norm = unicodedata.normalize('NFD', norm)
                         norm = ''.join(ch for ch in norm if unicodedata.category(ch) != 'Mn')
 
-                    # --- TAGLIA TUTTO PRIMA DELLA WAKE-WORD, SEMPRE ---
+                    # CERCA LA WAKE-WORD OVUNQUE (indipendente da wake_match)
                     found = False
                     remainder = ""
                     trig_word = ""
                     for kw in self.wake_words:
-                        # kw va normalizzata come sopra
                         nkw = kw if self.case_sensitive else kw.lower()
                         if self.normalize_accents:
                             nkw = unicodedata.normalize('NFD', nkw)
                             nkw = ''.join(ch for ch in nkw if unicodedata.category(ch) != 'Mn')
                         idx = norm.find(nkw)
                         if idx != -1:
-                            # prendi "raw_text" a partire dalla fine della wake-word trovata
-                            # Nota: usiamo l'indice in "norm", ma tagliamo su "raw_text" conservando maiuscole e accenti originali
-                            # Per allinearci, ricalcoliamo l'offset su raw_text con la stessa sottostringa non normalizzata
-                            # (approssimazione robusta: usa len della wakeword originale)
-                            start = idx + len(kw)
+                            start = idx + len(kw)  # taglia su raw_text dopo la wake-word
                             remainder = raw_text[start:].lstrip()
                             trig_word = kw
                             found = True
@@ -518,18 +512,19 @@ class ASRTTSNode(Node):
                     self.get_logger().info(f"Hai detto: {raw_text}")
 
                     if not found:
-                        # Nessuna wake-word: ignora
+                        # nessuna wake-word trovata -> non beep
                         continue
 
-                    if self.debug:
-                        self.get_logger().debug(f"[DEBUG] Wake matched: '{trig_word}' | remainder_raw='{remainder}'")
-
+                    # BEEP SEMPRE AL RILEVAMENTO
                     self._beep()
+
+                    # Se c'è del testo dopo la wake-word, pubblicalo (eventuale correzione NLP)
                     if remainder:
                         corrected = self._postprocess_text(remainder)
                         if self.debug and corrected != remainder:
                             self.get_logger().debug(f"[DEBUG] NLP corrected -> '{corrected}' (from '{remainder}')")
                         self.publish_asr(corrected)
+                        self.speak("o capito un attimo e ti rispondo")
 
                 # if self.recognizer.AcceptWaveform(data):
                 #     result = json.loads(self.recognizer.Result())
