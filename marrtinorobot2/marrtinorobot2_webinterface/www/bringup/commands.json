@@ -1,0 +1,159 @@
+[
+    {
+        "title": "bringup",
+        "startCommand": "bringup.sh",
+        "stopCommand": "bringup_kill",
+        "selected": true,
+        "description": "Starts the main bringup process.",
+        "monitor": false,
+        "voiceKeywords": [
+            "bringup",
+            "robot"
+        ]
+    },
+    {
+        "title": "WebCam",
+        "startCommand": "webcam.sh",
+        "stopCommand": "webcam_kill",
+        "selected": false,
+        "description": "Activates the webcam feed.",
+        "monitor": false,
+        "voiceKeywords": [
+            "webcam",
+            "telecamera"
+        ]
+    },
+    {
+        "title": "dynamixel",
+        "description": "Pan/tilt and arm Dynamixel controller from smarrtino.bash.",
+        "startCommand": "pantilt.sh",
+        "stopCommand": "pantilt_kill",
+        "selected": false,
+        "monitor": false,
+        "voiceKeywords": [
+            "dynamixel",
+            "motori braccia"
+        ]
+    },
+    {
+        "title": "asr-tts-piper",
+        "description": "Offline ASR/TTS Piper voice node from smarrtino.bash.",
+        "startCommand": "asr_tts_piper.sh",
+        "stopCommand": "asr-tts-piper_kill",
+        "selected": false,
+        "monitor": false,
+        "voiceKeywords": [
+            "voce",
+            "asr",
+            "piper"
+        ]
+    },
+    {
+        "title": "asr-chatbot-bridge",
+        "description": "ASR chatbot bridge from smarrtino.bash.",
+        "startCommand": "asr_chatbot_bridge.sh",
+        "stopCommand": "asr-chatbot-bridge_kill",
+        "selected": false,
+        "monitor": false,
+        "voiceKeywords": [
+            "chatbot",
+            "assistente"
+        ]
+    },
+    {
+        "title": "blockly-websocket",
+        "description": "Blockly/WebSocket robot command server from smarrtino.bash.",
+        "startCommand": "websocket_robot.sh",
+        "stopCommand": "blockly-websocket_kill",
+        "selected": false,
+        "monitor": false,
+        "voiceKeywords": [
+            "blockly",
+            "websocket"
+        ]
+    },
+    {
+        "title": "web-video-server",
+        "description": "MJPEG web video server from smarrtino.bash.",
+        "startCommand": "webvideoserver.sh",
+        "stopCommand": "web-video-server_kill",
+        "selected": false,
+        "monitor": false,
+        "voiceKeywords": [
+            "video server",
+            "streaming video"
+        ]
+    },
+    {
+        "title": "apriltag",
+        "description": "AprilTag detection from smarrtino.bash.",
+        "startCommand": "apriltag.sh",
+        "stopCommand": "apriltag_kill",
+        "selected": false,
+        "monitor": false,
+        "voiceKeywords": [
+            "april tag",
+            "apriltag"
+        ]
+    },
+    {
+        "title": "getimage",
+        "description": "Image capture helper node from smarrtino.bash.",
+        "startCommand": "getimage.sh",
+        "stopCommand": "getimage_kill",
+        "selected": false,
+        "monitor": false,
+        "voiceKeywords": [
+            "cattura immagine",
+            "fotografia"
+        ]
+    },
+    {
+        "title": "gesture",
+        "description": "Social gesture node from smarrtino.bash.",
+        "startCommand": "gesture.sh",
+        "stopCommand": "gesture_kill",
+        "selected": false,
+        "monitor": false,
+        "voiceKeywords": [
+            "gesti",
+            "gesture"
+        ]
+    },
+    {
+        "title": "noise",
+        "description": "Low-volume white-noise audio keepalive from smarrtino.bash.",
+        "startCommand": "noise.sh",
+        "stopCommand": "noise_kill",
+        "selected": false,
+        "monitor": false,
+        "voiceKeywords": [
+            "rumore audio",
+            "noise"
+        ]
+    },
+    {
+        "title": "face-recognizer",
+        "description": "Riconoscimento e memorizzazione guidata dei volti.",
+        "startCommand": "face_recognizer.sh",
+        "stopCommand": "face_recognizer_kill",
+        "selected": false,
+        "monitor": false,
+        "voiceKeywords": [
+            "riconoscimento facciale",
+            "riconoscimento volti"
+        ]
+    },
+    {
+        "title": "person-follower",
+        "description": "Ricerca persone e avvicinamento leggero con arresto laser di sicurezza.",
+        "startCommand": "person_follower.sh",
+        "stopCommand": "person-follower_kill",
+        "selected": false,
+        "monitor": false,
+        "voiceKeywords": [
+            "insegui persona",
+            "rilevatore persone"
+        ]
+    }
+]

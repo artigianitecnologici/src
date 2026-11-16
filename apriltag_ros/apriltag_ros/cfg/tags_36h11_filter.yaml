@@ -1,0 +1,22 @@
+#
+# ComposableNode should not be nested with node name and namespace
+#
+image_transport: 'raw'    # image format
+family: '36h11'           # tag family name
+size: 0.08                # default tag size
+threads: 2
+max_hamming: 0          # maximum allowed hamming distance (corrected bits)
+z_up: true              # rotate about x-axis to have Z pointing upwards
+
+# see "apriltag.h" for more documentation on these optional parameters
+decimate: 2.0           # decimate resolution for quad detection
+blur: 1.0               # sigma of Gaussian blur for quad detection
+refine-edges: 1         # snap to strong gradients
+debug: 0                # write additional debugging images to current working directory
+# tag_ids: [99]            # tag ID
+# tag_frames: [dock_frame]  # optional frame name
+# tag_sizes: [0.08]        # optional tag-specific edge size
+# Definizione dei tag
+tag_ids: [99,100,101,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30] # ID dei tag
+tag_frames: ['dock_frame','tag100_frame','tag101_frame','tag01_frame','tag02_frame','tag03_frame','tag04_frame','tag05_frame','tag06_frame','tag07_frame','tag08_frame','tag09_frame','tag10_frame','tag11_frame','tag12_frame','tag13_frame','tag14_frame','tag15_frame','tag16_frame','tag17_frame','tag18_frame','tag19_frame','tag20_frame',tag21_frame','tag22_frame','tag23_frame','tag24_frame','tag25_frame','tag26_frame','tag27_frame','tag28_frame','tag29_frame','tag30_frame']  # Nomi dei frame associati ai tag
+tag_sizes: [0.08,0.10,0.12,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055,0.055] #  Dimensioni specifiche per ciascun tag (in metri)

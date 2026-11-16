@@ -1,0 +1,12 @@
+pyserial
+flask
+mediapipe
+requests
+gtts
+opencv-python 
+opencv-python-headless
+pydub
+sounddevice
+faster-whisper
+huggingface-hub>=0.21,<1
+click>=8.1,<8.2

@@ -1,0 +1,52 @@
+##If the docker-compose-plugin package is still not found, you can install Docker Compose manually:
+
+    Create the CLI Plugins Directory:
+
+    bash
+
+
+### installation 
+sudo apt remove docker-compose
+sudo apt install curl -y
+mkdir -p ~/.docker/cli-plugins/
+# Download Docker Compose: Replace v2.30.0 with the latest version number from the Docker Compose releases page.
+curl -SL https://github.com/docker/compose/releases/download/v2.30.0/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
+# Apply Executable Permissions:
+chmod +x ~/.docker/cli-plugins/docker-compose
+# Verify Installation:
+ docker compose version
+
+By following these steps, you should be able to install Docker Compose on your Ubuntu 24.04 system.
+
+
+
+
+# for check .env
+docker-compose config
+# start
+docker-compose up
+# ckear all image
+docker container stop $(docker container ls -aq) && docker system prune -af --volumes
+
+sudo chown -R $USER:$USER ${MARRTINOROBOT2_APPS}/www
+sudo chmod -R 755 ${MARRTINOROBOT2_APPS}/www
+
+docker exec -it cd695ecdb47a /bin/bash
+
+
+  marrtinorobot2:
+    image: marrtinorobot2:system
+    build:
+      context: $MARRTINOROBOT2_HOME/docker
+      dockerfile: Dockerfile.system
+    container_name: system
+    dns:
+      - 8.8.8.8
+    network_mode: "host"
+    tty: true
+    privileged: true
+    environment:
+      - ROS_IP=$ROS_IP
+    volumes:
+      - /dev:/dev
+      - $MARRTINOROBOT2_HOME:/home/robot/src/marrtinorobot2

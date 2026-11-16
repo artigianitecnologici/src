@@ -1,0 +1,56 @@
+services:
+
+  webgui:
+    image: nginx:alpine
+    container_name: nginx_humble
+    volumes:
+      - ./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - "${MARRTINOROBOT2_WEBI}/www:/var/www/html"
+    network_mode: host
+    depends_on:
+      - php_humble
+    restart: always
+
+  php_humble:
+    image: php:8.1-fpm-alpine
+    container_name: php_humble
+    volumes:
+      - "${MARRTINOROBOT2_WEBI}/www:/var/www/html"
+      - "${MARRTINOROBOT2_HOME}/marrtinorobot2_voice/config:/robot-config"
+      - "${MARRTINOROBOT2_HOME}/marrtinorobot2_voice/models/piper:/robot-models/piper:ro"
+      - "/proc/asound:/host-asound:ro"
+      - ./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+    network_mode: host
+    restart: always
+
+  humble:
+    image: marrtinorobot2:mate-vnc
+    build:
+      context: .
+      dockerfile: Dockerfile.mate-vnc
+      args:
+        REPOSITORY_CACHEBUST: ${REPOSITORY_CACHEBUST:-manual}
+    container_name: marrtinorobot2-mate-vnc
+    network_mode: host
+    security_opt:
+      - seccomp=unconfined
+    shm_size: "512m"
+    environment:
+      - PULSE_SERVER=unix:/run/user/1000/pulse/native
+      - ROS_DOMAIN_ID=0
+      - ROS_LOCALHOST_ONLY=0
+    volumes:
+      - ./entrypoint.sh:/entrypoint.sh:ro
+      - $MARRTINOROBOT2_HOME:/home/ubuntu/src/marrtinorobot2
+      - ./docker_home_autostart:/home/ubuntu/.config/autostart                       
+      - /dev:/dev
+      # Mount the PulseAudio runtime directory instead of the socket itself.
+      # A stale directory at the socket path prevents runc from recreating the
+      # container with "not a directory" after PulseAudio is restarted.
+      - /run/user/1000/pulse:/run/user/1000/pulse
+    dns: 8.8.8.8
+    privileged: true
+    tty: true
+    stdin_open: true
+    restart: always
+    

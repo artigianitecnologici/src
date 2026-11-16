@@ -1,0 +1,26 @@
+git clone -b humble-devel https://github.com/ROBOTIS-GIT/dynamixel-workbench.git
+git clone -b humble-devel https://github.com/ROBOTIS-GIT/dynamixel-workbench-msgs.git
+git clone -b humble-devel https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+
+
+ros2 run dynamixel_sdk_examples read_write_node
+ros2 topic pub -1 /set_positon dynamixel_sdk_custom_interfaces/msg/Set Position "{id:1, position: 0}"
+
+ros2 service call /get_positon dynamixel_sdk_custom_interfaces/srv/GetPosition "{id:1, position: 0}"
+
+
+# prerequisiti
+pip install dynamixel-sdk
+
+# test
+python3 -c "from dynamixel_sdk import *; print('Dynamixel SDK loaded successfully')"
+
+# verifica
+pip show dynamixel-sdk
+
+
+sudo apt install ros-humble-ros2-control ros-humble-ros2-controllers
+ros2 launch my_robot_package pan_tilt.launch.py
+
+colcon build --packages-select marrtinorobot2_social
+

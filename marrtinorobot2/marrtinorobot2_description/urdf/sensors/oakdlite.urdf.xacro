@@ -1,0 +1,81 @@
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- 3D Camera Link -->
+  <link name="3d_camera_link">
+    <inertial>
+      <origin xyz="0.00849999999999999 -6.20230426557913E-17 0" rpy="0 0 0" />
+      <mass value="0.043316" />
+      <inertia 
+        ixx="3.27216283333333E-05" 
+        ixy="-2.01335432272409E-19" 
+        ixz="-1.19114008207638E-22" 
+        iyy="3.87317233333333E-06" 
+        iyz="-2.37303626261453E-22" 
+        izz="3.09348433333333E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://marrtinorobo2_description/meshes/3d_camera_link.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.627450980392157 0.627450980392157 0.627450980392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+       <mesh filename="package://marrtinorobo2_description/meshes/3d_camera_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="3d_camera_link_joint" type="fixed">
+    <origin xyz="0.069874862129561 0 0.0792560807319928" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="3d_camera_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+  <!-- Pan-Tilt Camera Links -->
+  <link name="pt_camera_link">
+    <inertial>
+      <origin xyz="0.00630730338217479 -5.20013413546207E-17 0.000950308188413934" rpy="0 -1.5708 1.5708" />
+      <mass value="0.00623651844028495" />
+      <inertia 
+        ixx="5.11295942352593E-07" 
+        ixy="-4.50040932181143E-22" 
+        ixz="-4.00917493406375E-08" 
+        iyy="3.99078324787848E-07" 
+        iyz="4.11363605148623E-22" 
+        izz="4.02518684222241E-07" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 -1.5708 1.5708" />
+      <geometry>
+        <mesh filename="package://marrtinorobo2_description/meshes/pt_camera_link.stl" />
+      </geometry>
+      <material name="">
+        <color rgba="0.627450980392157 0.627450980392157 0.627450980392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 -1.5708 1.5708" />
+      <geometry>
+        <mesh filename="package://marrtinorobo2_description/meshes/pt_camera_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="pt_link2_to_pt_camera_link" type="fixed">
+    <origin xyz="0.0476858338436577 -0.000568997109077291 0.0199999999999997" rpy="3.14 -1.5708 0" />
+    <parent link="pt_link2" />
+    <child link="pt_camera_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+  <joint name="3d_camera_joint" type="fixed">
+  <parent link="base_link" />
+  <child link="3d_camera_link" />
+  <origin xyz="0.1 0.0 0.05" rpy="0 0 0" />
+</joint>
+
+</robot>

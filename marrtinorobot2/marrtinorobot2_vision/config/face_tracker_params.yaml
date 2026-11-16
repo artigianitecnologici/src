@@ -1,0 +1,11 @@
+face_tracker_controller:
+  ros__parameters:
+    servomaxx: 0.5
+    servomaxy: 0.5
+    servomin: -0.5
+    screenmaxx: 640
+    screenmaxy: 480
+    center_offset: 100
+    center_offsety: 60
+    step_distancex: 0.005
+    step_distancey: 0.005

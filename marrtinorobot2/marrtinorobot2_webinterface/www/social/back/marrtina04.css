@@ -1,0 +1,164 @@
+:root {
+  --face-color:rgb(250, 206, 240);
+  --face-height: 100vh;
+  --face-width: 100vw;
+  --eye-size: 26.00vmin;
+  --bulb-size: 33.33vmin;
+  --eye-color: white;
+  --eyelid-color: whitesmoke;
+  --mouth-color: black;
+  --mouth-width: 20vw;
+  --mouth-height: 20vh;
+  --nose-color: black;
+  --nose-width: 15vw;
+  --nose-height: 15vh;
+}
+
+body {
+  background-color: white;
+  margin: 0;
+}
+
+.buttons {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.face {
+  background-color: var(--face-color);
+  margin: auto;
+  height: var(--face-height);
+  width: var(--face-width);
+  position: relative;
+  overflow: hidden;
+}
+
+.face div {
+  position: absolute;
+}
+
+.eyebrow {
+  height: 10vmin;
+  width: 50vmin;
+}
+
+.eyebrow.left {
+  left: 1%;
+  top: 10%;
+}
+
+.eyebrow.right {
+  right: -5%;
+  top: 10%;
+}
+
+.bulb {
+  height: calc(var(--bulb-size) * 1.2);
+  width: var(--bulb-size);
+  top: 22%;
+}
+
+.bulb.left {
+  left: 10%;
+}
+
+.bulb.right {
+  right: 10%;
+}
+
+.eye {
+  position: relative;
+  /* background-color: var(--eye-color); */
+  border-radius: 50%;
+  height: var(--eye-size);
+  width: var(--eye-size);
+  top: calc(var(--bulb-size) / 3);
+  z-index: 1; /* Gli occhi sono sotto rispetto alle pupille */
+}
+
+.pupil {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2; /* Le pupille sono sopra gli occhi */
+  width: 40%;
+  height: 60%;
+  /* background-color: black; */
+  border-radius: 50%;
+  animation: movePupil 2s infinite;
+}
+
+.eyelid {
+  position: absolute;
+  height: var(--eye-size);
+  width: calc(var(--eye-size) * 1.75);
+  background-color: var(--eyelid-color);
+  z-index: 2;
+  border-radius: 50%;
+}
+
+.eyelid.upper {
+  top: 0;
+  left: calc(var(--eye-size) * -0.375);
+}
+
+.eyelid.lower {
+  bottom: 0;
+  left: calc(var(--eye-size) * -0.375);
+}
+
+.mouth {
+  height: var(--mouth-height);
+  width: var(--mouth-width);
+  bottom: 5%;
+  left: 30%;
+  z-index: 4;
+  position: absolute;
+}
+
+.nose {
+  height: var(--nose-height);
+  width: var(--nose-width);
+  bottom: 25%;
+  left: calc(var(--face-width) / 2 - var(--nose-width) / 2);
+  z-index: 4;
+  position: absolute;
+}
+
+/* Animazione per le pupille */
+@keyframes movePupil {
+  0% {
+    transform: translate(-50%, -50%) translateX(0);
+  }
+  25% {
+    transform: translate(-50%, -50%) translateX(10px);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateX(0);
+  }
+  75% {
+    transform: translate(-50%, -50%) translateX(-10px);
+  }
+  100% {
+    transform: translate(-50%, -50%) translateX(0);
+  }
+}
+
+/* Testo pulsanti */
+button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #555;
+}

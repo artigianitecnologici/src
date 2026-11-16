@@ -1,0 +1,65 @@
+[
+  {
+    "title": "rplidar c1",
+    "startCommand": "rplidar-c1.sh",
+    "stopCommand": "rplidar_kill",
+    "selected": true,
+    "description": "Activates the RPLIDAR laser scanner.",
+    "monitor": false,
+    "voiceKeywords": [
+      "lidar",
+      "rplidar",
+      "laser"
+    ]
+  },
+  {
+    "title": "slam",
+    "startCommand": "slam.sh",
+    "stopCommand": "slam_kill",
+    "selected": false,
+    "description": "Starts the SLAM algorithm for mapping.",
+    "monitor": false,
+    "voiceKeywords": [
+      "slam",
+      "mappatura",
+      "creazione mappa"
+    ]
+  },
+  {
+    "title": "explorer",
+    "startCommand": "explorer.sh",
+    "stopCommand": "explorer_kill",
+    "selected": false,
+    "description": "Launches the autonomous exploration module.",
+    "monitor": false,
+    "voiceKeywords": [
+      "esplorazione",
+      "explorer",
+      "esplora"
+    ]
+  },
+  {
+    "title": "nav",
+    "startCommand": "nav.sh",
+    "stopCommand": "nav_kill",
+    "selected": false,
+    "description": "Starts the navigation stack for path planning.",
+    "monitor": false,
+    "voiceKeywords": [
+      "navigazione",
+      "nav"
+    ]
+  },
+  {
+    "title": "vizanti",
+    "startCommand": "vizanti_server.sh",
+    "stopCommand": "vizanti_kill",
+    "selected": false,
+    "description": "Launches the Vizanti visualization server.",
+    "monitor": false,
+    "voiceKeywords": [
+      "vizanti",
+      "visualizzazione navigazione"
+    ]
+  }
+]

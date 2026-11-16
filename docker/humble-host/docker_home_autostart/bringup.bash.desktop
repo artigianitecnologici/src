@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/ubuntu/src/marrtinorobot2/bringup.bash
+Hidden=false
+Name[C]=Bringup MARRtino Robot
+Name=Bringup MARRtino Robot
+Comment[C]=Bringup MARRtino Robot
+Comment=Bringup MARRtino Robot
+X-MATE-Autostart-Delay=1

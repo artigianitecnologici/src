@@ -1,0 +1,20 @@
+# teleop_twist_joy.yaml
+joy_config: ps4
+
+# Mappatura degli assi
+axis_linear: 1    # Stick sinistro - asse Y (avanti/indietro)
+axis_angular: 3   # Stick destro - asse X (rotazione sinistra/destra)
+
+# Scale per i movimenti
+scale_linear: 1.0    # Velocità massima lineare
+scale_angular: 2.0   # Velocità massima angolare
+
+# Scale turbo (opzionale)
+scale_linear_turbo: 2.0  # Velocità turbo lineare
+scale_angular_turbo: 4.0 # Velocità turbo angolare
+
+# Pulsante per abilitare il controllo
+enable_button: 4  # Pulsante L1 sul controller PS4
+
+# Pulsante per attivare la modalità turbo (opzionale)
+enable_turbo_button: 5  # Pulsante R1 sul controller PS4

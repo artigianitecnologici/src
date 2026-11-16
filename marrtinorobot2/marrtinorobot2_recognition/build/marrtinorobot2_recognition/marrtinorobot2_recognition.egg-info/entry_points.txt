@@ -1,0 +1,4 @@
+[console_scripts]
+face_recognizer = marrtinorobot2_recognition.face_recognizer_node:main
+person_follower = marrtinorobot2_recognition.person_follower_node:main
+

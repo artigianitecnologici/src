@@ -1,0 +1,23 @@
+# Regole per assegnare la webcam Sonix/Vitade a /dev/webcam
+SUBSYSTEM=="video4linux", ATTRS{idVendor}=="0c45", ATTRS{idProduct}=="6366", ATTR{index}=="0", SYMLINK+="webcam", MODE="0777"
+SUBSYSTEM=="video4linux", ATTRS{idVendor}=="0c45", ATTRS{idProduct}=="6369", ATTR{index}=="0", SYMLINK+="webcam", MODE="0777"
+
+# Regola per assegnare la OAK-D Depth Camera a /dev/oak solo quando e' davvero Luxonis
+SUBSYSTEM=="video4linux", ATTRS{idVendor}=="03e7", ATTR{index}=="0", SYMLINK+="oak", MODE="0777"
+# SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="2485", RUN+="/bin/sh -c 'ln -sf /dev/video1 /dev/oak'" , KERNEL=='video1'
+
+
+# 🔹 Regole udev per dispositivi Luxonis OAK (X_LINK_UNBOOTED)
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", MODE="0777"
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="2485", MODE="0777", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="f63b", MODE="0777", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="f63c", MODE="0777", GROUP="plugdev"
+
+# Supporto per dispositivi DepthAI non avviati (X_LINK_UNBOOTED)
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="2150", MODE="0777", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="2485", MODE="0777", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="f63b", MODE="0777", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="f63c", MODE="0777", GROUP="plugdev"
+SUBSYSTEM=="usb", ATTR{idVendor}=="03e7", ATTR{idProduct}=="f63d", MODE="0777", GROUP="plugdev"
+
+ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"

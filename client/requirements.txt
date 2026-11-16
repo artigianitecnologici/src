@@ -1,0 +1,5 @@
+# HTTP e networking usano la libreria standard Python.
+sounddevice>=0.4.6,<1.0
+
+# Riconoscimento italiano locale per la parola di attivazione Sonia.
+vosk>=0.3.45,<0.4

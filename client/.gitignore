@@ -1,0 +1,41 @@
+# Ambienti virtuali Python
+.venv/
+venv/
+env/
+
+# Modelli scaricati da install_wake_model.py
+/models/
+
+# Bytecode e cache Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Coverage e build
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+build/
+dist/
+*.egg-info/
+
+# Configurazione locale e credenziali
+.env
+.env.*
+!.env.example
+
+# Log e file temporanei
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+
+# Editor e sistema operativo
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,2 @@
+# docker run -p 6080:80 --security-opt seccomp=unconfined --shm-size=512m -v $MARRTINOROBOT2_HOME:/home/ubuntu/src/marrtinorobot2 ros2-desktop-vnc:humble
+ docker run -p 6080:80 --security-opt seccomp=unconfined --shm-size=512m  marrtinorobot2:system

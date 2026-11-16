@@ -1,0 +1,49 @@
+
+# DISABLE POWER OFF WIFI  
+
+1. To disable power saving mode for your wifi on Raspberry Pi running Ubuntu 22.04, you can try the following steps:
+2. Open a terminal window and type sudo nano /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf to open the configuration file.
+3. Change the value of wifi.powersave from 3 to 2.
+4. Save the file by pressing Ctrl+O and then Ctrl+X to exit.
+5. Reboot your Raspberry Pi.
+6. iwconfig 
+   
+    lo        no wireless extensions.
+    eth0      no wireless extensions.
+    wlan0     IEEE 802.11  Mode:Master  Tx-Power=31 dBm
+              Retry short limit:7   RTS thr:off   Fragment thr:off
+              Power Management:off
+    docker0   no wireless extensions.
+
+7 iw wlan0 info
+
+
+# CREATE A PUBLISHER 
+
+ros2 pkg create --build-type ament_python --license Apache-2.0 py_pubsub
+
+# terminator
+sudo apt install terminator
+
+
+# rqt_graph
+
+ros2 pkg list | grep cartographer
+
+
+# turtlebot 3
+git clone -b humble-devel https://github.com/ROBOTIS-GIT/marrtinorobot2_simulations.git
+git clone -b humble-devel https://github.com/ROBOTIS-GIT/marrtinorobot2.git
+git clone -b humble-devel
+
+
+orbtec ros2
+https://github.com/orbbec/OrbbecSDK_ROS2
+
+https://github.com/naoki-mizuno/ds4_driver.git
+git clone https://github.com/naoki-mizuno/ds4_driver.git -b humble-devel
+
+
+joystick
+sudo apt install ros-humble-joy ros-humble-teleop-twist-joystick
+ros2 run joy joy_node

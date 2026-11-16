@@ -1,0 +1,33 @@
+*.env
+.env.*
+!.env.example
+*.log
+*.py[cod]
+*Zone.Identifier
+__pycache__/
+
+facestart.sh
+
+# Ambienti Python locali
+myenv/
+.venv/
+venv/
+eva/myenv/
+marrtinorobot2/marrtinorobot2_chatbot/myenv/
+
+# Log e output runtime
+eva/log/
+eva/twochat.log
+MarrtinoN8N/log/
+MarrtinoN8N/out/
+MarrtinoN8N/shared/
+
+# Modelli scaricabili o generati localmente
+eva/models/vosk-model-it-0.22/
+eva/models/vosk_model.zip
+eva/models_whisper/
+eva/models/piper/*.onnx
+eva/models/piper/*.onnx.json
+MarrtinoN8N/models/whisper_cache/
+marrtinorobot2/marrtinorobot2_chatbot/models/
+marrtinorobot2/marrtinorobot2_voice/models/*

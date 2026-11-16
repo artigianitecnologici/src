@@ -1,0 +1,17 @@
+marrtinorobot2_recognition:
+  ros__parameters:
+    db_dir: data
+    threshold: 0.45
+    providers: ['CPUExecutionProvider']
+    det_size_w: 640
+    det_size_h: 640
+    topic_image: /camera/image_raw
+    topic_output: /recognized_face
+    topic_command: /face_recognizer/command
+    topic_status: /face_recognizer/status
+    topic_speech: /speech/to_speak
+    enroll_samples: 7
+    enroll_timeout_sec: 45.0
+    enroll_interval_sec: 3.0
+    enroll_instruction_delay_sec: 2.5
+    process_every_n: 1
